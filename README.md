@@ -9,7 +9,9 @@ Checker: A tool for checking if the cge-rule-string is valid.
 ## Platform ##
 
 windows: xp, 7, 8, 10 are all supported. Build with windows10+vs2012+qt5.2.1-x86(Angle Ver)
+
 osx: Build with osx_10.11.6 + qt5.6.0
+
 ubuntu: Build with Ubuntu_16.04_LTS-x64 + qt5.7.0
 
 ## Screenshot ##
