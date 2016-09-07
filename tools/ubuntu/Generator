@@ -1,0 +1,20 @@
+#!/bin/sh
+appName="filterGenerator"
+dirName="$(dirname $0)"
+tmp="$(pwd)"
+
+if [ $tmp != $dirName ]; then
+
+r1="$(echo $dirName | sed 's/^\..*$//g')"
+r2="$(echo $dirName | sed 's/^\/.*$//g')"
+
+if [ -z $r1 ]; then
+dirName="$tmp/$dirName"
+elif [ ! -z $r2 ]; then
+dirName="$tmp"
+fi
+
+fi
+
+export LD_LIBRARY_PATH="$dirName/tool"
+$LD_LIBRARY_PATH/$appName
