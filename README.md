@@ -8,11 +8,11 @@ Generator: A tool for quickly creating cge-filters.
 Checker: A tool for checking if the cge-rule-string is valid.
 
 ref: 
-```
+
 1. Android: [https://github.com/wysaid/android-gpuimage-plus](https://github.com/wysaid/android-gpuimage-plus)
 
 2. iOS: [https://github.com/wysaid/ios-gpuimage-plus](https://github.com/wysaid/ios-gpuimage-plus)
-```
+
 
 ## Platform ##
 
