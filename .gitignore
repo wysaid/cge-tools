@@ -1,0 +1,146 @@
+#################
+## Build outputs
+#################
+
+# Build directories
+build/
+build-*/
+cmake-build-*/
+out/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+install_manifest.txt
+compile_commands.json
+
+# Build artifacts
+*.a
+*.so
+*.dylib
+*.dll
+*.lib
+*.obj
+*.o
+*.exe
+*.out
+*.app
+
+# Qt generated files
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+.qmake.stash
+
+#################
+## IDEs
+#################
+
+# VSCode (keep .vscode configs but ignore local settings)
+# .vscode/
+.history/
+
+# Visual Studio
+*.suo
+*.user
+*.sln.docstates
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+ipch/
+*.aps
+*.ncb
+*.cachefile
+*.psess
+*.vsp
+*.vspx
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+# Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.metadata
+.settings/
+.loadpath
+.project
+.cproject
+*.launch
+.externalToolBuilders/
+
+#################
+## OS
+#################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+*.swp
+*.swo
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+#################
+## Project specific
+#################
+
+# QMake (legacy - no longer used)
+*.pro.user*
+Makefile*
+!CMakeLists.txt
+
+# Examples build outputs
+examples/build/
+examples/input.jpg
+examples/output.jpg
+
+# Documentation build
+docs/_build/
+docs/html/
+docs/latex/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+*.cache
+
+# Dependencies (if vendored)
+# dependencies/
+
+/tasks

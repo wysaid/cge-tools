@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BasicAdjustWidget</class>
+ <widget class="QWidget" name="BasicAdjustWidget">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <strikeout>false</strikeout>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>Basic Adjusts</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>filterGenerator.ico</normaloff>filterGenerator.ico</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>0.850000000000000</double>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>140</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#fedcba</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Brightness</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Contrast</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Saturation</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>B&amp;W</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Exposure</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Shadow&amp;Highlight</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Blur / Sharpen</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vignette</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HSL</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HSV</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>WhiteBalance(Temperature&amp;Tint)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ColorBalance</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SelectiveColor</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ColorLevel&amp;Gamma</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Lookup</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QWidget" name="contentWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>0</y>
+     <width>260</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

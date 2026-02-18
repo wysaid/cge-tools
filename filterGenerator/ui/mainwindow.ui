@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UIMainWindow</class>
+ <widget class="QMainWindow" name="UIMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>897</width>
+    <height>598</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Filter Generator</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="adjustWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>270</y>
+      <width>171</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#00f</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="logoWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>170</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(':CGE/logo.png');</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="sceneWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>521</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#0f0;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="controlWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>10</y>
+      <width>171</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QScrollArea" name="outputScrollWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>171</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="outputWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>169</width>
+        <height>200</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>171</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>UI Options</string>
+     </property>
+     <widget class="QPushButton" name="resizeBtn">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>25</y>
+        <width>85</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Origin</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="fitBtn">
+      <property name="geometry">
+       <rect>
+        <x>85</x>
+        <y>25</y>
+        <width>85</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Fit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="compBtn">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>95</y>
+        <width>150</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Compare</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="zoomInBtn">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>85</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Zoom In</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="zoomOutBtn">
+      <property name="geometry">
+       <rect>
+        <x>85</x>
+        <y>60</y>
+        <width>85</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Zoom Out</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>85</y>
+      <width>171</width>
+      <height>176</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>File Options</string>
+    </property>
+    <widget class="QPushButton" name="openImageBtn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Image File</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="saveImageBtn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>60</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save Image&amp;Config</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="previewConfigBtn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>100</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Preview Config</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="useLUTBtn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Use Lookup Table</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>resizeBtn</tabstop>
+  <tabstop>fitBtn</tabstop>
+  <tabstop>zoomInBtn</tabstop>
+  <tabstop>zoomOutBtn</tabstop>
+  <tabstop>compBtn</tabstop>
+  <tabstop>openImageBtn</tabstop>
+  <tabstop>saveImageBtn</tabstop>
+  <tabstop>previewConfigBtn</tabstop>
+  <tabstop>useLUTBtn</tabstop>
+  <tabstop>outputScrollWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

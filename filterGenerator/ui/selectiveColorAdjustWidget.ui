@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SelectiveColorWidget</class>
+ <widget class="QWidget" name="SelectiveColorWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>260</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="previewBtn">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>265</y>
+     <width>120</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Preview(预览)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="applyBtn">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>265</y>
+     <width>100</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Apply(使用)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>65</x>
+     <y>5</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>cyan</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>5</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>magenta</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>165</x>
+     <y>5</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>yellow</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>5</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>black</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>30</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Red</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>80</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Green</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>130</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Blue</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>105</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cyan</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>155</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Magenta</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>55</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Yellow</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>180</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>White</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>205</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Gray</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>230</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Black</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="redCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>30</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="redMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>30</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="redYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>30</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="redBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>30</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="greenCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>80</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="greenYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>80</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="greenMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>80</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="greenBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>80</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blueCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>130</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blueYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>130</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blueMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>130</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blueBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>130</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cyanCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>105</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cyanYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>105</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cyanMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>105</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cyanBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>105</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="magentaCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>155</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="magentaYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>155</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="magentaMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>155</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="magentaBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>155</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="yellowCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>55</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="yellowYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>55</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="yellowMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>55</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="yellowBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>55</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="whiteCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>180</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="whiteYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>180</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="whiteMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>180</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="whiteBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>180</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="grayCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>205</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="grayYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>205</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="grayMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>205</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="grayBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>205</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blackCyanEdit">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>230</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blackYellowEdit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>230</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blackMagentaEdit">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>230</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="blackBlackEdit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>230</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>label_9</zorder>
+  <zorder>previewBtn</zorder>
+  <zorder>applyBtn</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
+  <zorder>label_10</zorder>
+  <zorder>label_11</zorder>
+  <zorder>label_12</zorder>
+  <zorder>label_13</zorder>
+  <zorder>redCyanEdit</zorder>
+  <zorder>redMagentaEdit</zorder>
+  <zorder>redYellowEdit</zorder>
+  <zorder>redBlackEdit</zorder>
+  <zorder>greenCyanEdit</zorder>
+  <zorder>greenYellowEdit</zorder>
+  <zorder>greenMagentaEdit</zorder>
+  <zorder>greenBlackEdit</zorder>
+  <zorder>blueCyanEdit</zorder>
+  <zorder>blueYellowEdit</zorder>
+  <zorder>blueMagentaEdit</zorder>
+  <zorder>blueBlackEdit</zorder>
+  <zorder>cyanCyanEdit</zorder>
+  <zorder>cyanYellowEdit</zorder>
+  <zorder>cyanMagentaEdit</zorder>
+  <zorder>cyanBlackEdit</zorder>
+  <zorder>magentaCyanEdit</zorder>
+  <zorder>magentaYellowEdit</zorder>
+  <zorder>magentaMagentaEdit</zorder>
+  <zorder>magentaBlackEdit</zorder>
+  <zorder>yellowCyanEdit</zorder>
+  <zorder>yellowYellowEdit</zorder>
+  <zorder>yellowMagentaEdit</zorder>
+  <zorder>yellowBlackEdit</zorder>
+  <zorder>whiteCyanEdit</zorder>
+  <zorder>whiteYellowEdit</zorder>
+  <zorder>whiteMagentaEdit</zorder>
+  <zorder>whiteBlackEdit</zorder>
+  <zorder>grayCyanEdit</zorder>
+  <zorder>grayYellowEdit</zorder>
+  <zorder>grayMagentaEdit</zorder>
+  <zorder>grayBlackEdit</zorder>
+  <zorder>blackCyanEdit</zorder>
+  <zorder>blackYellowEdit</zorder>
+  <zorder>blackMagentaEdit</zorder>
+  <zorder>blackBlackEdit</zorder>
+ </widget>
+ <tabstops>
+  <tabstop>redCyanEdit</tabstop>
+  <tabstop>redMagentaEdit</tabstop>
+  <tabstop>redYellowEdit</tabstop>
+  <tabstop>redBlackEdit</tabstop>
+  <tabstop>yellowCyanEdit</tabstop>
+  <tabstop>yellowMagentaEdit</tabstop>
+  <tabstop>yellowYellowEdit</tabstop>
+  <tabstop>yellowBlackEdit</tabstop>
+  <tabstop>greenCyanEdit</tabstop>
+  <tabstop>greenMagentaEdit</tabstop>
+  <tabstop>greenYellowEdit</tabstop>
+  <tabstop>greenBlackEdit</tabstop>
+  <tabstop>cyanCyanEdit</tabstop>
+  <tabstop>cyanMagentaEdit</tabstop>
+  <tabstop>cyanYellowEdit</tabstop>
+  <tabstop>cyanBlackEdit</tabstop>
+  <tabstop>blueCyanEdit</tabstop>
+  <tabstop>blueMagentaEdit</tabstop>
+  <tabstop>blueYellowEdit</tabstop>
+  <tabstop>blueBlackEdit</tabstop>
+  <tabstop>magentaCyanEdit</tabstop>
+  <tabstop>magentaMagentaEdit</tabstop>
+  <tabstop>magentaYellowEdit</tabstop>
+  <tabstop>magentaBlackEdit</tabstop>
+  <tabstop>whiteCyanEdit</tabstop>
+  <tabstop>whiteMagentaEdit</tabstop>
+  <tabstop>whiteYellowEdit</tabstop>
+  <tabstop>whiteBlackEdit</tabstop>
+  <tabstop>grayCyanEdit</tabstop>
+  <tabstop>grayMagentaEdit</tabstop>
+  <tabstop>grayYellowEdit</tabstop>
+  <tabstop>grayBlackEdit</tabstop>
+  <tabstop>blackCyanEdit</tabstop>
+  <tabstop>blackMagentaEdit</tabstop>
+  <tabstop>blackYellowEdit</tabstop>
+  <tabstop>blackBlackEdit</tabstop>
+  <tabstop>previewBtn</tabstop>
+  <tabstop>applyBtn</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

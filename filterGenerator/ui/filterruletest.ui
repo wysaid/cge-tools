@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FilterRuleTestClass</class>
+ <widget class="QMainWindow" name="FilterRuleTestClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>896</width>
+    <height>695</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FilterRuleTest</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="canvasWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>591</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#f00;</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="inputBox">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>470</y>
+      <width>291</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Input Image</string>
+    </property>
+    <widget class="QPushButton" name="inputChooseBtn">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="imageImageEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPlainTextEdit" name="ruleEdit">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>291</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="plainText">
+     <string>## Paste Effect Rules Here! ##
+
+Clear all text in this box, paste the effect rules, and click Test.
+
+Tip: After finishing in the effect editor, click Save to generate files. Open the _cge.txt file, copy the text, paste it into the box above, and click the center button to test whether the rule is correct.
+
+The console window will display the final effect result for this rule.
+Click the Compare Original button at the bottom to see the difference between the effect image and the original.
+
+Click &quot;Select&quot; in the Input Image box to set the resource image; by default it uses the same image as FilterGenerator.
+
+If an effect uses a resource, set the resource directory in the &quot;Resource Image Directory&quot; box.
+
+After clicking &quot;Save Result Image&quot;, a dialog will appear allowing you to save the effect image.
+
+When focus is on the right display window, press the &quot;Space&quot; key to fit the image to the screen, press &quot;Enter&quot; to display the image at its original scale. Use the mouse scroll wheel to zoom in/out, and click-drag to pan the displayed image.
+
+V1.3 added Batch Process function: click to select multiple images, all will have the effect configuration applied.</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="resBox">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>530</y>
+      <width>291</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Resource Image Directory</string>
+    </property>
+    <widget class="QPushButton" name="resChooseBtn">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="resPathEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="funcBox">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>580</y>
+      <width>291</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Functions</string>
+    </property>
+    <widget class="QPushButton" name="saveBtn">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>60</y>
+       <width>85</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save Result Image</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="batchBtn">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>85</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Batch Process</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="compBtn">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>20</y>
+       <width>85</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Compare Original</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="testBtn">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>20</y>
+       <width>85</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Test Rule</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

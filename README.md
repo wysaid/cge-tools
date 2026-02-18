@@ -1,23 +1,290 @@
-# cge-tools
+# CGE-Tools
 
-Some utils for cge filter including "Generator" & "Checker"
+A powerful C++ image and video processing library with OpenGL-based filters and effects, built with Qt6.
+
+## Quick Links
+
+- 🚀 [Quick Start Guide](docs/QUICKSTART.md) - Get up and running in 5 minutes
+- 📖 [Build Documentation](docs/BUILD.md) - Detailed build instructions
+- 💡 [Examples](examples/) - Sample programs and tutorials
+- 🔧 [Modernization Log](docs/MODERNIZATION.md) - Project upgrade details
+- ⚡ [Optimization Guide](docs/OPTIMIZATION.md) - Project optimizations and best practices
+- 🤝 [Contributing Guide](.github/CONTRIBUTING.md) - How to contribute to the project
 
 ## Description
 
-Generator: A tool for quickly creating cge-filters.
+CGE (Cool Graphics Effects) is a high-performance graphics processing library that provides:
 
-Checker: A tool for checking if the cge-rule-string is valid.
+- **Image Filters**: 70+ built-in filters for image enhancement and effects
+- **Animation System**: Smooth animation framework for dynamic effects
+- **Slideshow Engine**: Professional slideshow effects (Classic, Dynamic, Lovely, Memories, Party, Piano, Christmas, etc.)
+- **Sprite System**: 2D/3D sprite rendering capabilities
+- **Real-time Processing**: GPU-accelerated processing using OpenGL/OpenGL ES
 
-ref: [Android](https://github.com/wysaid/android-gpuimage-plus) [iOS](https://github.com/wysaid/ios-gpuimage-plus)
+This library is the core engine powering the mobile apps:
+- [Android GPUImage Plus](https://github.com/wysaid/android-gpuimage-plus)
+- [iOS GPUImage Plus](https://github.com/wysaid/ios-gpuimage-plus)
 
-## Platform ##
+## Features
 
-windows: xp, 7, 8, 10+ are all supported. Build with windows10+vs2012+qt5.2.1-x86(Angle Ver)
+### Core Functionality
+- Hardware-accelerated OpenGL rendering
+- Cross-platform support (macOS, Linux, Windows)
+- Qt6 integration
+- Modular architecture
 
-osx: Build with osx_10.11.6 + qt5.6.0
+### Filter Categories
+- **Basic Adjustments**: Brightness, Contrast, Saturation, Exposure, Hue, etc.
+- **Color Effects**: Color Balance, Color Level, Curves, White Balance, etc.
+- **Blur Effects**: Gaussian Blur, Bilateral Blur, Mosaic Blur, Motion Blur, etc.
+- **Beauty Filters**: Face Beautification, Eye Enlargement, Teeth Whitening, etc.
+- **Artistic Effects**: Sketch, Halftone, Crosshatch, Emboss, Edge Detection, etc.
+- **Advanced Effects**: Vignette, Tilt-shift, Haze, Lookup Tables (LUT), etc.
 
-ubuntu: Build with Ubuntu_16.04_LTS-x64 + qt5.7.0
+## Building from Source
 
-## Screenshot ##
+### Prerequisites
+
+- CMake 3.16 or higher
+- Qt6 (Qt 6.0 or later)
+- C++11 compatible compiler
+- OpenGL development libraries
+- (Optional) ccache for faster compilation
+
+### Quick Build
+
+```bash
+# Using build script (recommended)
+./tasks.sh --release --rebuild
+
+# Or manually
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . -j8
+```
+
+### macOS
+
+```bash
+# Set Qt6 path (if not already set)
+export QTDIR=/path/to/Qt/6.x.x/macos
+
+# Build
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+```
+
+### Linux
+
+```bash
+# Install dependencies (Ubuntu/Debian)
+sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev
+
+# Build
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+```
+
+### Windows
+
+```bash
+# Set Qt6 path
+set QTDIR=C:\Qt\6.x.x\msvc2019_64
+
+# Build
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+```
+
+### CMake Build Options
+
+The build system supports several options:
+
+```bash
+# Build shared library instead of static
+cmake .. -DBUILD_SHARED_LIBS=ON
+
+# Build filter generator application (requires Qt6 migration - currently experimental)
+cmake .. -DBUILD_FILTER_GENERATOR=ON
+
+# Debug build
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+
+# Specify custom Qt path
+cmake .. -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x.x
+```
+
+**Note**: The filter generator application is currently undergoing Qt5 to Qt6 migration and is disabled by default. The core CGE library is fully functional.
+
+## Project Structure
+
+```
+cge-tools/
+├── CMakeLists.txt          # CMake build configuration
+├── README.md               # This file
+├── include/                # Public headers
+│   └── cge/               # All library headers
+│       ├── core/          # Core functionality
+│       ├── filters/       # Filter implementations
+│       ├── animation/     # Animation system
+│       ├── sprite/        # Sprite rendering
+│       └── slideshow/     # Slideshow effects
+├── src/                   # Implementation files
+│   ├── core/              # Core implementations
+│   ├── filters/           # Filter implementations
+│   ├── animation/         # Animation implementations
+│   ├── sprite/            # Sprite implementations
+│   ├── slideshow/         # Slideshow implementations
+│   └── extend/            # Extension modules
+├── examples/              # Usage examples
+│   ├── simple_filter.cpp  # Basic filtering example
+│   └── CMakeLists.txt     # Example build config
+├── tools/                 # Utility tools
+│   ├── Generator/         # Filter generator tool
+│   └── Checker/           # Rule string validator
+└── screenshots/           # Example screenshots
+```
+
+## Usage
+
+### Basic Usage
+
+```cpp
+#include <cge/cge.h>
+#include <cge/filters/cgeBrightnessAdjust.h>
+
+// Initialize image handler
+CGE::CGEImageHandler handler;
+handler.initWithRawBufferData(buffer, width, height, format);
+
+// Apply brightness filter
+CGE::CGEBrightnessFilter* filter = new CGE::CGEBrightnessFilter();
+filter->setIntensity(1.5f);
+handler.setFilterWithConfig(filter);
+
+// Process and get result
+handler.processingFilters();
+void* result = handler.getResultBuffer();
+```
+
+### Using with Qt
+
+```cpp
+#include <QImage>
+#include <cge/cge.h>
+
+QImage processImage(const QImage& input) {
+    // Your processing code here
+    return output;
+}
+```
+
+## Examples
+
+The `examples/` directory contains sample programs demonstrating how to use CGE:
+
+- **simple_filter**: Basic image filtering example showing how to load an image, apply filters, and save results
+
+To build and run the examples:
+
+```bash
+# Build examples
+cd examples
+mkdir build && cd build
+cmake ..
+cmake --build .
+
+# Run simple_filter example
+cp /path/to/your/image.jpg input.jpg
+./simple_filter
+```
+
+For detailed instructions and more examples, see [examples/README.md](examples/README.md).
+
+## Tools
+
+### Filter Generator (Experimental)
+
+A Qt-based GUI application for creating and testing CGE filters interactively. 
+
+**Status**: Currently undergoing Qt5 to Qt6 migration. To build:
+
+```bash
+cmake .. -DBUILD_FILTER_GENERATOR=ON
+cmake --build .
+```
+
+**Note**: The application may require additional code updates for full Qt6 compatibility. Pre-built versions are available in the `tools/` directory for macOS, Windows, and Linux.
+
+### Checker
+
+A tool for validating CGE rule strings to ensure filter configurations are correct. (Available in `tools/` directory)
+
+## Installation
+
+After building, you can install the library:
+
+```bash
+cd build
+cmake --install . --prefix /usr/local
+```
+
+This will install:
+- Headers to `/usr/local/include/cge/`
+- Library to `/usr/local/lib/`
+- CMake config files for easy integration
+
+## Using in Your Project
+
+### With CMake
+
+```cmake
+find_package(cge REQUIRED)
+target_link_libraries(your_target PRIVATE CGE::cge)
+```
+
+### Manual Integration
+
+```cmake
+target_include_directories(your_target PRIVATE /path/to/cge-tools/include)
+target_link_libraries(your_target PRIVATE /path/to/cge-tools/build/libcge.a Qt6::Core Qt6::OpenGL)
+```
+
+## License
+
+Please refer to the LICENSE file for licensing information.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+
+## Author
+
+Wang Yang (wysaid)
+- Email: admin@wysaid.org
+- GitHub: [@wysaid](https://github.com/wysaid)
+
+## Related Projects
+
+- [Android GPUImage Plus](https://github.com/wysaid/android-gpuimage-plus) - Android version with Java/Kotlin bindings
+- [iOS GPUImage Plus](https://github.com/wysaid/ios-gpuimage-plus) - iOS version with Objective-C/Swift bindings
+
+## Changelog
+
+### Version 1.0.0 (2024)
+- Open source release
+- Migrated from QMake to CMake build system
+- Qt6 compatibility
+- Reorganized project structure
+- Improved documentation
+
+## Screenshots
 
 ![cge-tool](https://raw.githubusercontent.com/wysaid/cge-tools/master/screenshots/0.jpg "cge-tool-screenshot")
+
+## Support
+
+For questions, issues, or feature requests, please open an issue on GitHub.

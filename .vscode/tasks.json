@@ -1,0 +1,343 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        // ── Clean ──────────────────────────────────────────────────────────
+        {
+            "label": "Clean Build Directory",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        // ── Configure (Load) ───────────────────────────────────────────────
+        {
+            "label": "Load CMake Project (Debug)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--config"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Load CMake Project (Release)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--release",
+                "--config"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Reload CMake Project (Debug)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--clean",
+                "--debug",
+                "--config"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Reload CMake Project (Release)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--clean",
+                "--release",
+                "--config"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        // ── Build ──────────────────────────────────────────────────────────
+        {
+            "label": "Build CMake Project (Debug)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build CMake Project (Release)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--release",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        // ── Load + Build (sequence) ────────────────────────────────────────
+        {
+            "label": "Load And Build CMake Project (Debug)",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "Done !"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": [
+                "Load CMake Project (Debug)",
+                "Build CMake Project (Debug)"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Load And Build CMake Project (Release)",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "Done !"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": [
+                "Load CMake Project (Release)",
+                "Build CMake Project (Release)"
+            ],
+            "dependsOrder": "sequence"
+        },
+        // ── Rebuild ────────────────────────────────────────────────────────
+        {
+            "label": "Rebuild Project (Debug)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--rebuild"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Rebuild Project (Release)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--release",
+                "--rebuild"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Current Cpp File",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--build-single-file",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run Tests (Debug)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--test"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "test"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run Tests (Release)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--release",
+                "--test"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run simple_filter Example (Debug)",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/examples/simple_filter",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Build CMake Project (Debug)"
+        },
+        {
+            "label": "Gen Mac Xcode Project",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--xcode"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Open Project In Xcode",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build_xcode"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Gen Mac Xcode Project"
+        },
+        {
+            "label": "Format Source Code",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--format"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        // ── Run FilterGenerator ────────────────────────────────────────────
+        {
+            "label": "Run FilterGenerator (Debug)",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build/filterGenerator/filterGenerator.app"
+            ],
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "${workspaceFolder}/build/filterGenerator/Debug/filterGenerator.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Build With Filter Generator (Debug)"
+        },
+        {
+            "label": "Run FilterGenerator (Release)",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build/filterGenerator/filterGenerator.app"
+            ],
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "${workspaceFolder}/build/filterGenerator/Release/filterGenerator.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Build With Filter Generator (Release)"
+        }
+    ]
+}
