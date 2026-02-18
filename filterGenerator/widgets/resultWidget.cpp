@@ -17,7 +17,7 @@ void ResultWidget::mousePressEvent(QMouseEvent *e)
 {
 	m_ui.dockWidget->setCursor(Qt::CursorShape::ClosedHandCursor);
 	raise();
-	m_lastY = e->globalY();
+	m_lastY = (int)e->globalPosition().y();
 	m_isHover = true;
 	CGE_LOG_INFO("Result Widget Hover\n");
 }
@@ -39,14 +39,15 @@ void ResultWidget::mouseMoveEvent(QMouseEvent *e)
 {
 	if(m_isHover)
 	{
-		move(x(), y() + e->globalY() - m_lastY);
-		m_lastY = e->globalY();
+		auto globalY = (int)e->globalPosition().y();
+		move(x(), y() + globalY - m_lastY);
+		m_lastY = globalY;
 
 // Compatibility: fix the issue of losing focus when the mouse moves outside the window on OS X
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
 
-		auto w = m_mainWindow->getOutputScrollWidget();		
-		auto p = w->mapFromGlobal(e->globalPos());
+		auto w = m_mainWindow->getOutputScrollWidget();
+		auto p = w->mapFromGlobal(e->globalPosition().toPoint());
 
         if(p.y() < -50)
         {

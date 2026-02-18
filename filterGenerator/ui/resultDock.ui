@@ -14,7 +14,8 @@
    <string>ResultInfo</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #ddd</string>
+   <string notr="true">background-color: #ddd;
+color: #333;</string>
   </property>
   <widget class="QDockWidget" name="dockWidget">
    <property name="geometry">

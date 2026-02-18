@@ -25,7 +25,7 @@ cmake --build . --config Release
 | Option | Default | Description |
 |--------|---------|-------------|
 | `BUILD_SHARED_LIBS` | `OFF` | Build shared libraries instead of static |
-| `BUILD_FILTER_GENERATOR` | `OFF` | Build the filter generator GUI application |
+| `BUILD_FILTER_GENERATOR` | `ON` | Build the filter generator GUI application |
 | `CMAKE_BUILD_TYPE` | - | Build type: `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` |
 | `CMAKE_PREFIX_PATH` | `$ENV{QTDIR}` | Path to Qt installation |
 
@@ -35,8 +35,8 @@ cmake --build . --config Release
 # Build shared library
 cmake .. -DBUILD_SHARED_LIBS=ON
 
-# Build with filter generator (experimental)
-cmake .. -DBUILD_FILTER_GENERATOR=ON
+# Exclude filter generator
+cmake .. -DBUILD_FILTER_GENERATOR=OFF
 
 # Debug build
 cmake .. -DCMAKE_BUILD_TYPE=Debug
@@ -66,7 +66,7 @@ cmake .. \
 
 | Application | Output | Status |
 |-------------|--------|--------|
-| filterGenerator | `build/filterGenerator/filterGenerator.app` (macOS)<br>`build/filterGenerator/filterGenerator` (Linux)<br>`build/filterGenerator/filterGenerator.exe` (Windows) | Experimental (Qt6 migration in progress) |
+| filterGenerator | `build/filterGenerator/filterGenerator.app` (macOS)<br>`build/filterGenerator/filterGenerator` (Linux)<br>`build/filterGenerator/filterGenerator.exe` (Windows) | Functional (built by default) |
 
 ## Installation
 
@@ -175,10 +175,11 @@ sudo apt-get install mesa-common-dev libgl1-mesa-dev
 
 ### filterGenerator Build Errors
 
-The filter generator application is undergoing Qt5 to Qt6 migration. If you encounter build errors:
+filterGenerator is built by default. If you encounter build errors, ensure Qt6 is properly installed. To disable:
 
-1. Use pre-built binaries from `tools/` directory
-2. Or disable it: `cmake .. -DBUILD_FILTER_GENERATOR=OFF` (default)
+```bash
+cmake .. -DBUILD_FILTER_GENERATOR=OFF
+```
 
 ## Clean Build
 

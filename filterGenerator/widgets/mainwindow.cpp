@@ -83,6 +83,10 @@ FilterFormats::Format FilterFormats::lookup("adjust lut %1", "", "");
 
 FilterFormats::Format FilterFormats::colorMapping("style cm %1 %2 %3 %4 %5", "", "");
 
+FilterFormats::Format FilterFormats::colorMulVec("style colormul vec %1 %2 %3", "", "");
+
+FilterFormats::Format FilterFormats::colorMulMat("style colormul mat %1 %2 %3 %4 %5 %6 %7 %8 %9", "", "");
+
 //////////////////////////////////////////////////////////////////////////
 
 void MenuDialogCommon::applyAndQuit()
@@ -216,7 +220,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 		auto g = m_ui.sceneWidget->geometry();
 		auto rightBorder = m_ui.controlWidget->width() + borderSize;
 		m_ui.sceneWidget->setGeometry(g.x(), g.y(), w - rightBorder - g.x(), h - g.y() - borderSize);
-		m_canvasWidget->setGeometry(m_ui.sceneWidget->geometry());
+		m_canvasWidget->setGeometry(QRect({0, 0}, m_ui.sceneWidget->size()));
 	}
 	{
 		auto g = m_ui.controlWidget->geometry();
@@ -248,11 +252,11 @@ void MainWindow::_initWidgets()
 	m_menuWidget = new MenuWidget(this, m_ui.centralWidget);
 	m_menuWidget->setGeometry(m_ui.adjustWidget->geometry());
 	m_ui.adjustWidget->hide();
+	m_menuWidget->show();
 
-	m_canvasWidget = new CanvasWidget(m_ui.centralWidget);
+	m_canvasWidget = new CanvasWidget(m_ui.sceneWidget);
+	m_canvasWidget->setGeometry(QRect({0, 0}, m_ui.sceneWidget->size()));
 	m_canvasWidget->show();
-	m_canvasWidget->setGeometry(m_ui.sceneWidget->geometry());
-	m_ui.sceneWidget->hide();
 }
 
 void MainWindow::openImage()
@@ -293,11 +297,16 @@ void MainWindow::previewResults()
 	CGE_LOG_INFO("previewResults\n");
 	
 	QString configCGE;
-		QMessageBox::information(this, QStringLiteral("Invalid Filter"), QStringLiteral("Apply failed due to an unknown error. Please contact the author."));
 	std::for_each(m_resultSteps.begin(), m_resultSteps.end(), [&](decltype(m_resultSteps[0])& step){
 		auto& result = step->getResult();
 		configCGE += QStringLiteral("@") + result.formatContent.cge + " ";
 	});
+
+	if(configCGE.isEmpty())
+	{
+		QMessageBox::information(this, QStringLiteral("No Effects"), QStringLiteral("No effects have been applied yet."));
+		return;
+	}
 
 	QPlainTextEdit* w = new QPlainTextEdit(this);
 	w->setWindowFlags(Qt::Tool);
@@ -312,13 +321,9 @@ void MainWindow::previewResults()
 
 void MainWindow::useLUT()
 {
-// 	auto w = new ExportWindow(this);
-// 	w->exec();
-
-	QImage img(":CGE/res/lookup.png");
-		CGE_LOG_ERROR("removeFilter failed!\n");
+	if(!m_canvasWidget->openImage(":CGE/resource/lookup.png"))
 	{
-		CGE_LOG_ERROR("Open LUT Image failed!\n");
+		CGE_LOG_ERROR("Failed to load LUT image!\n");
 	}
 }
 
@@ -388,27 +393,16 @@ void MainWindow::appendStep(CGE::CGEImageFilterInterfaceAbstract* filter, const 
 
 bool MainWindow::removeStep(ResultWidget* step)
 {
-	struct SS{
-		SS(QMutex* m) { mutex = m;mutex->lock(); }
-		~SS() { mutex->unlock(); }
-		QMutex* mutex;
-	}dummy(&m_mutex);
-
-    for(auto t = m_resultSteps.begin(); t != m_resultSteps.end(); ++t)
+	auto widgetIter = std::find(m_resultSteps.begin(), m_resultSteps.end(), step);
+	if(widgetIter != m_resultSteps.end())
 	{
-		auto p = *t;
-		if(p == step)
-		{
-			removeFilter(p->getResult().filter);
-			p->deleteLater();
-			m_resultSteps.erase(t);
-			m_ui.outputWidget->setFixedHeight(CGE::CGE_MAX((MARGIN_TOP + p->height()) * (int)m_resultSteps.size(), m_ui.outputScrollWidget->height() - 20));
-			sortSteps();			
-			sortFilters();
-			CGE_LOG_INFO("A result step is removed!\n");
-			m_shouldSave = true;
-			return true;
-		}
+		m_resultSteps.erase(widgetIter);
+		refreshOutputWidget();
+		removeFilter(step->getResult().filter);
+		step->deleteLater();
+		m_shouldSave = true;
+		CGE_LOG_INFO("A result step is removed!\n");
+		return true;
 	}
 	return false;
 }
@@ -434,6 +428,19 @@ void MainWindow::enableMenu(bool useMenu)
 		m_menuWidget->setEnabled(useMenu);
 		m_ui.outputWidget->setEnabled(useMenu);
 	}
+}
+
+void MainWindow::refreshOutputWidget()
+{
+	int height = 0;
+	for(auto widget : m_resultSteps)
+	{
+		widget->setGeometry(3, height, widget->width(), widget->height());
+		height += (widget->height() + MARGIN_TOP);
+		widget->show();
+	}
+	m_ui.outputWidget->setFixedHeight(CGE::CGE_MAX(height, m_ui.outputScrollWidget->height() - 20));
+	m_ui.outputScrollWidget->verticalScrollBar()->setValue(m_ui.outputWidget->height());
 }
 
 void MainWindow::appendFilter(CGE::CGEImageFilterInterfaceAbstract* filter)

@@ -12,7 +12,7 @@
 SingleCurveWidget::SingleCurveWidget(CurveAdjustWindow* curveAdjustWindow,  QLineEdit* edit,CurveChannel channel, QWidget* parent) : QWidget(parent), m_curveAdjustWindow(curveAdjustWindow), m_curveEdit(edit), m_isHover(false), m_channel(channel)
 {
 	setGeometry(0, 0, parent->width(), parent->height());
-	m_image = std::move(QImage(size(), QImage::Format_RGB888));
+	m_image = QImage(size(), QImage::Format_RGB888);
 	m_curvePoints.push_back(CGE::CGECurveInterface::makeCurvePoint(0.0f, 0.0f));
 	m_curvePoints.push_back(CGE::CGECurveInterface::makeCurvePoint(1.0f, 1.0f));
 	drawCurveImage(m_curvePoints);
@@ -360,7 +360,7 @@ std::vector<CGE::CGECurveInterface::CurvePoint> CurveAdjustWindow::_genCurvePoin
 	int x, y;
 	while(sscanf(dataText, "%*[^0-9]%d%*[^0-9]%d", &x, &y) == 2)
 	{
-		vec.push_back(std::move(CGE::CGECurveInterface::makeCurvePoint(x / 255.0f, y / 255.0f)));
+		vec.push_back(CGE::CGECurveInterface::makeCurvePoint(x / 255.0f, y / 255.0f));
 		while(*dataText && !_isBrakeRight(dataText))
 			++dataText;
 		while(*dataText && !_isBrakeLeft(dataText))

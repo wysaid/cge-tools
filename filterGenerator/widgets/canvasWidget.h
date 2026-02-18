@@ -6,8 +6,7 @@
 *        Mail: admin@wysaid.org
 */
 
-#ifndef _CANVASWIDGET_H_
-#define _CANVASWIDGET_H_
+#pragma once
 
 #include "cge.h"
 #include <QOpenGLWidget>
@@ -94,17 +93,13 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *);
 	void dropEvent(QDropEvent *);
 
-	static CGEConstString paramTexSizeName;
-
 private:
 	DisplaySprite* m_sprite;
 	int m_lastX, m_lastY;
 	bool m_isMoving;
 
-	GLint m_bgTextureLocation;
 	GLuint m_posAttribLocation;
 	CGE::ProgramObject* m_program;
-	CGE::SharedTexture m_bgTexture;
 
 	CGE::CGEImageHandler m_handler;	
 	float m_intensity;
@@ -112,4 +107,3 @@ private:
 
 CGE::SharedTexture genSharedTextureWidthImageName(const char* filename, GLenum filter = GL_LINEAR);
 
-#endif

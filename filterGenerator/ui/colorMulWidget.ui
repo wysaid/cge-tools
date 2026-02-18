@@ -118,7 +118,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#8f8;</string>
+     <string notr="true">background-color:#8f8; color:#000;</string>
     </property>
     <property name="text">
      <string/>
@@ -137,7 +137,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#f88;</string>
+     <string notr="true">background-color:#f88; color:#000;</string>
     </property>
     <property name="text">
      <string>1</string>
@@ -156,7 +156,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#88f;</string>
+     <string notr="true">background-color:#88f; color:#000;</string>
     </property>
     <property name="text">
      <string/>
@@ -201,7 +201,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#88f;</string>
+     <string notr="true">background-color:#88f; color:#000;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -217,7 +217,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#f88;</string>
+     <string notr="true">background-color:#f88; color:#000;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -285,7 +285,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#8f8;</string>
+     <string notr="true">background-color:#8f8; color:#000;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

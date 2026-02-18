@@ -45,7 +45,7 @@ src/                 # Implementation files (mirrors include structure)
 - Used `file(GLOB)` to automatically collect source files
 - Supported build options:
   - `BUILD_SHARED_LIBS`: Build shared library (default: static library)
-  - `BUILD_FILTER_GENERATOR`: Build filter generator app (default: OFF)
+  - `BUILD_FILTER_GENERATOR`: Build filter generator app (default: ON)
   - `CMAKE_BUILD_TYPE`: Build type (Release/Debug)
 
 **Build artifacts**:
@@ -61,12 +61,9 @@ src/                 # Implementation files (mirrors include structure)
 - Added Qt version detection macros
 
 **filterGenerator app**:
-- Partially migrated (QGLWidget → QOpenGLWidget)
-- Still required:
-  - `QRegExp` → `QRegularExpression`
-  - `QRegExpValidator` → `QRegularExpressionValidator`
-  - OpenGL context sharing API updates
-- Current status: disabled by default; enable with `-DBUILD_FILTER_GENERATOR=ON`
+- Qt6 migration complete
+- All deprecated APIs updated (`QRegExp` → `QRegularExpression`, FBO binding, etc.)
+- Current status: fully functional, built by default
 
 ### 4. Project Naming Simplification
 
@@ -167,10 +164,8 @@ target_link_libraries(your_app PRIVATE CGE::cge)
 ## Known Issues
 
 ### 1. filterGenerator App
-- **Status**: Experimental, disabled by default
-- **Reason**: Qt5 → Qt6 API migration incomplete
-- **Impact**: Does not affect core library usage
-- **Fix needed**: Update QRegExp-related code
+- **Status**: Functional, built by default
+- Qt6 migration complete: all deprecated APIs updated
 
 ### 2. Shared Library (macOS)
 - **Problem**: Link error "framework 'AGL' not found"
@@ -194,17 +189,12 @@ target_link_libraries(your_app PRIVATE CGE::cge)
 ### Functionality Tests
 - ✅ Core library Qt6 compatibility
 - ✅ Basic filter functionality
-- ⚠️ filterGenerator app requires additional work
+- ✅ filterGenerator app: Qt6 migration complete
 
 ## Future Improvement Suggestions
 
 ### Short-term (Necessary)
-1. Complete filterGenerator Qt6 migration
-   - Replace QRegExp → QRegularExpression
-   - Update OpenGL context sharing code
-   - Test all UI functionality
-
-2. Fix shared library build
+1. Fix shared library build
    - Remove or conditionally link AGL framework
    - Test on Linux and Windows
 
@@ -248,7 +238,7 @@ target_link_libraries(your_app PRIVATE CGE::cge)
 - [x] Static library build
 - [x] Example programs
 - [x] .gitignore update
-- [ ] filterGenerator full Qt6 migration
+- [x] filterGenerator full Qt6 migration
 - [ ] Shared library build fix
 - [ ] Cross-platform testing
 - [ ] API documentation generation

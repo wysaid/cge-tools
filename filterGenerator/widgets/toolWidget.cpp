@@ -26,7 +26,7 @@ ToolSliderWidget::ToolSliderWidget(QWidget* parent) : QSlider(parent), m_func(nu
 	setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
 	setOrientation(Qt::Horizontal);
 	setFixedSize(300, 30);
-	setStyleSheet("background-color:#009");
+	setStyleSheet("background-color:#009; color:#fff;");
 }
 
 ToolSliderWidget::~ToolSliderWidget()

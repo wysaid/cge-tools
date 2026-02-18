@@ -6,8 +6,7 @@
 *        Mail: admin@wysaid.org
 */
 
-#ifndef _RESULT_WIDGET_H_
-#define _RESULT_WIDGET_H_
+#pragma once
 
 #include "mainwindow.h"
 #include "ui_resultDock.h"
@@ -66,6 +65,3 @@ protected:
 	int m_lastY;
 	bool m_isHover;
 };
-
-
-#endif
