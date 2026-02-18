@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StyleAdjustWidget</class>
+ <widget class="QWidget" name="StyleAdjustWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Style Adjusts</string>
+  </property>
+  <property name="windowOpacity">
+   <double>0.850000000000000</double>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>140</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:#ffaaaa</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>BilateralFilter</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Crosshatch</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sobel Edge</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Emboss</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HalfTone</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Haze</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Polkadot</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LerpBlur</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sketch</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MaxValue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MinValue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MidValue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Wave</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ColorMapping</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QWidget" name="contentWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>0</y>
+     <width>260</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
