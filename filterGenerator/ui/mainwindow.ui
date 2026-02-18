@@ -53,7 +53,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#0f0;</string>
+     <string notr="true">background-color: #CCCCCC;</string>
     </property>
    </widget>
    <widget class="QWidget" name="controlWidget" native="true">

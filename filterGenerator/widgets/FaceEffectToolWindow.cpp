@@ -6,7 +6,7 @@
 *        Mail: admin@wysaid.org
 */
 
-#include "faceEffectToolWindow.h"
+#include "FaceEffectToolWindow.h"
 
 using namespace CGE;
 
@@ -213,7 +213,7 @@ QString FaceSpriteWidget::genConfig()
 	QJsonArray jsonArr;
 
 	auto& firstFace = m_vecPoints[0].pnts;
-	float len = (firstFace[1] - firstFace[0]).length();
+	(void)firstFace; // Reserved for future use
 
 	for(auto& facePoints : m_vecPoints)
 	{
@@ -315,9 +315,7 @@ void FaceSpriteWidget::paintGL()
 		m_dispatchFunctions.pop_front();		
 	}
 
-#ifndef Q_OS_IOS
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-#endif
+	glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -733,7 +731,11 @@ void FaceEffectToolWindow::setConfigDir()
 
 		QString filename = dir + "/params.txt";
 		QFile file(filename);
-		file.open(QIODevice::ReadOnly | QIODevice::Text);
+		if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+			CGE_LOG_ERROR("Failed to open params.txt!\n");
+			return;
+		}
 		if(file.isReadable())
 		{
             m_ui.controlWidget->setEnabled(false);

@@ -234,10 +234,10 @@ bool TextureBlendWindow::loadTexture(const QString& filename)
 	{
 		float ratio = sqrtf(sMaxTexSize / (img.width() * img.height()));
 		QSize s(img.width() * ratio, img.height() * ratio);
-		img = std::move(img.scaled(s, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+		img = img.scaled(s, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 	}
 
-    img = std::move(img.convertToFormat(QImage::Format_RGBA8888_Premultiplied, Qt::ColorOnly));
+    img = img.convertToFormat(QImage::Format_RGBA8888_Premultiplied, Qt::ColorOnly);
 
 	m_mainWindow->useCanvasContext();
 	m_texSize.set(img.width(), img.height());

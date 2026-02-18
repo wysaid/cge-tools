@@ -147,8 +147,8 @@ Full-featured build script:
 # Release build
 ./tasks.sh --release --rebuild
 
-# Enable filterGenerator
-./tasks.sh --filter-gen --build
+# Build single file for syntax check
+./tasks.sh --build-single-file filterGenerator/widgets/canvasWidget.cpp
 
 # Format code
 ./tasks.sh --format

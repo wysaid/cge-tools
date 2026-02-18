@@ -299,7 +299,7 @@ cmake .. -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations"
 
 ### Q: filterGenerator app fails to compile
 
-**A:** filterGenerator is undergoing Qt6 migration and is disabled by default. To use it, either wait for full Qt6 support or use the precompiled version in the `tools/` directory.
+**A:** Ensure Qt6 is properly installed and `QTDIR` is set. filterGenerator is built by default — if the build fails, check that Qt6 OpenGL modules are available (`qt6-opengl-dev` on Linux, `brew install qt@6` on macOS).
 
 ## Performance Tips
 

@@ -10,7 +10,6 @@ PROJECT_DIR="$THIS_DIR"
 BUILD_DIR="$PROJECT_DIR/build"
 BUILD_TYPE="Debug"
 JOBS=$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)
-BUILD_FILTER_GENERATOR="OFF"
 
 # Colors for output
 RED='\033[0;31m'
@@ -28,7 +27,6 @@ function print_usage() {
     echo "  --rebuild         Clean + Config + Build"
     echo "  --release         Use Release build type (default: Debug)"
     echo "  --debug           Use Debug build type (default)"
-    echo "  --filter-gen      Enable filter generator build"
     echo "  --install         Install the built libraries"
     echo "  --test            Run tests"
     echo "  --format          Format all source code with clang-format"
@@ -39,7 +37,7 @@ function print_usage() {
     echo "Examples:"
     echo "  $0 --clean --config --build"
     echo "  $0 --release --rebuild"
-    echo "  $0 --filter-gen --build"
+    echo "  $0 --release --build"
     echo "  $0 --xcode"
     echo "  $0 --build-single-file src/core/cgeImageFilter.cpp"
 }
@@ -70,14 +68,12 @@ function configure_cmake() {
     print_info "Configuring CMake project..."
     print_info "Build Type: $BUILD_TYPE"
     print_info "Build Directory: $BUILD_DIR"
-    print_info "Filter Generator: $BUILD_FILTER_GENERATOR"
 
     mkdir -p "$BUILD_DIR"
     cd "$BUILD_DIR"
 
     cmake .. \
         -DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
-        -DBUILD_FILTER_GENERATOR="$BUILD_FILTER_GENERATOR" \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
     print_info "CMake configuration complete"
@@ -158,8 +154,7 @@ function gen_xcode() {
     mkdir -p "$XCODE_BUILD_DIR"
     cd "$XCODE_BUILD_DIR"
 
-    cmake .. -G Xcode \
-        -DBUILD_FILTER_GENERATOR="$BUILD_FILTER_GENERATOR"
+    cmake .. -G Xcode
 
     print_info "Xcode project generated at: $XCODE_BUILD_DIR"
     print_info "Open with: open $XCODE_BUILD_DIR/cge-tools.xcodeproj"
@@ -179,25 +174,35 @@ function build_single_file() {
         configure_cmake
     fi
 
-    # Use clang++ directly with compile_commands.json for syntax checking
-    if command -v clang++ &>/dev/null; then
-        # Extract compile command from compile_commands.json
-        if command -v python3 &>/dev/null && [ -f "$BUILD_DIR/compile_commands.json" ]; then
-            ABS_FILE="$(cd "$(dirname "$FILE")" && pwd)/$(basename "$FILE")"
-            CMD=$(python3 -c "
-import json, sys
-data = json.load(open('$BUILD_DIR/compile_commands.json'))
-for e in data:
-    if e['file'] == '$ABS_FILE' or e['file'].endswith('$(basename "$FILE")'):
-        print(e['command'])
-        break
-")
-            if [ -n "$CMD" ]; then
-                print_info "Running: $CMD"
-                eval "$CMD"
-                print_info "Single file build complete"
-                return
+    # Extract compile command from compile_commands.json using grep/sed
+    if command -v clang++ &>/dev/null && [ -f "$BUILD_DIR/compile_commands.json" ]; then
+        local BASENAME
+        BASENAME="$(basename "$FILE")"
+
+        # Parse compile_commands.json: find the entry matching this file
+        # and extract the "directory" and "command" field values.
+        # The JSON format from CMake is: { "directory": "...", "command": "...", "file": "..." }
+        local ENTRY
+        ENTRY=$(grep -B5 "\"file\": \".*${BASENAME}\"" "$BUILD_DIR/compile_commands.json" |
+            head -10)
+
+        local DIR
+        DIR=$(echo "$ENTRY" | grep '"directory"' | head -1 |
+            sed 's/.*"directory": "//;s/"[,]*$//')
+
+        local CMD
+        CMD=$(echo "$ENTRY" | grep '"command"' | head -1 |
+            sed 's/.*"command": "//;s/"[,]*$//')
+
+        if [ -n "$CMD" ]; then
+            if [ -n "$DIR" ]; then
+                print_info "Working directory: $DIR"
+                cd "$DIR"
             fi
+            print_info "Running: $CMD"
+            eval "$CMD"
+            print_info "Single file build complete"
+            return
         fi
     fi
 
@@ -242,9 +247,6 @@ while [ $# -gt 0 ]; do
         ;;
     --debug)
         BUILD_TYPE="Debug"
-        ;;
-    --filter-gen)
-        BUILD_FILTER_GENERATOR="ON"
         ;;
     --install)
         DO_INSTALL=true

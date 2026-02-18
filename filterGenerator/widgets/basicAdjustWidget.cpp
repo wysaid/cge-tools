@@ -32,6 +32,17 @@ enum BasicAdjustEnum
 	ColorLookup_Adjust,
 };
 
+BrightnessAdjustWidget::BrightnessAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(0.0f)
+{
+    initBrightness();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* BrightnessAdjustWidget::createFilter()
+{
+    return CGE::createBrightnessFilter();
+}
+
 void BrightnessAdjustWidget::initBrightness()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -40,16 +51,6 @@ void BrightnessAdjustWidget::initBrightness()
 	connect(m_ui.brightnessSlider, SIGNAL(valueChanged(int)), SLOT(setBrightness(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool BrightnessAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createBrightnessFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void BrightnessAdjustWidget::preview()
@@ -98,6 +99,17 @@ void BrightnessAdjustWidget::setBrightness(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+ContrastAdjustWidget::ContrastAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(0.0f)
+{
+    initContrast();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ContrastAdjustWidget::createFilter()
+{
+    return CGE::createContrastFilter();
+}
+
 void ContrastAdjustWidget::initContrast()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -107,16 +119,6 @@ void ContrastAdjustWidget::initContrast()
 	connect(m_ui.contrastSlider, SIGNAL(valueChanged(int)), SLOT(setContrast(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool ContrastAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createContrastFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void ContrastAdjustWidget::preview()
@@ -173,6 +175,17 @@ void ContrastAdjustWidget::setContrast(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+SaturationAdjustWidget::SaturationAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(0.0f)
+{
+    initSaturation();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* SaturationAdjustWidget::createFilter()
+{
+    return CGE::createSaturationFilter();
+}
+
 void SaturationAdjustWidget::initSaturation()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -182,16 +195,6 @@ void SaturationAdjustWidget::initSaturation()
 	connect(m_ui.saturationSlider, SIGNAL(valueChanged(int)), SLOT(setSaturation(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool SaturationAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createSaturationFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void SaturationAdjustWidget::preview()
@@ -247,6 +250,17 @@ void SaturationAdjustWidget::setSaturation(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+ExposureAdjustWidget::ExposureAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(0.0f)
+{
+    initExposure();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ExposureAdjustWidget::createFilter()
+{
+    return CGE::createExposureFilter();
+}
+
 void ExposureAdjustWidget::initExposure()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -256,17 +270,6 @@ void ExposureAdjustWidget::initExposure()
 	connect(m_ui.exposureSlider, SIGNAL(valueChanged(int)), SLOT(setExposure(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool ExposureAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createExposureFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-
-	return !!m_filter;
 }
 
 void ExposureAdjustWidget::preview()
@@ -318,6 +321,17 @@ void ExposureAdjustWidget::setExposure(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+HueAdjustWidget::HueAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(0.0f)
+{
+    initHue();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* HueAdjustWidget::createFilter()
+{
+    return CGE::createHueAdjustFilter();
+}
+
 void HueAdjustWidget::initHue()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -327,17 +341,6 @@ void HueAdjustWidget::initHue()
 	connect(m_ui.hueSlider, SIGNAL(valueChanged(int)), SLOT(setHue(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool HueAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createHueAdjustFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-
-	return !!m_filter;
 }
 
 void HueAdjustWidget::preview()
@@ -389,6 +392,17 @@ void HueAdjustWidget::setHue(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+ShadowHighlightAdjustWidget::ShadowHighlightAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_shadowIntensity(0.0f), m_highlightIntensity(0.0f)
+{
+    initShadowHighlight();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ShadowHighlightAdjustWidget::createFilter()
+{
+    return CGE::createShadowHighlightFilter();
+}
+
 void ShadowHighlightAdjustWidget::initShadowHighlight()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -402,16 +416,6 @@ void ShadowHighlightAdjustWidget::initShadowHighlight()
 	connect(m_ui.highlightSlider, SIGNAL(valueChanged(int)), SLOT(setHighlight(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool ShadowHighlightAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createShadowHighlightFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void ShadowHighlightAdjustWidget::preview()
@@ -479,6 +483,17 @@ void ShadowHighlightAdjustWidget::setHighlight(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+BlurSharpenAdjustWidget::BlurSharpenAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_intensity(1.0f), m_samplerScale(0.0f)
+{
+    initSharpenBlur();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* BlurSharpenAdjustWidget::createFilter()
+{
+    return CGE::createSharpenBlurSimpleBetterFilter();
+}
+
 void BlurSharpenAdjustWidget::initSharpenBlur()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -498,12 +513,15 @@ bool BlurSharpenAdjustWidget::checkFilter()
 {
 	if(m_filter == nullptr)
 	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createSharpenBlurSimpleBetterFilter());
-		m_mainWindow->appendFilter(m_filter);
-		m_filter->setIntensity(m_intensity);
-		m_filter->setSamplerScale(m_samplerScale);
+		m_filter = static_cast<decltype(m_filter)>(createFilter());
+		if(m_filter != nullptr)
+		{
+			m_mainWindow->appendFilter(m_filter);
+			m_filter->setIntensity(m_intensity);
+			m_filter->setSamplerScale(m_samplerScale);
+		}
 	}
-	return !!m_filter;
+	return m_filter != nullptr;
 }
 
 void BlurSharpenAdjustWidget::preview()
@@ -584,6 +602,17 @@ void BlurSharpenAdjustWidget::setSamplerScale(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+VignetteAdjustWidget::VignetteAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_vigStart(0.0f), m_vigRange(1.0f)
+{
+    initVignette();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* VignetteAdjustWidget::createFilter()
+{
+    return CGE::createVignetteFilter();
+}
+
 void VignetteAdjustWidget::initVignette()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -604,11 +633,14 @@ bool VignetteAdjustWidget::checkFilter()
 {
 	if(m_filter == nullptr)
 	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createVignetteFilter());
-		m_mainWindow->appendFilter(m_filter);
-		m_filter->setVignette(m_vigStart, m_vigRange);
+		m_filter = static_cast<decltype(m_filter)>(createFilter());
+		if(m_filter != nullptr)
+		{
+			m_mainWindow->appendFilter(m_filter);
+			m_filter->setVignette(m_vigStart, m_vigRange);
+		}
 	}
-	return !!m_filter;
+	return m_filter != nullptr;
 }
 
 void VignetteAdjustWidget::preview()
@@ -677,6 +709,17 @@ void VignetteAdjustWidget::setRange(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+HSLAdjustWidget::HSLAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_hue(0.0f), m_saturation(0.0f), m_luminance(0.0f)
+{
+    initHSL();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* HSLAdjustWidget::createFilter()
+{
+    return CGE::createSaturationHSLFilter();
+}
+
 void HSLAdjustWidget::initHSL()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -693,16 +736,6 @@ void HSLAdjustWidget::initHSL()
 	connect(m_ui.luminanceSlider, SIGNAL(valueChanged(int)), SLOT(setLuminance(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool HSLAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createSaturationHSLFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void HSLAdjustWidget::preview()
@@ -787,6 +820,24 @@ void HSLAdjustWidget::setLuminance(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+HSVAdjustWidget::HSVAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent)
+{
+    initHSV();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* HSVAdjustWidget::createFilter()
+{
+    auto* filter = new CGE::CGESaturationHSVFilter;
+    if (!filter->init())
+    {
+        CGE_LOG_ERROR("HSVAdjustWidget - CGESaturationHSVFilter init failed!\n");
+        delete filter;
+        return nullptr;
+    }
+    return filter;
+}
+
 void HSVAdjustWidget::initHSV()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -829,22 +880,6 @@ void HSVAdjustWidget::activeSlider()
 	w->show();
 	w->setFocus();
 	w->update();
-}
-
-bool HSVAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = new CGE::CGESaturationHSVFilter;
-		if(!m_filter->init())
-		{
-			CGE_LOG_ERROR("HSVAdjustWidget - CGESaturationHSVFilter init failed!\n");
-			delete m_filter;
-			m_filter = nullptr;
-		}
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 bool HSVAdjustWidget::_preview(FormatContent* fmt)
@@ -911,6 +946,24 @@ void HSVAdjustWidget::apply()
 
 //////////////////////////////////////////////////////////////////////////
 
+MonochromeAdjustWidget::MonochromeAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent)
+{
+    initMonochrome();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* MonochromeAdjustWidget::createFilter()
+{
+    auto* filter = new CGE::CGEMonochromeFilter;
+    if (!filter->init())
+    {
+        CGE_LOG_ERROR("MonochromeAdjustWidget - CGEMonochromeFilter init failed!\n");
+        delete filter;
+        return nullptr;
+    }
+    return filter;
+}
+
 void MonochromeAdjustWidget::initMonochrome()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -953,22 +1006,6 @@ void MonochromeAdjustWidget::activeSlider()
 	w->show();
 	w->setFocus();
 	w->update();
-}
-
-bool MonochromeAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = new CGE::CGEMonochromeFilter;
-		if(!m_filter->init())
-		{
-			CGE_LOG_ERROR("HSVAdjustWidget - CGESaturationHSVFilter init failed!\n");
-			delete m_filter;
-			m_filter = nullptr;
-		}
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 bool MonochromeAdjustWidget::_preview(FormatContent* fmt)
@@ -1041,6 +1078,17 @@ void MonochromeAdjustWidget::apply()
 
 //////////////////////////////////////////////////////////////////////////
 
+WhiteBalanceAdjustWidget::WhiteBalanceAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_temp(0.0f), m_tint(1.0f)
+{
+    initWhiteBalance();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* WhiteBalanceAdjustWidget::createFilter()
+{
+    return CGE::createWhiteBalanceFilter();
+}
+
 void WhiteBalanceAdjustWidget::initWhiteBalance()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -1055,16 +1103,6 @@ void WhiteBalanceAdjustWidget::initWhiteBalance()
 	connect(m_ui.tintSlider, SIGNAL(valueChanged(int)), SLOT(setTint(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool WhiteBalanceAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createWhiteBalanceFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void WhiteBalanceAdjustWidget::preview()
@@ -1141,6 +1179,17 @@ void WhiteBalanceAdjustWidget::setTint(int n)
 //////////////////////////////////////////////////////////////////////////
 
 
+ColorBalanceAdjustWidget::ColorBalanceAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_red(0.0f), m_green(0.0f), m_blue(0.0f)
+{
+    initColorBalance();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ColorBalanceAdjustWidget::createFilter()
+{
+    return CGE::createColorBalanceFilter();
+}
+
 void ColorBalanceAdjustWidget::initColorBalance()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -1153,16 +1202,6 @@ void ColorBalanceAdjustWidget::initColorBalance()
 	connect(m_ui.blueShiftSlider, SIGNAL(valueChanged(int)), SLOT(setBlue(int)));
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool ColorBalanceAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createColorBalanceFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void ColorBalanceAdjustWidget::preview()
@@ -1248,6 +1287,17 @@ void ColorBalanceAdjustWidget::setBlue(int n)
 
 //////////////////////////////////////////////////////////////////////////
 
+ColorLevelAdjustWidget::ColorLevelAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent), m_dark(0.0f), m_light(1.0f), m_gamma(1.0f)
+{
+    initColorLevel();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ColorLevelAdjustWidget::createFilter()
+{
+    return CGE::createColorLevelFilter();
+}
+
 void ColorLevelAdjustWidget::initColorLevel()
 {
 	QRegularExpression reg("[-0-9.]{1,20}");
@@ -1267,16 +1317,6 @@ void ColorLevelAdjustWidget::initColorLevel()
 	
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
-}
-
-bool ColorLevelAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createColorLevelFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void ColorLevelAdjustWidget::preview()
@@ -1368,9 +1408,20 @@ void ColorLevelAdjustWidget::setGamma(int n)
 	m_mainWindow->runFilters();
 }
 
+SelectiveColorAdjustWidget::SelectiveColorAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent)
+{
+    initSelectiveColor();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* SelectiveColorAdjustWidget::createFilter()
+{
+    return CGE::createSelectiveColorFilter();
+}
+
 void SelectiveColorAdjustWidget::initSelectiveColor()
 {
-	ColorArugments edits[9] = {
+	ColorArguments edits[9] = {
 		{ m_ui.redCyanEdit, m_ui.redMagentaEdit, m_ui.redYellowEdit, m_ui.redBlackEdit }, //0
 		{ m_ui.greenCyanEdit, m_ui.greenMagentaEdit, m_ui.greenYellowEdit, m_ui.greenBlackEdit }, //1
 		{ m_ui.blueCyanEdit, m_ui.blueMagentaEdit, m_ui.blueYellowEdit, m_ui.blueBlackEdit }, //2
@@ -1438,16 +1489,6 @@ void SelectiveColorAdjustWidget::activeSlider()
 	w->show();
 	w->setFocus();
 	w->update();
-}
-
-bool SelectiveColorAdjustWidget::checkFilter()
-{
-	if(m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createSelectiveColorFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void SelectiveColorAdjustWidget::setArg(int index, float cyan, float magenta, float yellow, float black)
@@ -1556,6 +1597,17 @@ void SelectiveColorAdjustWidget::apply()
 	m_mainWindow->runFilters();
 }
 
+ColorLookupAdjustWidget::ColorLookupAdjustWidget(MainWindow* mainWindow, QWidget* parent)
+    : FilterAdjustWidgetBase(mainWindow, parent)
+{
+    initColorLookup();
+}
+
+CGE::CGEImageFilterInterfaceAbstract* ColorLookupAdjustWidget::createFilter()
+{
+    return CGE::createLookupFilter();
+}
+
 void ColorLookupAdjustWidget::initColorLookup()
 {
 	m_ui.workDirEdit->setText(QDir::currentPath());
@@ -1563,16 +1615,6 @@ void ColorLookupAdjustWidget::initColorLookup()
 	connect(m_ui.previewBtn, SIGNAL(clicked()), SLOT(preview()));
 	connect(m_ui.applyBtn, SIGNAL(clicked()), SLOT(apply()));
 	connect(m_ui.workDirBtn, SIGNAL(clicked()), SLOT(setFolder()));
-}
-
-bool ColorLookupAdjustWidget::checkFilter()
-{
-	if (m_filter == nullptr)
-	{
-		m_filter = static_cast<decltype(m_filter)>(CGE::createLookupFilter());
-		m_mainWindow->appendFilter(m_filter);
-	}
-	return !!m_filter;
 }
 
 void ColorLookupAdjustWidget::setFolder()

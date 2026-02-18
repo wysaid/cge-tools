@@ -55,7 +55,8 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:#fedcba</string>
+    <string notr="true">background-color:#fedcba;
+color:#000;</string>
    </property>
    <item>
     <property name="text">

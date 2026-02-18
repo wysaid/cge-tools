@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="CGE">
+    <file alias="resource/Frieren.jpg">resource/Frieren.jpg</file>
+    <file alias="resource/lookup.png">resource/lookup.png</file>
+    <file alias="logo.png">resource/logo.png</file>
+  </qresource>
+</RCC>

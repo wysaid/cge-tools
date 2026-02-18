@@ -6,8 +6,7 @@
 *        Mail: admin@wysaid.org
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QImage>
 #include <QPushButton>
@@ -85,6 +84,8 @@ struct FilterFormats
     static Format wave;
 	static Format lookup;
 	static Format colorMapping;
+	static Format colorMulVec;
+	static Format colorMulMat;
 };
 
 class CanvasWidget;
@@ -156,6 +157,8 @@ public:
 
 	void removeFilter(CGE::CGEImageFilterInterfaceAbstract* filter, bool bDel = true);
 
+	void refreshOutputWidget();
+
 	QWidget* getOutputWidget() { return m_ui.outputWidget; }
 	QWidget* getOutputScrollWidget() { return m_ui.outputScrollWidget; }
 
@@ -188,5 +191,3 @@ private:
 	bool m_stopRunFilters;
 	bool m_shouldSave;
 };
-
-#endif // MAINWINDOW_H

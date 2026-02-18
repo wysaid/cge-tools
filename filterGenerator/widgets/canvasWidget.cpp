@@ -27,37 +27,41 @@ CGE::SharedTexture genSharedTextureWidthImageName(const char* filename, GLenum f
 
 //////////////////////////////////////////////////////////////////////////
 
+// Checkerboard grid size in pixels (each square is GRID_SIZE x GRID_SIZE)
+static const float s_checkerboardGridSize = 8.0;
+
 static CGEConstString s_vshBackGround = CGE_SHADER_STRING(
 
 attribute vec4 position;
 varying vec2 texCoord;
 
-uniform vec2 texSize;
+uniform vec2 canvasSize;
 
 void main()
 {
 	gl_Position = position;
-	texCoord = vec2(position.x + 1.0, 1.0 - position.y) / 2.0 * texSize;
+	texCoord = vec2(position.x + 1.0, 1.0 - position.y) / 2.0 * canvasSize;
 });
 
-static CGEConstString s_fshBackGround = CGE_SHADER_STRING_PRECISION_L(
+// Photoshop-style transparency checkerboard: white (#FFFFFF) and light gray (#CCCCCC)
+static CGEConstString s_fshBackGround = CGE_SHADER_STRING_PRECISION_H(
 
 varying vec2 texCoord;
-uniform sampler2D texture;
+uniform float gridSize;
 
 void main()
 {
-	gl_FragColor = texture2D(texture, fract(texCoord));
+	vec2 cell = floor(texCoord / gridSize);
+	float checker = mod(cell.x + cell.y, 2.0);
+	float gray = mix(1.0, 0.8, checker);
+	gl_FragColor = vec4(gray, gray, gray, 1.0);
 });
 
 
 //////////////////////////////////////////////////////////////////////////
 
-CGEConstString CanvasWidget::paramTexSizeName = "texSize";
-
 CanvasWidget::CanvasWidget(QWidget* parent) : QOpenGLWidget(parent), m_isMoving(false), m_program(nullptr), m_intensity(1.0f)
-{	
-	setAttribute(Qt::WA_PaintOnScreen);
+{
 	setAttribute(Qt::WA_NoSystemBackground);
 	setCursor(Qt::CursorShape::OpenHandCursor);
 	setFocusPolicy(Qt::ClickFocus);
@@ -70,10 +74,7 @@ CanvasWidget::~CanvasWidget()
 
 void CanvasWidget::paintGL()
 {
-	//The iOS device would have a framebuffer_oes object that is already binding ok.
-#ifndef Q_OS_IOS
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-#endif
+	glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject());
 
     glDisable(GL_DEPTH_TEST);
     glViewport(0, 0, width() * devicePixelRatio(), height() * devicePixelRatio());
@@ -82,7 +83,6 @@ void CanvasWidget::paintGL()
 	{
 		glDisable(GL_BLEND);
 		m_program->bind();
-        m_bgTexture.bindToIndex(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, CGE::CGEGlobalConfig::sVertexBufferCommon);
 		glEnableVertexAttribArray(m_posAttribLocation);
@@ -122,7 +122,7 @@ void CanvasWidget::initializeGL()
 // 	CGE::cgeSetCommonUnloadFunction(resourceReleaseFunc, nullptr);
 //	CGE::cgeInitExtends();
 
-	CGE::SharedTexture t = genSharedTextureWidthImageName(":CGE/res/68.jpg");
+	CGE::SharedTexture t = genSharedTextureWidthImageName(":CGE/resource/Frieren.jpg");
 	
 	m_handler.initWithTexture(t.texID(), t.width, t.height, CGE_FORMAT_RGBA_INT8, true);
 
@@ -134,10 +134,9 @@ void CanvasWidget::initializeGL()
 	m_program->bindAttribLocation("position", m_posAttribLocation);
 	if(m_program->initWithShaderStrings(s_vshBackGround, s_fshBackGround))
 	{
-        m_bgTexture = genSharedTextureWidthImageName(":CGE/res/bg.png", GL_NEAREST);
 		m_program->bind();
-        m_program->sendUniformf(paramTexSizeName, width() * (float)m_bgTexture.width, height() * (float)m_bgTexture.height);
-		m_bgTextureLocation = m_program->uniformLocation("texture");
+		m_program->sendUniformf("canvasSize", (float)width(), (float)height());
+		m_program->sendUniformf("gridSize", s_checkerboardGridSize);
 	}
 	else
 	{
@@ -146,7 +145,7 @@ void CanvasWidget::initializeGL()
 		CGE_LOG_ERROR("Failed to initialize background, will display background as black");
 	}
 
-//	fitImage();
+	fitImage();
 }
 
 // Compatible with Retina display: can use w and h converted by deviceRatio
@@ -156,7 +155,7 @@ void CanvasWidget::resizeGL(int w, int h)
 	if(m_program != nullptr)
 	{
 		m_program->bind();
-        m_program->sendUniformf(paramTexSizeName, width() / (float)m_bgTexture.width, height() / (float)m_bgTexture.height);
+		m_program->sendUniformf("canvasSize", (float)width(), (float)height());
 	}
 }
 
@@ -280,8 +279,6 @@ bool CanvasWidget::openImage(QImage& img)
 #else 
 	const float sMaxImageSize = 5000000.0f;
 #endif
-
-	const float sMaxTexSize = CGE::cgeGetMaxTextureSize();
 
 	if(img.width() * img.height() > sMaxImageSize)
 	{

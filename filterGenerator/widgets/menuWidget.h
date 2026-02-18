@@ -6,8 +6,7 @@
 *        Mail: admin@wysaid.org
 */
 
-#ifndef _MENUWIDGET_H_
-#define _MENUWIDGET_H_
+#pragma once
 
 #include "mainwindow.h"
 
@@ -60,4 +59,3 @@ protected:
 };
 
 
-#endif
