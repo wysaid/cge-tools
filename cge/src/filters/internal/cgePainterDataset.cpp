@@ -10,22 +10,20 @@
 namespace CGE
 {
 
-	const char* getBrushTextureName(PathAttrib::BrushStyle style)
-	{
-		const static char* textureNameTable[] = 
-		{
-			"none",
-			"brush_default.png",
-			"brush_test1.png",
-			"brush_test2.png",
-			"brush_test3.png",
-			"brush_test4.png",
-			"brush_test5.png",
-		};
+const char* getBrushTextureName(PathAttrib::BrushStyle style)
+{
+    const static char* textureNameTable[] = {
+        "none",
+        "brush_default.png",
+        "brush_test1.png",
+        "brush_test2.png",
+        "brush_test3.png",
+        "brush_test4.png",
+        "brush_test5.png",
+    };
 
-		if(style < 0 || style >= sizeof(textureNameTable) / sizeof(*textureNameTable))
-			return nullptr;
-		return textureNameTable[style];
-	}
-
+    if (style < 0 || style >= sizeof(textureNameTable) / sizeof(*textureNameTable)) return nullptr;
+    return textureNameTable[style];
 }
+
+}  // namespace CGE

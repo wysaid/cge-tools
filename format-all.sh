@@ -32,29 +32,32 @@ fi
 
 print_info "Formatting all C++ source files..."
 
-# Format include directory
-if [ -d "$THIS_DIR/include" ]; then
-    print_info "Formatting include directory..."
-    find "$THIS_DIR/include" -type f \( -name "*.h" -o -name "*.hpp" \) -print0 | xargs -0 clang-format -i
+# Collect directories to format
+FORMAT_DIRS=()
+
+# Core library: headers and sources live under cge/
+if [ -d "$THIS_DIR/cge" ]; then
+    FORMAT_DIRS+=("$THIS_DIR/cge")
 fi
 
-# Format src directory
-if [ -d "$THIS_DIR/src" ]; then
-    print_info "Formatting src directory..."
-    find "$THIS_DIR/src" -type f \( -name "*.cpp" -o -name "*.cc" -o -name "*.h" \) -print0 | xargs -0 clang-format -i
-fi
-
-# Format filterGenerator directory (if exists)
+# filterGenerator (optional Qt6 GUI app)
 if [ -d "$THIS_DIR/filterGenerator" ]; then
-    print_info "Formatting filterGenerator directory..."
-    find "$THIS_DIR/filterGenerator" -type f \( -name "*.cpp" -o -name "*.h" \) -print0 | xargs -0 clang-format -i
+    FORMAT_DIRS+=("$THIS_DIR/filterGenerator")
 fi
 
-# Format examples directory (if exists)
+# examples
 if [ -d "$THIS_DIR/examples" ]; then
-    print_info "Formatting examples directory..."
-    find "$THIS_DIR/examples" -type f \( -name "*.cpp" -o -name "*.h" \) -print0 | xargs -0 clang-format -i
+    FORMAT_DIRS+=("$THIS_DIR/examples")
 fi
+
+if [ ${#FORMAT_DIRS[@]} -eq 0 ]; then
+    print_warn "No source directories found to format."
+    exit 0
+fi
+
+print_info "Directories: ${FORMAT_DIRS[*]}"
+
+find "${FORMAT_DIRS[@]}" -type f \( -name "*.cpp" -o -name "*.h" \) -print0 | xargs -0 clang-format -i
 
 print_info "Code formatting complete!"
 print_info "All C++ files have been formatted according to .clang-format configuration."

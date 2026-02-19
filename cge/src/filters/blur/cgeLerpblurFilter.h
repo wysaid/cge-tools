@@ -12,48 +12,49 @@
 
 namespace CGE
 {
-	class CGELerpblurFilter : public CGEImageFilterInterface
-	{
-	public:
-		~CGELerpblurFilter();
+class CGELerpblurFilter : public CGEImageFilterInterface
+{
+public:
+    ~CGELerpblurFilter();
 
-		enum { MAX_LERP_BLUR_INTENSITY = 12 };
-		
-		bool init();
+    enum
+    {
+        MAX_LERP_BLUR_INTENSITY = 12
+    };
 
-		struct TextureCache
-		{
-			GLuint texID;
-			CGESizei size;
-		};
+    bool init();
 
-		void setBlurLevel(int value);
+    struct TextureCache
+    {
+        GLuint texID;
+        CGESizei size;
+    };
 
-		void setIntensity(float value);
+    void setBlurLevel(int value);
 
-		void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
+    void setIntensity(float value);
 
-		//Progressive image downscale base factor (> 1.1)
-		void setMipmapBase(float value);
+    void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
 
-	protected:
-		void _genMipmaps(int width, int height);
-		void _clearMipmaps();
-		int _calcLevel(int len, int level);
+    // Progressive image downscale base factor (> 1.1)
+    void setMipmapBase(float value);
 
-	private:
-				
-		TextureCache m_texCache[MAX_LERP_BLUR_INTENSITY];
-		CGESizei m_cacheTargetSize;
-		int m_intensity;
-		float m_mipmapBase;
-		bool m_isBaseChanged;
+protected:
+    void _genMipmaps(int width, int height);
+    void _clearMipmaps();
+    int _calcLevel(int len, int level);
 
-		FrameBuffer m_framebuffer;
+private:
+    TextureCache m_texCache[MAX_LERP_BLUR_INTENSITY];
+    CGESizei m_cacheTargetSize;
+    int m_intensity;
+    float m_mipmapBase;
+    bool m_isBaseChanged;
 
-	};
+    FrameBuffer m_framebuffer;
+};
 
 
-}
+}  // namespace CGE
 
 #endif

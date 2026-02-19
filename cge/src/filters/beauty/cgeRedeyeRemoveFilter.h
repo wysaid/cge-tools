@@ -5,22 +5,22 @@
 
 namespace CGE
 {
-	class CGERedeyeRemoveFilter : public CGEAdvancedEffectOneStepFilterHelper
-	{
-	public:
-		bool init();
+class CGERedeyeRemoveFilter : public CGEAdvancedEffectOneStepFilterHelper
+{
+public:
+    bool init();
 
-		void setEyePostion(float x, float y);
+    void setEyePostion(float x, float y);
 
-		void setRadius(float radius);
+    void setRadius(float radius);
 
-		void setAlpha(float alpha);
+    void setAlpha(float alpha);
 
-	protected:
-		static CGEConstString paramRadiusName;
-		static CGEConstString paramEyePostionName;
-		static CGEConstString  paramAlphaName;
-	};
-}
+protected:
+    static CGEConstString paramRadiusName;
+    static CGEConstString paramEyePostionName;
+    static CGEConstString paramAlphaName;
+};
+}  // namespace CGE
 
 #endif

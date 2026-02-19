@@ -141,8 +141,19 @@ function format_code() {
         exit 1
     fi
 
-    find "$PROJECT_DIR/include" "$PROJECT_DIR/src" \
-        -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) \
+    # Collect directories: core lib under cge/, plus filterGenerator and examples
+    FORMAT_DIRS=()
+    for d in "$PROJECT_DIR/cge" "$PROJECT_DIR/filterGenerator" "$PROJECT_DIR/examples"; do
+        [ -d "$d" ] && FORMAT_DIRS+=("$d")
+    done
+
+    if [ ${#FORMAT_DIRS[@]} -eq 0 ]; then
+        print_warn "No source directories found to format."
+        return
+    fi
+
+    find "${FORMAT_DIRS[@]}" \
+        -type f \( -name "*.cpp" -o -name "*.h" \) \
         -exec clang-format -i {} \;
 
     print_info "Code formatting complete"

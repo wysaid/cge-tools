@@ -1,9 +1,9 @@
 ﻿/*
-* cgeMarscara.h
-*
-*  Created on: 2014-5-5
-*      Author: Wang Yang
-*/
+ * cgeMarscara.h
+ *
+ *  Created on: 2014-5-5
+ *      Author: Wang Yang
+ */
 
 #ifndef _CGE_MARSCARA_H_
 #define _CGE_MARSCARA_H_
@@ -12,20 +12,18 @@
 
 namespace CGE
 {
-	class CGEMarscaraFilter : public CGEAdvancedEffectOneStepFilterHelper
-	{
-	public:
+class CGEMarscaraFilter : public CGEAdvancedEffectOneStepFilterHelper
+{
+public:
+    bool init();
 
-		bool init();
+    // value >= 0
+    void setSamplerScale(int value);
 
-		//value >= 0
-		void setSamplerScale(int value);
-
-	protected:
-		static CGEConstString paramSamplerScaleName;
-	};
-}
-
+protected:
+    static CGEConstString paramSamplerScaleName;
+};
+}  // namespace CGE
 
 
 #endif

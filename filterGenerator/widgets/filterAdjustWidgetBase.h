@@ -35,8 +35,7 @@
 //       CGEImageFilterInterfaceAbstract* createFilter() override { return CGE::createBrightnessFilter(); }
 //   ...
 //   };
-template <class FilterType, class QTUIType>
-class FilterAdjustWidgetBase : public QWidget
+template <class FilterType, class QTUIType> class FilterAdjustWidgetBase : public QWidget
 {
 public:
     explicit FilterAdjustWidgetBase(MainWindow* mainWindow, QWidget* parent = nullptr) :

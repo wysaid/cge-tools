@@ -1,9 +1,9 @@
 /*
-* cgeGaussianBlurFilter.cpp
-*
-*  Created on: 2015-10-8
-*      Author: Wang Yang
-*/
+ * cgeGaussianBlurFilter.cpp
+ *
+ *  Created on: 2015-10-8
+ *      Author: Wang Yang
+ */
 
 #include "cgeGaussianBlurFilter.h"
 
@@ -14,9 +14,9 @@
 
 namespace CGE
 {
-	bool CGEGaussianBlurFilter::init()
-	{
-		return false;
-	}
-
+bool CGEGaussianBlurFilter::init()
+{
+    return false;
 }
+
+}  // namespace CGE

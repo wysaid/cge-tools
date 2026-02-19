@@ -142,7 +142,8 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 
-class ShadowHighlightAdjustWidget : public FilterAdjustWidgetBase<CGE::CGEShadowHighlightFilter, Ui::ShadowHighlightAdjustWidget>
+class ShadowHighlightAdjustWidget :
+    public FilterAdjustWidgetBase<CGE::CGEShadowHighlightFilter, Ui::ShadowHighlightAdjustWidget>
 {
     Q_OBJECT
 public:
@@ -164,7 +165,8 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 
-class BlurSharpenAdjustWidget : public FilterAdjustWidgetBase<CGE::CGESharpenBlurSimpleBetterFilter, Ui::blurSharpenAdjustWidget>
+class BlurSharpenAdjustWidget :
+    public FilterAdjustWidgetBase<CGE::CGESharpenBlurSimpleBetterFilter, Ui::blurSharpenAdjustWidget>
 {
     Q_OBJECT
 public:

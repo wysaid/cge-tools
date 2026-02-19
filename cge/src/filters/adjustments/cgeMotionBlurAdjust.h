@@ -14,30 +14,30 @@
 
 namespace CGE
 {
-	class CGEMotionBlurFilter : public CGEImageFilterInterface
-	{
-	public:
-		CGEMotionBlurFilter(){}
-		~CGEMotionBlurFilter(){}
+class CGEMotionBlurFilter : public CGEImageFilterInterface
+{
+public:
+    CGEMotionBlurFilter() {}
+    ~CGEMotionBlurFilter() {}
 
-		bool init();
+    bool init();
 
-		// range: radius >= 0.0
-		void setSamplerRadius(float radius);
+    // range: radius >= 0.0
+    void setSamplerRadius(float radius);
 
-		void setAngle(float angle);
-		void setRadians(float radians);
+    void setAngle(float angle);
+    void setRadians(float radians);
 
-		void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
+    void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
 
-	protected:
-		static CGEConstString paramSamplerRadiusName;
-		static CGEConstString paramSamplerStepName;
-		static CGEConstString paramBlurNormName;
+protected:
+    static CGEConstString paramSamplerRadiusName;
+    static CGEConstString paramSamplerStepName;
+    static CGEConstString paramBlurNormName;
 
-		float m_samplerRadius;
-		Vec2f m_blurNorm;
-	};
-}
+    float m_samplerRadius;
+    Vec2f m_blurNorm;
+};
+}  // namespace CGE
 
 #endif

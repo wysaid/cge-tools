@@ -1,10 +1,10 @@
 ﻿/*
-* filterRuleTest.h
-*
-*  Created on: 2014-11-26
-*      Author: Wang Yang
-*        Mail: admin@wysaid.org
-*/
+ * filterRuleTest.h
+ *
+ *  Created on: 2014-11-26
+ *      Author: Wang Yang
+ *        Mail: admin@wysaid.org
+ */
 
 
 #ifndef FILTERRULETEST_H
@@ -17,30 +17,30 @@
 
 class FilterRuleTest : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	FilterRuleTest(QWidget *parent = 0);
-	~FilterRuleTest();
+    FilterRuleTest(QWidget* parent = 0);
+    ~FilterRuleTest();
 
     CanvasWidget* getCanvas() { return m_canvasWidget; }
 
 protected:
-	void initWidgets();
+    void initWidgets();
     void resizeEvent(QResizeEvent*);
 
 
 protected slots:
-	void testRule();
-	void saveResult();
-	void batchEffect();
-	void chooseInputImage();
-	void chooseResourceFolder();
+    void testRule();
+    void saveResult();
+    void batchEffect();
+    void chooseInputImage();
+    void chooseResourceFolder();
 
 
 private:
-	Ui::FilterRuleTestClass m_ui;
-	CanvasWidget* m_canvasWidget;
+    Ui::FilterRuleTestClass m_ui;
+    CanvasWidget* m_canvasWidget;
 };
 
-#endif // FILTERRULETEST_H
+#endif  // FILTERRULETEST_H

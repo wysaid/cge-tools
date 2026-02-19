@@ -14,33 +14,31 @@
 
 namespace CGE
 {
-	class CGEPointDrawer
-	{
-	public:
+class CGEPointDrawer
+{
+public:
+    CGE_COMMON_CREATE_FUNC(CGEPointDrawer, init);
 
-		CGE_COMMON_CREATE_FUNC(CGEPointDrawer, init);
+    virtual ~CGEPointDrawer() {}
 
-		virtual ~CGEPointDrawer() {}
+    void draw(Vec2f* points, int count, int stride = 0);
 
-		void draw(Vec2f* points, int count, int stride = 0);
+    void setPointSize(float pointSize);
+    void setColor(Vec4f color);
 
-		void setPointSize(float pointSize);
-		void setColor(Vec4f color);
+protected:
+    CGEPointDrawer();
+    bool init();
 
-	protected:
+    virtual CGEConstString getVSH();
+    virtual CGEConstString getFSH();
 
-		CGEPointDrawer();
-		bool init();
-
-		virtual CGEConstString getVSH();
-		virtual CGEConstString getFSH();
-
-		ProgramObject m_program;
-		GLuint m_pointSizeLoc, m_colorLoc;
-	};
+    ProgramObject m_program;
+    GLuint m_pointSizeLoc, m_colorLoc;
+};
 
 
-}
+}  // namespace CGE
 
 
-#endif // !_CGE_GEOMETRYUTILS_H_
+#endif  // !_CGE_GEOMETRYUTILS_H_

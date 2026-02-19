@@ -15,28 +15,28 @@
 
 #if defined(DEBUG) || defined(_DEBUG)
 
-template<bool K>
-struct _CGEStaticAssert ;
+template <bool K> struct _CGEStaticAssert;
 
-template<>
-struct _CGEStaticAssert<true> { int dummy; };
+template <> struct _CGEStaticAssert<true>
+{
+    int dummy;
+};
 
-template<int n>
-struct __CGEStaticAssert {};
+template <int n> struct __CGEStaticAssert
+{};
 
-#define cgeStaticAssert(value) do \
-{\
-	typedef __CGEStaticAssert<\
-	sizeof(_CGEStaticAssert<(bool)(value)>)\
-	> ___CGEStaticAssert;\
-} while (0)
+#define cgeStaticAssert(value)                                                                 \
+    do                                                                                         \
+    {                                                                                          \
+        typedef __CGEStaticAssert<sizeof(_CGEStaticAssert<(bool)(value)>)> ___CGEStaticAssert; \
+    } while (0)
 
 #else
 
-#define cgeStaticAssert(...) 
+#define cgeStaticAssert(...)
 
 #endif
 
 #endif
 
-#endif //_CGE_STATICASSERT_H_
+#endif  //_CGE_STATICASSERT_H_

@@ -1,10 +1,10 @@
 ﻿/*
-* cgeThread.h
-*
-*  Created on: 2015-3-17
-*      Author: Wang Yang
-*        Mail: admin@wysaid.org
-*/
+ * cgeThread.h
+ *
+ *  Created on: 2015-3-17
+ *      Author: Wang Yang
+ *        Mail: admin@wysaid.org
+ */
 
 #ifndef _CGE_THREAD_H_
 #define _CGE_THREAD_H_
@@ -19,212 +19,201 @@
 
 namespace CGE
 {
-    template<class Type>
-    class CGESyncReadWriteQueue
+template <class Type> class CGESyncReadWriteQueue
+{
+public:
+    void putData4Write(const Type& data)
     {
-    public:
-        
-        void putData4Write(const Type& data)
-        {
-            m_writeMutex.lock();
-            m_list4Write.push(data);
-            m_writeMutex.unlock();
-        }
-        
-        void putData4Read(const Type& data)
-        {
-            m_readMutex.lock();
-            m_list4Read.push(data);
-            m_readMutex.unlock();
-        }
-        
-        bool hasData4Write()
-        {
-            m_list4Write.lock();
-            bool canWrite = !m_list4Write.empty();
-            m_list4Write.unlock();
-            return canWrite;
-        }
-        
-        bool hasData4Read()
-        {
-            m_list4Read.lock();
-            bool canRead = !m_list4Read.empty();
-            m_list4Read.unlock();
-            return canRead;
-        }
-        
-        Type getData4Write()
-        {
-            std::unique_lock<std::mutex> lock(m_writeMutex);
-            if(m_list4Write.empty())
-                return Type();
-            
-            Type data = m_list4Write.front();
-            m_list4Write.pop();
-            return data;
-        }
-        
-        Type getData4Read()
-        {
-            std::unique_lock<std::mutex> lock(m_readMutex);
-            if(m_list4Read.empty())
-                return Type();
-            
-            Type data = m_list4Read.front();
-            m_list4Read.pop();
-            return data;
-        }
-        
-        std::list<Type>& list4Read()
-        {
-            return m_list4Read;
-        }
-        
-        std::list<Type>& list4Write()
-        {
-            return m_list4Write;
-        }
-        
-    private:
+        m_writeMutex.lock();
+        m_list4Write.push(data);
+        m_writeMutex.unlock();
+    }
 
-        std::list<Type> m_list4Read;
-        std::list<Type> m_list4Write;
-        std::mutex m_readMutex;
-        std::mutex m_writeMutex;
-    };
-    
-	/*
-	class:     CGEThreadPreemptive
+    void putData4Read(const Type& data)
+    {
+        m_readMutex.lock();
+        m_list4Read.push(data);
+        m_readMutex.unlock();
+    }
 
-	Use case: real-time screen refresh, live slider result updates, etc.
-	
-	Description: Tasks are long-running and persistent, performing similar work continuously
-	           When a new task arrives, the running task can be discarded immediately or the queued task replaced. At most one task will be waiting.
-			   A single CGEThreadPreemptive instance creates at most one thread.
+    bool hasData4Write()
+    {
+        m_list4Write.lock();
+        bool canWrite = !m_list4Write.empty();
+        m_list4Write.unlock();
+        return canWrite;
+    }
 
-	Note: Avoid calling the API of the same CGEThreadPreemptive from multiple threads simultaneously
-	*/
+    bool hasData4Read()
+    {
+        m_list4Read.lock();
+        bool canRead = !m_list4Read.empty();
+        m_list4Read.unlock();
+        return canRead;
+    }
 
-	class CGEThreadPreemptive
-	{
-	public:
-		CGEThreadPreemptive();
-		~CGEThreadPreemptive();
+    Type getData4Write()
+    {
+        std::unique_lock<std::mutex> lock(m_writeMutex);
+        if (m_list4Write.empty()) return Type();
 
-		inline bool isActive() const { return m_runningStatus; }
-		inline bool isRunning() const { return m_thread != nullptr; }
+        Type data = m_list4Write.front();
+        m_list4Write.pop();
+        return data;
+    }
 
-		void run();
-		// void terminate(); // Not yet available
-		void quit();
+    Type getData4Read()
+    {
+        std::unique_lock<std::mutex> lock(m_readMutex);
+        if (m_list4Read.empty()) return Type();
 
-		void join(); // Once started, this thread will not terminate automatically unless quit() is called or the object is destroyed
+        Type data = m_list4Read.front();
+        m_list4Read.pop();
+        return data;
+    }
 
-	protected:
+    std::list<Type>& list4Read() { return m_list4Read; }
 
-		virtual void runTask() = 0; // Must be implemented by subclass
+    std::list<Type>& list4Write() { return m_list4Write; }
 
-		void _run();
+private:
+    std::list<Type> m_list4Read;
+    std::list<Type> m_list4Write;
+    std::mutex m_readMutex;
+    std::mutex m_writeMutex;
+};
 
-	public:
+/*
+class:     CGEThreadPreemptive
 
-		std::mutex& getMutex() { return m_mutex; }
-		std::thread* getThread() { return m_thread; }
-		std::condition_variable& getCondition() { return m_condition; }
+Use case: real-time screen refresh, live slider result updates, etc.
 
-	protected:
-		std::thread* m_thread;
-		std::mutex m_mutex;
-		std::condition_variable m_condition;
-		bool m_taskRestart, m_threadOver;
-		bool m_runningStatus;
-	};
+Description: Tasks are long-running and persistent, performing similar work continuously
+           When a new task arrives, the running task can be discarded immediately or the queued task replaced. At most
+one task will be waiting. A single CGEThreadPreemptive instance creates at most one thread.
 
-	//////////////////////////////////////////////////////////////////////////
+Note: Avoid calling the API of the same CGEThreadPreemptive from multiple threads simultaneously
+*/
 
-	class CGEThreadPool
-	{
-	private:
-		class Worker;
+class CGEThreadPreemptive
+{
+public:
+    CGEThreadPreemptive();
+    ~CGEThreadPreemptive();
 
-	public:
-		class Work;
+    inline bool isActive() const { return m_runningStatus; }
+    inline bool isRunning() const { return m_thread != nullptr; }
 
-		CGEThreadPool(std::list<std::unique_ptr<Worker>>::size_type maxThreadNum = 1);
-		~CGEThreadPool();
+    void run();
+    // void terminate(); // Not yet available
+    void quit();
 
-		bool isActive(); // Returns true if at least one thread is active
-		bool isBusy();   // Returns true if all threads are busy
-        
-        // Wait while at least one thread is still working; ms=0 means wait until no threads are active
-        void wait4Active(long ms = 0);
-        // Wait while the thread pool is busy; ms=0 means wait until not busy
-        void wait4Busy(long ms = 0);
+    void join();  // Once started, this thread will not terminate automatically unless quit() is called or the object is
+                  // destroyed
 
-		void terminate();
-		void quit();  // Clear all pending work, wait for all threads to finish, then release all resources and return.
+protected:
+    virtual void runTask() = 0;  // Must be implemented by subclass
 
-		void join();  // Release all resources and return after all work is complete
+    void _run();
 
-		std::list<Work>::size_type totalWorks() { return m_workList.size(); }
-		std::list<std::unique_ptr<Worker>>::size_type totalWorkers() { return m_workerList.size(); }
+public:
+    std::mutex& getMutex() { return m_mutex; }
+    std::thread* getThread() { return m_thread; }
+    std::condition_variable& getCondition() { return m_condition; }
 
-		void run(const Work& work);
+protected:
+    std::thread* m_thread;
+    std::mutex m_mutex;
+    std::condition_variable m_condition;
+    bool m_taskRestart, m_threadOver;
+    bool m_runningStatus;
+};
 
-	private:
+//////////////////////////////////////////////////////////////////////////
 
-		std::list<Work> m_workList;
-		std::list<std::unique_ptr<Worker>> m_workerList;
+class CGEThreadPool
+{
+private:
+    class Worker;
 
-		std::condition_variable m_condition;
-		std::mutex m_threadMutex, m_poolMutex;
-		std::list<std::unique_ptr<Worker>>::size_type m_maxWorkerSize;
-		bool m_threadOver, m_threadJoining;
-	};
+public:
+    class Work;
 
-	class CGEThreadPool::Work
-	{
-	public:
-		Work() : func(nullptr), arg(NULL) {}
-		Work(const std::function<void (void*)>& _func, void* _arg = NULL) : func(_func), arg(_arg) {}
+    CGEThreadPool(std::list<std::unique_ptr<Worker>>::size_type maxThreadNum = 1);
+    ~CGEThreadPool();
 
-		void run() { if(func != nullptr) func(arg); }
+    bool isActive();  // Returns true if at least one thread is active
+    bool isBusy();    // Returns true if all threads are busy
 
-	private:
-		std::function<void (void*)> func;
-		void* arg;
-	};
+    // Wait while at least one thread is still working; ms=0 means wait until no threads are active
+    void wait4Active(long ms = 0);
+    // Wait while the thread pool is busy; ms=0 means wait until not busy
+    void wait4Busy(long ms = 0);
 
-	class CGEThreadPool::Worker
-	{
-	public:
-		Worker(CGEThreadPool& pool);
-		Worker(Worker& worker);
-		Worker(Worker&& worker);
-		~Worker();
+    void terminate();
+    void quit();  // Clear all pending work, wait for all threads to finish, then release all resources and return.
 
-		inline bool isActive() const { return m_runningStatus; }
-		inline bool isRunning() const { return m_thread != nullptr; }
+    void join();  // Release all resources and return after all work is complete
 
-		void shouldLeave() { m_shouldLeave = true; }
+    std::list<Work>::size_type totalWorks() { return m_workList.size(); }
+    std::list<std::unique_ptr<Worker>>::size_type totalWorkers() { return m_workerList.size(); }
 
-		void run();
-		void terminate();
-		void waitForQuit();
+    void run(const Work& work);
 
-		void join();
+private:
+    std::list<Work> m_workList;
+    std::list<std::unique_ptr<Worker>> m_workerList;
 
-	protected:
+    std::condition_variable m_condition;
+    std::mutex m_threadMutex, m_poolMutex;
+    std::list<std::unique_ptr<Worker>>::size_type m_maxWorkerSize;
+    bool m_threadOver, m_threadJoining;
+};
 
-		void _run();
+class CGEThreadPool::Work
+{
+public:
+    Work() : func(nullptr), arg(NULL) {}
+    Work(const std::function<void(void*)>& _func, void* _arg = NULL) : func(_func), arg(_arg) {}
 
-	private:
-		std::thread* m_thread;
-		CGEThreadPool& m_pool;
-		bool m_runningStatus, m_shouldLeave;
-	};
-}
+    void run()
+    {
+        if (func != nullptr) func(arg);
+    }
+
+private:
+    std::function<void(void*)> func;
+    void* arg;
+};
+
+class CGEThreadPool::Worker
+{
+public:
+    Worker(CGEThreadPool& pool);
+    Worker(Worker& worker);
+    Worker(Worker&& worker);
+    ~Worker();
+
+    inline bool isActive() const { return m_runningStatus; }
+    inline bool isRunning() const { return m_thread != nullptr; }
+
+    void shouldLeave() { m_shouldLeave = true; }
+
+    void run();
+    void terminate();
+    void waitForQuit();
+
+    void join();
+
+protected:
+    void _run();
+
+private:
+    std::thread* m_thread;
+    CGEThreadPool& m_pool;
+    bool m_runningStatus, m_shouldLeave;
+};
+}  // namespace CGE
 
 #define CGE_THREAD_WORK CGE::CGEThreadPool::Work
 

@@ -1,10 +1,10 @@
 /*
-* cgeEyeBrightenFilter.h
-*
-*  Created on: 2014-4-23
-*      Author: Wang Yang
-*  Description: Eye Pop
-*/
+ * cgeEyeBrightenFilter.h
+ *
+ *  Created on: 2014-4-23
+ *      Author: Wang Yang
+ *  Description: Eye Pop
+ */
 
 #ifndef _CGE_EYEBRIGHTEN_H_
 #define _CGE_EYEBRIGHTEN_H_
@@ -13,12 +13,11 @@
 
 namespace CGE
 {
-	class CGEEyeBrightenFilter : public CGEAdvancedEffectOneStepFilterHelper
-	{
-	public:
+class CGEEyeBrightenFilter : public CGEAdvancedEffectOneStepFilterHelper
+{
+public:
+    bool init();
+};
 
-		bool init();
-	};
-
-}
+}  // namespace CGE
 #endif
