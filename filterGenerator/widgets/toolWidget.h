@@ -1,10 +1,10 @@
 ﻿/*
-* toolWidget.h
-*
-*  Created on: 2015-5-14
-*      Author: Wang Yang
-*        Mail: admin@wysaid.org
-*/
+ * toolWidget.h
+ *
+ *  Created on: 2015-5-14
+ *      Author: Wang Yang
+ *        Mail: admin@wysaid.org
+ */
 
 #ifndef _TOOL_WIDGET_H_
 #define _TOOL_WIDGET_H_
@@ -15,26 +15,24 @@
 
 class ToolSliderWidget : public QSlider
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
+    ToolSliderWidget(QWidget* parent);
+    ~ToolSliderWidget();
 
-	ToolSliderWidget(QWidget* parent);
-	~ToolSliderWidget();
-
-	void setFunc(const std::function<void (int)>& func);
+    void setFunc(const std::function<void(int)>& func);
 
 protected:
-
-	void focusOutEvent(QFocusEvent *);
-	void keyPressEvent(QKeyEvent *ev);
+    void focusOutEvent(QFocusEvent*);
+    void keyPressEvent(QKeyEvent* ev);
 
 public slots:
 
-	void setSliderValue(int);
+    void setSliderValue(int);
 
 protected:
-	std::function<void (int)> m_func;
-	static std::vector<ToolSliderWidget*> s_toolWidgets;
+    std::function<void(int)> m_func;
+    static std::vector<ToolSliderWidget*> s_toolWidgets;
 };
 
-#endif // !_TOOL_WIDGET_H_
+#endif  // !_TOOL_WIDGET_H_

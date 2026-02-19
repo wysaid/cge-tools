@@ -12,45 +12,45 @@
 
 namespace CGE
 {
-	class CGEBorderFilter : public CGEImageFilterInterfaceAbstract
-	{
-	public:
-		CGEBorderFilter() {}
-		~CGEBorderFilter();
-		
-		bool initWithBorderID(int index, bool isShortCut = false);
-		bool initWithBorderString(const char* pstr, bool isShortCut = false);
+class CGEBorderFilter : public CGEImageFilterInterfaceAbstract
+{
+public:
+    CGEBorderFilter() {}
+    ~CGEBorderFilter();
 
-		bool initWithBorderShortcutID(int index);
-		bool initWithBorderShortcutString(const char* pstr);
+    bool initWithBorderID(int index, bool isShortCut = false);
+    bool initWithBorderString(const char* pstr, bool isShortCut = false);
 
-		void setThickness(float thickness); //Range [0, 0.5], 0 for orign
+    bool initWithBorderShortcutID(int index);
+    bool initWithBorderShortcutString(const char* pstr);
 
-		void setAlign(float align); //Range: differ from the borders. See more in the borders.
+    void setThickness(float thickness);  // Range [0, 0.5], 0 for orign
 
-		void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
+    void setAlign(float align);  // Range: differ from the borders. See more in the borders.
 
-		void setLoadFunction(CGEBufferLoadFun fLoad, void* loadParam, CGEBufferUnloadFun fUnload, void* unloadParam);
+    void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
 
-		GLuint loadResourceToTexture(const char* srcName);
+    void setLoadFunction(CGEBufferLoadFun fLoad, void* loadParam, CGEBufferUnloadFun fUnload, void* unloadParam);
 
-        CGEBufferLoadFun getLoadFunc() { return m_loadFunc; }
-		CGEBufferUnloadFun getUnloadFunc() { return m_unloadFunc; }
-		void* getLoadParam() { return m_loadParam; }
-		void* getUnloadParam() { return m_unloadParam; }
+    GLuint loadResourceToTexture(const char* srcName);
 
-		void addFilter(CGEBorderFilterInterface* proc) { m_vecProc.push_back(proc); }
-		void clearFilters();
+    CGEBufferLoadFun getLoadFunc() { return m_loadFunc; }
+    CGEBufferUnloadFun getUnloadFunc() { return m_unloadFunc; }
+    void* getLoadParam() { return m_loadParam; }
+    void* getUnloadParam() { return m_unloadParam; }
 
-	protected:
-		CGEBufferLoadFun m_loadFunc;
-		CGEBufferUnloadFun m_unloadFunc;
-		void* m_loadParam;
-		void* m_unloadParam;
+    void addFilter(CGEBorderFilterInterface* proc) { m_vecProc.push_back(proc); }
+    void clearFilters();
 
-	private:
-		std::vector<CGEBorderFilterInterface*> m_vecProc;
-	};
-}
+protected:
+    CGEBufferLoadFun m_loadFunc;
+    CGEBufferUnloadFun m_unloadFunc;
+    void* m_loadParam;
+    void* m_unloadParam;
+
+private:
+    std::vector<CGEBorderFilterInterface*> m_vecProc;
+};
+}  // namespace CGE
 
 #endif /* CGEBORDEREFFECTS_H_ */

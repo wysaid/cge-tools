@@ -1,30 +1,30 @@
 ﻿/*
-* cgeLightFilter.h
-*
-*  Created on: 2014-6-3
-*      Author: liu hailong
-*/
+ * cgeLightFilter.h
+ *
+ *  Created on: 2014-6-3
+ *      Author: liu hailong
+ */
 
-#ifndef  _CGE_LIGHT_H_
-#define  _CGE_LIGHT_H_
+#ifndef _CGE_LIGHT_H_
+#define _CGE_LIGHT_H_
 
 #include "../internal/cgeAdvancedEffectsCommon.h"
 
 namespace CGE
 {
-	class CGELightFilter : public CGEAdvancedEffectOneStepFilterHelper
-	{
-	public:
-		bool init();
-		void setColor(float r,float g,float b);
-		void setCentrePosition(float x,float y);
-	protected:
-		static CGEConstString paramColorName;
-		static CGEConstString paramCentrePositionName;
+class CGELightFilter : public CGEAdvancedEffectOneStepFilterHelper
+{
+public:
+    bool init();
+    void setColor(float r, float g, float b);
+    void setCentrePosition(float x, float y);
 
-	};
+protected:
+    static CGEConstString paramColorName;
+    static CGEConstString paramCentrePositionName;
+};
 
-}
+}  // namespace CGE
 
 
 #endif

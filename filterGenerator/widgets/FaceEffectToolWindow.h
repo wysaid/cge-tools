@@ -1,10 +1,10 @@
 ﻿/*
-* faceEffectTool.h
-*
-*  Created on: 2017-4-12
-*      Author: Wang Yang
-*        Mail: admin@wysaid.org
-*/
+ * faceEffectTool.h
+ *
+ *  Created on: 2017-4-12
+ *      Author: Wang Yang
+ *        Mail: admin@wysaid.org
+ */
 
 #ifndef _FACE_EFFECT_TOOL_H_
 
@@ -25,78 +25,86 @@ class FaceEffectToolWindow;
 
 class FaceSpriteWidget : public QOpenGLWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FaceSpriteWidget(QWidget* parent, QOpenGLWidget* shareWidget);
-	~FaceSpriteWidget();
+    FaceSpriteWidget(QWidget* parent, QOpenGLWidget* shareWidget);
+    ~FaceSpriteWidget();
 
-	enum { MAX_POINTS = FACE_SPRITE_MULTIPLE ? 16 : 2 };
+    enum
+    {
+        MAX_POINTS = FACE_SPRITE_MULTIPLE ? 16 : 2
+    };
 
-	struct FacePoints 
-	{
-		CGE::Vec2f pnts[MAX_POINTS];
-	};
+    struct FacePoints
+    {
+        CGE::Vec2f pnts[MAX_POINTS];
+    };
 
-	float getProgress();
-	int getCurrentFrame();
+    float getProgress();
+    int getCurrentFrame();
 
-	void setupWithJsonConfig(const QString& jsonConfig, const std::function<void (bool)>& callback);
+    void setupWithJsonConfig(const QString& jsonConfig, const std::function<void(bool)>& callback);
 
-	bool isPlaying();
+    bool isPlaying();
 
-	CGE::Sprite2dInterChangeMultiple* sprite() { return m_sprite; }
+    CGE::Sprite2dInterChangeMultiple* sprite() { return m_sprite; }
 
-	QSize spriteSize() { return m_spriteSize; }
+    QSize spriteSize() { return m_spriteSize; }
 
-	void queueEvent(std::function<void ()>&& func);
+    void queueEvent(std::function<void()>&& func);
 
-	CGE::CGEPointDrawer* getPointDrawer() { return m_pointDrawer; }
+    CGE::CGEPointDrawer* getPointDrawer() { return m_pointDrawer; }
 
-	QString genConfig();
+    QString genConfig();
 
-	const std::vector<FacePoints>& getPoints() const { return m_vecPoints; }
-	void setPoints(const std::vector<FacePoints>& pnts) { assert(pnts.size() == m_vecPoints.size()); m_vecPoints = pnts; _calcDrawPoints(); }
+    const std::vector<FacePoints>& getPoints() const { return m_vecPoints; }
+    void setPoints(const std::vector<FacePoints>& pnts)
+    {
+        assert(pnts.size() == m_vecPoints.size());
+        m_vecPoints = pnts;
+        _calcDrawPoints();
+    }
 
 public slots:
-	void startPlay();
-	void pausePlay();
-	void jumpFrame(float progress);
-	void updateProgress();
-	
+    void startPlay();
+    void pausePlay();
+    void jumpFrame(float progress);
+    void updateProgress();
+
 signals:
-	void progressUpdated();
+    void progressUpdated();
 
 protected:
-	void paintGL();
-	void resizeGL(int w, int h);
+    void paintGL();
+    void resizeGL(int w, int h);
 
-	void _calcDrawPoints();
+    void _calcDrawPoints();
 
 protected:
-	CGE::Sprite2dInterChangeMultiple* m_sprite;
-	QTimer m_timer;
-	QTime m_lastTime;
-	QSize m_spriteTextureSize;
-	QSize m_spriteSize;
-	std::list<std::function<void ()>> m_dispatchFunctions;
+    CGE::Sprite2dInterChangeMultiple* m_sprite;
+    QTimer m_timer;
+    QTime m_lastTime;
+    QSize m_spriteTextureSize;
+    QSize m_spriteSize;
+    std::list<std::function<void()>> m_dispatchFunctions;
 
-	std::vector<FacePoints> m_vecPoints;
-	std::vector<FacePoints> m_vecDrawPoints;
-	CGE::CGEPointDrawer* m_pointDrawer;
+    std::vector<FacePoints> m_vecPoints;
+    std::vector<FacePoints> m_vecDrawPoints;
+    CGE::CGEPointDrawer* m_pointDrawer;
 
-	QJsonDocument m_jsonDoc;
+    QJsonDocument m_jsonDoc;
 };
 
 // class FaceEffectToolMarkWidgetCanvas : public QGLWidget
 // {
 // public:
 // 	FaceEffectToolMarkWidgetCanvas(QWidget* parent, FaceSpriteWidget* shareWidget);
-// 
+//
 // protected:
 // 	void paintGL();
 // 	void resizeGL(int w, int h);
-// 
-// 
+//
+//
 // protected:
 // 	FaceSpriteWidget* m_spriteWidget;
 // };
@@ -104,71 +112,72 @@ protected:
 class FaceEffectToolMarkWidget : public MenuDialogCommon
 {
 public:
-	FaceEffectToolMarkWidget(FaceEffectToolWindow* parent, const std::function<void (std::vector<FaceSpriteWidget::FacePoints>*)>& func);
-	~FaceEffectToolMarkWidget();
+    FaceEffectToolMarkWidget(FaceEffectToolWindow* parent,
+                             const std::function<void(std::vector<FaceSpriteWidget::FacePoints>*)>& func);
+    ~FaceEffectToolMarkWidget();
 
 protected:
-//	void resizeEvent(QResizeEvent *);
-	void paintEvent(QPaintEvent *);
-	void keyReleaseEvent(QKeyEvent *);
+    //	void resizeEvent(QResizeEvent *);
+    void paintEvent(QPaintEvent*);
+    void keyReleaseEvent(QKeyEvent*);
 
-	void flushCache();
+    void flushCache();
 
-	void mouseReleaseEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent*);
 
 protected:
-	std::function<void (std::vector<FaceSpriteWidget::FacePoints>*)> m_callback;
+    std::function<void(std::vector<FaceSpriteWidget::FacePoints>*)> m_callback;
 
-//	FaceEffectToolMarkWidgetCanvas* m_canvas;
-	FaceEffectToolWindow* m_parent;
+    //	FaceEffectToolMarkWidgetCanvas* m_canvas;
+    FaceEffectToolWindow* m_parent;
 
-	QImage m_cacheImage;
-	CGE::FrameBuffer* m_framebuffer;
-	GLuint m_cacheTexture;
+    QImage m_cacheImage;
+    CGE::FrameBuffer* m_framebuffer;
+    GLuint m_cacheTexture;
 
-	std::vector<FaceSpriteWidget::FacePoints> m_vecPoints;
+    std::vector<FaceSpriteWidget::FacePoints> m_vecPoints;
 
-	int m_currentTarget;
+    int m_currentTarget;
 };
 
 class FaceEffectToolWindow : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FaceEffectToolWindow(const std::function<void ()>& func, MainWindow* mainwindow);
-	~FaceEffectToolWindow();
+    FaceEffectToolWindow(const std::function<void()>& func, MainWindow* mainwindow);
+    ~FaceEffectToolWindow();
 
-	FaceSpriteWidget* spriteWidget() { return m_spriteWidget; }
+    FaceSpriteWidget* spriteWidget() { return m_spriteWidget; }
 
 protected slots:
-	void windowClose();
-	void applyConfig();
-	void saveConfig();
-	void jumpToFixedFrame();
-	void jumpToFrame(int frameIndex);
+    void windowClose();
+    void applyConfig();
+    void saveConfig();
+    void jumpToFixedFrame();
+    void jumpToFrame(int frameIndex);
 
-	void updateProgress();
+    void updateProgress();
 
-	void setConfigDir();
+    void setConfigDir();
 
-	void textLeftBtnClicked();
-	void textRightBtnClicked();
+    void textLeftBtnClicked();
+    void textRightBtnClicked();
 
-	void markFrame();
-
-protected:
-	void closeEvent(QCloseEvent *);
-	void resizeEvent(QResizeEvent *);
-
-	void _fixLayout();
-
-	void _moveUI(int n);
+    void markFrame();
 
 protected:
-	MainWindow* m_mainWindow;
-	FaceSpriteWidget* m_spriteWidget;
-	Ui::FaceEffectToolWidget m_ui;
-	std::function<void ()> m_destructFunc;
+    void closeEvent(QCloseEvent*);
+    void resizeEvent(QResizeEvent*);
+
+    void _fixLayout();
+
+    void _moveUI(int n);
+
+protected:
+    MainWindow* m_mainWindow;
+    FaceSpriteWidget* m_spriteWidget;
+    Ui::FaceEffectToolWidget m_ui;
+    std::function<void()> m_destructFunc;
 };
 
-#endif // !_FACE_EFFECT_TOOL_H_
+#endif  // !_FACE_EFFECT_TOOL_H_

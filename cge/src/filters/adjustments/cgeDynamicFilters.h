@@ -12,7 +12,7 @@
 
 namespace CGE
 {
-	CGEDynamicWaveFilter* createDynamicWaveFilter();
+CGEDynamicWaveFilter* createDynamicWaveFilter();
 }
 
 #endif

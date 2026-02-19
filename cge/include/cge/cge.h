@@ -20,10 +20,6 @@
 #include "../../src/core/cgeVec.h"
 #include "../../src/core/cgeGlobal.h"
 
-// Animation system
-#include "../../src/animation/cgeAction.h"
-#include "../../src/animation/cgeAnimation.h"
-
 // Sprite system
 #include "../../src/sprite/cgeSprite2d.h"
 #include "../../src/sprite/cgeSprite3d.h"
@@ -37,4 +33,4 @@
 // Platform abstraction
 #include "platform.h"
 
-#endif // _CGE_H_
+#endif  // _CGE_H_

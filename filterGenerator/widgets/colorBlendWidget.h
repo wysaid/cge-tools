@@ -1,10 +1,10 @@
 ﻿/*
-* colorBlendWidget.h
-*
-*  Created on: 2014-11-21
-*      Author: Wang Yang
-*        Mail: admin@wysaid.org
-*/
+ * colorBlendWidget.h
+ *
+ *  Created on: 2014-11-21
+ *      Author: Wang Yang
+ *        Mail: admin@wysaid.org
+ */
 
 #ifndef _PIXEL_BLEND_WIDGET_
 #define _PIXEL_BLEND_WIDGET_
@@ -21,56 +21,56 @@ class MenuDialogCommon;
 
 class ColorBlendWindow : public MenuDialogCommon
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	ColorBlendWindow(MainWindow* mainWindow, QWidget* parent = nullptr);
-	~ColorBlendWindow();
+    ColorBlendWindow(MainWindow* mainWindow, QWidget* parent = nullptr);
+    ~ColorBlendWindow();
 
-	enum ColorBlendMode
-	{
-		ColorBlend_Pixel,
-		ColorBlend_Vignette,
-		ColorBlend_Self,
-	};
+    enum ColorBlendMode
+    {
+        ColorBlend_Pixel,
+        ColorBlend_Vignette,
+        ColorBlend_Self,
+    };
 
 protected:
-	void initWidgets();
+    void initWidgets();
 
-	bool _previewBlendPixel();
-	bool _previewBlendVignette();
-	bool _previewBlendSelf();
+    bool _previewBlendPixel();
+    bool _previewBlendVignette();
+    bool _previewBlendSelf();
 
-	bool _applyBlendPixel();
-	bool _applyBlendVignette();
-	bool _applyBlendSelf();
+    bool _applyBlendPixel();
+    bool _applyBlendVignette();
+    bool _applyBlendSelf();
 
-	bool _preview();
+    bool _preview();
 
-	bool checkFilter();
+    bool checkFilter();
 
 protected slots:
-	void preview();
-	void apply();
+    void preview();
+    void apply();
 
-	void setVignetteStart(int);
-	void setVignetteRange(int);
-	void switchBlendMode(int);
+    void setVignetteStart(int);
+    void setVignetteRange(int);
+    void switchBlendMode(int);
 
 
 private:
-	Ui::ColorBlendWidget m_ui;
-	MainWindow* m_mainWindow;
-	CGE::CGEMutipleEffectFilter* m_wrapFilter;
-	CGE::CGEBlendInterface* m_filter;
-	CGE::CGEPixblendFilter* m_filterPixelBlend;
-	CGE::CGEBlendVignetteFilter* m_filterVignetteBlend;
-	CGE::CGEBlendWithSelfFilter* m_filterSelfBlend;
-	CGETextureBlendMode m_texBlendMode;
-	ColorBlendMode m_colorBlendMode;
+    Ui::ColorBlendWidget m_ui;
+    MainWindow* m_mainWindow;
+    CGE::CGEMutipleEffectFilter* m_wrapFilter;
+    CGE::CGEBlendInterface* m_filter;
+    CGE::CGEPixblendFilter* m_filterPixelBlend;
+    CGE::CGEBlendVignetteFilter* m_filterVignetteBlend;
+    CGE::CGEBlendWithSelfFilter* m_filterSelfBlend;
+    CGETextureBlendMode m_texBlendMode;
+    ColorBlendMode m_colorBlendMode;
 
-	float m_vigStart, m_vigRange;
+    float m_vigStart, m_vigRange;
 
-	bool m_bVigBlendAlpha;
+    bool m_bVigBlendAlpha;
 };
 
 

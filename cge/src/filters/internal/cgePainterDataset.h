@@ -12,7 +12,7 @@
 
 namespace CGE
 {
-	const char* getBrushTextureName(PathAttrib::BrushStyle);
+const char* getBrushTextureName(PathAttrib::BrushStyle);
 
 }
 

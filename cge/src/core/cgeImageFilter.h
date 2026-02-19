@@ -1,9 +1,9 @@
 ﻿/*﻿
-* cgeImageFilter.h
-*
-*  Created on: 2013-12-13
-*      Author: Wang Yang
-*/
+ * cgeImageFilter.h
+ *
+ *  Created on: 2013-12-13
+ *      Author: Wang Yang
+ */
 
 #ifndef _CGEIMAGEFILTER_H_
 #define _CGEIMAGEFILTER_H_
@@ -18,126 +18,121 @@
 namespace CGE
 {
 
-	extern CGEConstString g_vshDefault;
-	extern CGEConstString g_vshDefaultWithoutTexCoord;
-	extern CGEConstString g_vshDrawToScreen;
-	extern CGEConstString g_vshDrawToScreenRot90;
-	extern CGEConstString g_fshDefault;
-	extern CGEConstString g_fshFastAdjust;
-	extern CGEConstString g_fshFastAdjustRGB;
-	extern CGEConstString g_fshCurveMapNoIntensity;
+extern CGEConstString g_vshDefault;
+extern CGEConstString g_vshDefaultWithoutTexCoord;
+extern CGEConstString g_vshDrawToScreen;
+extern CGEConstString g_vshDrawToScreenRot90;
+extern CGEConstString g_fshDefault;
+extern CGEConstString g_fshFastAdjust;
+extern CGEConstString g_fshFastAdjustRGB;
+extern CGEConstString g_fshCurveMapNoIntensity;
 
 // 	extern CGEConstString g_vshTest;
 // 	extern CGEConstString g_fshTest;
 
-	extern CGEConstString g_paramFastAdjustArrayName;
-	extern CGEConstString g_paramFastAdjustRGBArrayName;
-	extern CGEConstString g_paramCurveMapTextureName;
+extern CGEConstString g_paramFastAdjustArrayName;
+extern CGEConstString g_paramFastAdjustRGBArrayName;
+extern CGEConstString g_paramCurveMapTextureName;
 
 
-	class CGEImageHandlerInterface;
+class CGEImageHandlerInterface;
 
-	class CGEImageFilterInterface;
+class CGEImageFilterInterface;
 
-	class CGEImageFilterInterfaceAbstract
-	{
-	public:
-        CGEImageFilterInterfaceAbstract();
-        virtual ~CGEImageFilterInterfaceAbstract();
-		virtual void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID) = 0;
+class CGEImageFilterInterfaceAbstract
+{
+public:
+    CGEImageFilterInterfaceAbstract();
+    virtual ~CGEImageFilterInterfaceAbstract();
+    virtual void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID) = 0;
 
-		virtual void setIntensity(float value) {}
+    virtual void setIntensity(float value) {}
 
-		// Exclusive to multiple effects: if this returns true, the handler will decompose the filter when adding it.
-		virtual bool isWrapper() { return false; }
-		virtual std::vector<CGEImageFilterInterface*> getFilters(bool bMove = true) { return std::vector<CGEImageFilterInterface*>(); }
-		
-	};
+    // Exclusive to multiple effects: if this returns true, the handler will decompose the filter when adding it.
+    virtual bool isWrapper() { return false; }
+    virtual std::vector<CGEImageFilterInterface*> getFilters(bool bMove = true)
+    {
+        return std::vector<CGEImageFilterInterface*>();
+    }
+};
 
-	class CGEImageFilterInterface : public CGEImageFilterInterfaceAbstract
-	{
-	public:
-		CGEImageFilterInterface();
-		virtual ~CGEImageFilterInterface();
+class CGEImageFilterInterface : public CGEImageFilterInterfaceAbstract
+{
+public:
+    CGEImageFilterInterface();
+    virtual ~CGEImageFilterInterface();
 
-		virtual void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
+    virtual void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
 
-		//////////////////////////////////////////////////////////////////////////
-		bool initShadersFromString(const char* vsh, const char* fsh);
-		//bool initShadersFromFile(const char* vshFileName, const char* fshFileName);
+    //////////////////////////////////////////////////////////////////////////
+    bool initShadersFromString(const char* vsh, const char* fsh);
+    // bool initShadersFromFile(const char* vshFileName, const char* fshFileName);
 
-		void setAdditionalUniformParameter(UniformParameters* param);
-		UniformParameters* getUniformParam() { return m_uniformParam; }
+    void setAdditionalUniformParameter(UniformParameters* param);
+    UniformParameters* getUniformParam() { return m_uniformParam; }
 
-		virtual bool init() { return false; }
+    virtual bool init() { return false; }
 
-		ProgramObject& getProgram() { return m_program; }
+    ProgramObject& getProgram() { return m_program; }
 
-		static CGEConstString paramInputImageName;
-		static CGEConstString paramPositionIndexName;
+    static CGEConstString paramInputImageName;
+    static CGEConstString paramPositionIndexName;
 
-	//protected:
-		//////////////////////////////////////////////////////////////////////////
-		//virtual bool initVertexShaderFromString(const char* vsh);
-		//	virtual bool initVertexShaderFromFile(const char* vshFileName);
+    // protected:
+    //////////////////////////////////////////////////////////////////////////
+    // virtual bool initVertexShaderFromString(const char* vsh);
+    //	virtual bool initVertexShaderFromFile(const char* vshFileName);
 
-		//virtual bool initFragmentShaderFromString(const char* fsh);	
-		//	virtual bool initFragmentShaderFromFile(const char* fshFileName);
+    // virtual bool initFragmentShaderFromString(const char* fsh);
+    //	virtual bool initFragmentShaderFromFile(const char* fshFileName);
 
-		//virtual bool finishLoadShaders(); // If you call the above function separately for initialization, call this function afterwards.	
+    // virtual bool finishLoadShaders(); // If you call the above function separately for initialization, call this
+    // function afterwards.
 
-	protected:
-		ProgramObject m_program;
+protected:
+    ProgramObject m_program;
 
-		//See the description of "UniformParameters" to know "How to use it".
-		UniformParameters* m_uniformParam;
-	};
+    // See the description of "UniformParameters" to know "How to use it".
+    UniformParameters* m_uniformParam;
+};
 
-	class CGEFastAdjustFilter : public CGEImageFilterInterface
-	{
-	public:
+class CGEFastAdjustFilter : public CGEImageFilterInterface
+{
+public:
+    typedef struct CurveData
+    {
+        float data[3];
 
-		typedef struct CurveData
-		{
-			float data[3];
+        float& operator[](int index) { return data[index]; }
 
-			float& operator[](int index)
-			{
-				return data[index];
-			}
+        const float& operator[](int index) const { return data[index]; }
+    } CurveData;
 
-			const float& operator[](int index) const
-			{
-				return data[index];
-			}
-		}CurveData;
+    bool init();
 
-		bool init();
+protected:
+    static CGEConstString paramArray;
+    void assignCurveArrays();
+    void initCurveArrays();
 
-	protected:
-		static CGEConstString paramArray;
-		void assignCurveArrays();
-		void initCurveArrays();
+protected:
+    std::vector<CurveData> m_curve;
+};
 
-	protected:
-		std::vector<CurveData> m_curve;
-	};
+class CGEFastAdjustRGBFilter : public CGEImageFilterInterface
+{
+public:
+    bool init();
 
-	class CGEFastAdjustRGBFilter : public CGEImageFilterInterface
-	{
-	public:
+protected:
+    static CGEConstString paramArrayRGB;
+    void assignCurveArray();
+    void initCurveArray();
 
-		bool init();
+protected:
+    std::vector<float> m_curveRGB;
+};
 
-	protected:
-		static CGEConstString paramArrayRGB;
-		void assignCurveArray();
-		void initCurveArray();
-
-	protected:
-		std::vector<float> m_curveRGB;
-	};
-
-}
+}  // namespace CGE
 
 #endif

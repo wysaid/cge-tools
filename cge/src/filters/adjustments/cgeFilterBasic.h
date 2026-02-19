@@ -37,41 +37,41 @@
 #ifndef _CGE_FILTERS_H_
 namespace CGE
 {
-	CGEBrightnessFilter* createBrightnessFilter();
-	CGEBrightnessFastFilter* createBrightnessFastFilter();
-	CGEContrastFilter* createContrastFilter();
-	CGESharpenBlurFilter* createSharpenBlurFilter();
-	CGESharpenBlurFastFilter* createSharpenBlurFastFilter();
-	CGESharpenBlurSimpleFilter* createSharpenBlurSimpleFilter();
-	CGESharpenBlurSimpleBetterFilter* createSharpenBlurSimpleBetterFilter();
-	CGESaturationHSLFilter* createSaturationHSLFilter();
-	CGESaturationFilter* createSaturationFilter();
-	CGEShadowHighlightFilter* createShadowHighlightFilter();
-	CGEShadowHighlightFastFilter* createShadowHighlightFastFilter();
-	CGEWhiteBalanceFilter* createWhiteBalanceFilter();
-	CGEWhiteBalanceFastFilter* createWhiteBalanceFastFilter();
-	CGEMonochromeFilter* createMonochromeFilter(); // Monochrome
-	CGECurveTexFilter* createCurveTexFilter();
-	CGECurveFilter* createCurveFilter();
-	CGEMoreCurveFilter* createMoreCurveFilter();
-	CGEMoreCurveTexFilter* createMoreCurveTexFilter();
-	CGEColorLevelFilter* createColorLevelFilter();
-	CGEVignetteFilter* createVignetteFilter();
-	CGEVignetteExtFilter* createVignetteExtFilter();
-	CGETiltshiftVectorFilter* createTiltshiftVectorFilter();
-	CGETiltshiftEllipseFilter* createTiltshiftEllipseFilter();
-    CGETiltshiftVectorWithFixedBlurRadiusFilter* createFixedTiltshiftVectorFilter();
-	CGETiltshiftEllipseWithFixedBlurRadiusFilter* createFixedTiltshiftEllipseFilter();
-	CGESharpenBlurFastWithFixedBlurRadiusFilter* createSharpenBlurFastWithFixedBlurRadiusFilter();
-	CGEZoomBlurFilter* createZoomBlurFilter();
-	CGEZoomBlur2Filter* createZoomBlur2Filter();
-	CGEMotionBlurFilter* createMotionBlurFilter();
-	CGESelectiveColorFilter* createSelectiveColorFilter();
-	CGEExposureFilter* createExposureFilter();
-	CGEHueAdjustFilter* createHueAdjustFilter();
-	CGEColorBalanceFilter* createColorBalanceFilter();
-	CGELookupFilter* createLookupFilter();
-}
-#endif // _CGE_FILTERS_H_
+CGEBrightnessFilter* createBrightnessFilter();
+CGEBrightnessFastFilter* createBrightnessFastFilter();
+CGEContrastFilter* createContrastFilter();
+CGESharpenBlurFilter* createSharpenBlurFilter();
+CGESharpenBlurFastFilter* createSharpenBlurFastFilter();
+CGESharpenBlurSimpleFilter* createSharpenBlurSimpleFilter();
+CGESharpenBlurSimpleBetterFilter* createSharpenBlurSimpleBetterFilter();
+CGESaturationHSLFilter* createSaturationHSLFilter();
+CGESaturationFilter* createSaturationFilter();
+CGEShadowHighlightFilter* createShadowHighlightFilter();
+CGEShadowHighlightFastFilter* createShadowHighlightFastFilter();
+CGEWhiteBalanceFilter* createWhiteBalanceFilter();
+CGEWhiteBalanceFastFilter* createWhiteBalanceFastFilter();
+CGEMonochromeFilter* createMonochromeFilter();  // Monochrome
+CGECurveTexFilter* createCurveTexFilter();
+CGECurveFilter* createCurveFilter();
+CGEMoreCurveFilter* createMoreCurveFilter();
+CGEMoreCurveTexFilter* createMoreCurveTexFilter();
+CGEColorLevelFilter* createColorLevelFilter();
+CGEVignetteFilter* createVignetteFilter();
+CGEVignetteExtFilter* createVignetteExtFilter();
+CGETiltshiftVectorFilter* createTiltshiftVectorFilter();
+CGETiltshiftEllipseFilter* createTiltshiftEllipseFilter();
+CGETiltshiftVectorWithFixedBlurRadiusFilter* createFixedTiltshiftVectorFilter();
+CGETiltshiftEllipseWithFixedBlurRadiusFilter* createFixedTiltshiftEllipseFilter();
+CGESharpenBlurFastWithFixedBlurRadiusFilter* createSharpenBlurFastWithFixedBlurRadiusFilter();
+CGEZoomBlurFilter* createZoomBlurFilter();
+CGEZoomBlur2Filter* createZoomBlur2Filter();
+CGEMotionBlurFilter* createMotionBlurFilter();
+CGESelectiveColorFilter* createSelectiveColorFilter();
+CGEExposureFilter* createExposureFilter();
+CGEHueAdjustFilter* createHueAdjustFilter();
+CGEColorBalanceFilter* createColorBalanceFilter();
+CGELookupFilter* createLookupFilter();
+}  // namespace CGE
+#endif  // _CGE_FILTERS_H_
 
-#endif 
+#endif

@@ -12,40 +12,38 @@
 
 namespace CGE
 {
-	class CGEDynamicWaveFilter : public CGEImageFilterInterface
-	{
-	public:
+class CGEDynamicWaveFilter : public CGEImageFilterInterface
+{
+public:
+    void setIntensity(float value);  // The same to setAutoMotionSpeed
 
-		void setIntensity(float value); // The same to setAutoMotionSpeed
+    bool init();
 
-		bool init();
+    void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
 
-		void render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID);
+    void setWaveMotion(float motion);
+    void setWaveAngle(float angle);    // default: 20 (left-to-right, top-to-bottom, contains angle / PI cycles)
+    void setStrength(float strength);  // default: 0.01 strength (percentage), range (0, 1)
 
-		void setWaveMotion(float motion);
-		void setWaveAngle(float angle); //default: 20 (left-to-right, top-to-bottom, contains angle / PI cycles)
-        void setStrength(float strength); // default: 0.01 strength (percentage), range (0, 1)
+    void setAutoMotionSpeed(float speed);  // Auto motion would be disabled if speed <= 0.
 
-		void setAutoMotionSpeed(float speed); // Auto motion would be disabled if speed <= 0.
+protected:
+    static CGEConstString paramMotion;
+    static CGEConstString paramAngle;
+    static CGEConstString paramStrength;
 
-	protected:
-		static CGEConstString paramMotion;
-		static CGEConstString paramAngle;
-        static CGEConstString paramStrength;
+private:
+    GLint m_motionLoc;
+    GLint m_angleLoc;
+    GLint m_strengthLoc;
 
-	private:
+    GLfloat m_motion;
+    GLfloat m_motionSpeed;
+    GLfloat m_angle;
+    GLfloat m_strength;
+    bool m_autoMotion;
+};
 
-		GLint m_motionLoc;
-		GLint m_angleLoc;
-        GLint m_strengthLoc;
-		
-		GLfloat m_motion;
-		GLfloat m_motionSpeed;
-		GLfloat m_angle;
-        GLfloat m_strength;
-		bool m_autoMotion;
-	};
-
-}
+}  // namespace CGE
 
 #endif

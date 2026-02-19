@@ -1,9 +1,9 @@
 ﻿/*
-* cgeEyeTintFilter.h
-*
-*  Created on: 2014-4-23
-*      Author: Wang Yang
-*/
+ * cgeEyeTintFilter.h
+ *
+ *  Created on: 2014-4-23
+ *      Author: Wang Yang
+ */
 
 #ifndef _CGE_EYETINT_H_
 #define _CGE_EYETINT_H_
@@ -12,19 +12,18 @@
 
 namespace CGE
 {
-	class CGEEyeTintFilter : public CGEImageFilterInterface
-	{
-	public:
+class CGEEyeTintFilter : public CGEImageFilterInterface
+{
+public:
+    bool init();
 
-		bool init();
+    // range: [0.0, 1.0]
+    void setTintColor(float r, float g, float b);
 
-		//range: [0.0, 1.0]
-		void setTintColor(float r, float g, float b);
+protected:
+    static CGEConstString paramTintName;
+};
 
-	protected:
-		static CGEConstString paramTintName;
-	};
-
-}
+}  // namespace CGE
 
 #endif
