@@ -46,6 +46,7 @@ jobs:
             qt6-base-dev qt6-base-private-dev \
             libqt6opengl6-dev \
             libgl1-mesa-dev libglu1-mesa-dev \
+            libglew-dev \
             libxcb-cursor0 libxcb-icccm4 libxcb-image0 \
             libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
             libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 \
@@ -179,6 +180,7 @@ jobs:
                 cmake gcc-c++ make \
                 qt6-qtbase-devel \
                 mesa-libGL-devel mesa-libGLU-devel \
+                glew-devel \
                 qt6-linguist \
                 wget libstdc++-static
 
