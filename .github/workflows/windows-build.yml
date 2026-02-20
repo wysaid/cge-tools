@@ -1,0 +1,87 @@
+name: Windows Build
+
+on:
+  push:
+    branches: [master, source_code]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/instructions/**'
+      - '.github/skills/**'
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      artifact-windows:
+        description: "Windows artifact name"
+        value: ${{ jobs.build-windows.outputs.artifact-name }}
+
+jobs:
+  build-windows:
+    name: Windows x64 (MSVC 2022)
+    runs-on: windows-latest
+    outputs:
+      artifact-name: ${{ steps.package.outputs.artifact-name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.*'
+          arch: 'win64_msvc2022_64'
+          cache: true
+          cache-key-prefix: 'install-qt6-windows-msvc2022'
+
+      - name: Cache CMake build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: windows-msvc2022-release-${{ hashFiles('CMakeLists.txt', 'cge/CMakeLists.txt', 'filterGenerator/CMakeLists.txt', 'cge/src/**', 'cge/include/**', 'filterGenerator/**/*.cpp', 'filterGenerator/**/*.h') }}
+          restore-keys: windows-msvc2022-release-
+
+      - name: Configure CMake
+        shell: cmd
+        run: |
+          cmake -B build ^
+            -G "Visual Studio 17 2022" -A x64 ^
+            -DCMAKE_BUILD_TYPE=Release ^
+            -DBUILD_EXAMPLES=OFF ^
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Build
+        shell: cmd
+        run: cmake --build build --config Release -j %NUMBER_OF_PROCESSORS%
+
+      - name: Deploy Qt dependencies
+        shell: cmd
+        run: |
+          windeployqt --release --no-translations build\filterGenerator\Release\filterGenerator.exe
+
+      - name: Package
+        id: package
+        shell: pwsh
+        run: |
+          $ARTIFACT_NAME = "filterGenerator-windows-x64"
+          $SRC_DIR = "build\filterGenerator\Release"
+          $OUT_ZIP = "${ARTIFACT_NAME}.zip"
+
+          # Compress the deployed directory
+          Compress-Archive -Path "$SRC_DIR\*" -DestinationPath $OUT_ZIP -Force
+
+          $SIZE = (Get-Item $OUT_ZIP).Length / 1MB
+          Write-Host "Package created: $OUT_ZIP ($([math]::Round($SIZE, 1)) MB)"
+          echo "artifact-name=$ARTIFACT_NAME" >> $env:GITHUB_OUTPUT
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: filterGenerator-windows-x64
+          path: filterGenerator-windows-x64.zip
+          retention-days: 30
