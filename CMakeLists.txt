@@ -5,7 +5,7 @@ project(cge-tools VERSION 2.0.0 LANGUAGES CXX)
 # ============================================================================
 # Options
 # ============================================================================
-option(BUILD_FILTER_GENERATOR "Build filter generator application" ON)
+option(BUILD_FILTER_GENERATOR "Build filter generator application" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_VIDEO_EXTENSIONS "Build FFmpeg-based video extensions" OFF)
