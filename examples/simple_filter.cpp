@@ -3,7 +3,7 @@
  * Minimal compilation test
  */
 
-#include "cge/cge.h"
+#include "cge.h"
 #include <QCoreApplication>
 #include <QDebug>
 
