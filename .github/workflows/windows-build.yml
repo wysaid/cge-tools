@@ -63,6 +63,7 @@ jobs:
         shell: cmd
         run: |
           windeployqt --release --no-translations build\filterGenerator\Release\filterGenerator.exe
+          windeployqt --release --no-translations build\filterGenerator\Release\filterRuleTest.exe
 
       - name: Package
         id: package

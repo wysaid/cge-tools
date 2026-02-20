@@ -67,6 +67,7 @@ jobs:
 
       - name: Prepare AppDir
         run: |
+          # filterGenerator
           mkdir -p AppDir/usr/bin AppDir/usr/lib AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
           cp build/filterGenerator/filterGenerator AppDir/usr/bin/filterGenerator
           cp filterGenerator/resource/logo.png AppDir/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
@@ -81,6 +82,22 @@ jobs:
           Comment=CGE Filter Generator - OpenGL image processing tool
           EOF
           cp AppDir/filterGenerator.desktop AppDir/usr/share/applications/filterGenerator.desktop
+
+          # filterRuleTest
+          mkdir -p AppDir-frt/usr/bin AppDir-frt/usr/lib AppDir-frt/usr/share/applications AppDir-frt/usr/share/icons/hicolor/256x256/apps
+          cp build/filterGenerator/filterRuleTest AppDir-frt/usr/bin/filterRuleTest
+          cp filterGenerator/resource/logo.png AppDir-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
+          cp filterGenerator/resource/logo.png AppDir-frt/filterRuleTest.png
+          cat > AppDir-frt/filterRuleTest.desktop <<'EOF'
+          [Desktop Entry]
+          Name=Filter Rule Test
+          Exec=filterRuleTest
+          Icon=filterRuleTest
+          Type=Application
+          Categories=Graphics;
+          Comment=CGE Filter Rule Validation Tool
+          EOF
+          cp AppDir-frt/filterRuleTest.desktop AppDir-frt/usr/share/applications/filterRuleTest.desktop
 
       - name: Download linuxdeploy
         run: |
@@ -102,18 +119,36 @@ jobs:
             --plugin qt \
             --output appimage
 
+      - name: Create filterRuleTest AppImage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          QMAKE: /usr/lib/qt6/bin/qmake6
+          OUTPUT: filterRuleTest-linux-x86_64-ubuntu22.AppImage
+        run: |
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir AppDir-frt \
+            --executable AppDir-frt/usr/bin/filterRuleTest \
+            --desktop-file AppDir-frt/filterRuleTest.desktop \
+            --icon-file AppDir-frt/filterRuleTest.png \
+            --plugin qt \
+            --output appimage
+
       - name: Package
         id: package
         run: |
           APPIMAGE=$(ls filterGenerator-linux-x86_64-ubuntu22*.AppImage | head -1)
           echo "artifact-name=filterGenerator-linux-x86_64-ubuntu22" >> "$GITHUB_OUTPUT"
           echo "AppImage created: $APPIMAGE ($(du -sh "$APPIMAGE" | cut -f1))"
+          FRT_APPIMAGE=$(ls filterRuleTest-linux-x86_64-ubuntu22*.AppImage | head -1)
+          echo "filterRuleTest AppImage: $FRT_APPIMAGE ($(du -sh "$FRT_APPIMAGE" | cut -f1))"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: filterGenerator-linux-x86_64-ubuntu22
-          path: filterGenerator-linux-x86_64-ubuntu22*.AppImage
+          path: |
+            filterGenerator-linux-x86_64-ubuntu22*.AppImage
+            filterRuleTest-linux-x86_64-ubuntu22*.AppImage
           retention-days: 30
 
   build-fedora:
@@ -171,6 +206,24 @@ jobs:
               EOF
               cp AppDir-fedora/filterGenerator.desktop AppDir-fedora/usr/share/applications/filterGenerator.desktop
 
+              mkdir -p AppDir-fedora-frt/usr/bin
+              mkdir -p AppDir-fedora-frt/usr/share/applications
+              mkdir -p AppDir-fedora-frt/usr/share/icons/hicolor/256x256/apps
+              cp build-fedora/filterGenerator/filterRuleTest AppDir-fedora-frt/usr/bin/filterRuleTest
+              cp filterGenerator/resource/logo.png AppDir-fedora-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
+              cp filterGenerator/resource/logo.png AppDir-fedora-frt/filterRuleTest.png
+
+              cat > AppDir-fedora-frt/filterRuleTest.desktop <<'"'"'EOF'"'"'
+              [Desktop Entry]
+              Name=Filter Rule Test
+              Exec=filterRuleTest
+              Icon=filterRuleTest
+              Type=Application
+              Categories=Graphics;
+              Comment=CGE Filter Rule Validation Tool
+              EOF
+              cp AppDir-fedora-frt/filterRuleTest.desktop AppDir-fedora-frt/usr/share/applications/filterRuleTest.desktop
+
               echo "=== Downloading linuxdeploy ==="
               wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
               wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
@@ -189,8 +242,18 @@ jobs:
                 --plugin qt \
                 --output appimage
 
+              export OUTPUT=filterRuleTest-linux-x86_64-fedora.AppImage
+
+              ./linuxdeploy-x86_64.AppImage \
+                --appdir AppDir-fedora-frt \
+                --executable AppDir-fedora-frt/usr/bin/filterRuleTest \
+                --desktop-file AppDir-fedora-frt/filterRuleTest.desktop \
+                --icon-file AppDir-fedora-frt/filterRuleTest.png \
+                --plugin qt \
+                --output appimage
+
               echo "=== Done ==="
-              ls -lh filterGenerator-linux-x86_64-fedora*.AppImage
+              ls -lh filterGenerator-linux-x86_64-fedora*.AppImage filterRuleTest-linux-x86_64-fedora*.AppImage
             '
 
       - name: Package
@@ -199,10 +262,14 @@ jobs:
           APPIMAGE=$(ls filterGenerator-linux-x86_64-fedora*.AppImage | head -1)
           echo "artifact-name=filterGenerator-linux-x86_64-fedora" >> "$GITHUB_OUTPUT"
           echo "AppImage created: $APPIMAGE ($(du -sh "$APPIMAGE" | cut -f1))"
+          FRT_APPIMAGE=$(ls filterRuleTest-linux-x86_64-fedora*.AppImage | head -1)
+          echo "filterRuleTest AppImage: $FRT_APPIMAGE ($(du -sh "$FRT_APPIMAGE" | cut -f1))"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: filterGenerator-linux-x86_64-fedora
-          path: filterGenerator-linux-x86_64-fedora*.AppImage
+          path: |
+            filterGenerator-linux-x86_64-fedora*.AppImage
+            filterRuleTest-linux-x86_64-fedora*.AppImage
           retention-days: 30
