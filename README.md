@@ -22,18 +22,21 @@ CGE (Cool Graphics Effects) is a high-performance graphics processing library th
 - **Real-time Processing**: GPU-accelerated processing using OpenGL/OpenGL ES
 
 This library is the core engine powering the mobile apps:
+
 - [Android GPUImage Plus](https://github.com/wysaid/android-gpuimage-plus)
 - [iOS GPUImage Plus](https://github.com/wysaid/ios-gpuimage-plus)
 
 ## Features
 
 ### Core Functionality
+
 - Hardware-accelerated OpenGL rendering
 - Cross-platform support (macOS, Linux, Windows)
 - Qt6 integration
 - Modular architecture
 
 ### Filter Categories
+
 - **Basic Adjustments**: Brightness, Contrast, Saturation, Exposure, Hue, etc.
 - **Color Effects**: Color Balance, Color Level, Curves, White Balance, etc.
 - **Blur Effects**: Gaussian Blur, Bilateral Blur, Mosaic Blur, Motion Blur, etc.
@@ -208,7 +211,7 @@ For detailed instructions and more examples, see [examples/README.md](examples/R
 
 ### Filter Generator (Experimental)
 
-A Qt-based GUI application for creating and testing CGE filters interactively. 
+A Qt-based GUI application for creating and testing CGE filters interactively.
 
 **Status**: Currently undergoing Qt5 to Qt6 migration. To build:
 
@@ -233,6 +236,7 @@ cmake --install . --prefix /usr/local
 ```
 
 This will install:
+
 - Headers to `/usr/local/include/cge/`
 - Library to `/usr/local/lib/`
 - CMake config files for easy integration
@@ -264,7 +268,8 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 ## Author
 
 Wang Yang (wysaid)
-- Email: admin@wysaid.org
+
+- Email: <admin@wysaid.org>
 - GitHub: [@wysaid](https://github.com/wysaid)
 
 ## Related Projects
@@ -275,6 +280,7 @@ Wang Yang (wysaid)
 ## Changelog
 
 ### Version 1.0.0 (2024)
+
 - Open source release
 - Migrated from QMake to CMake build system
 - Qt6 compatibility
