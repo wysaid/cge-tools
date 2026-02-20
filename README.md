@@ -6,8 +6,7 @@ A powerful C++ image and video processing library with OpenGL-based filters and 
 
 - 🚀 [Quick Start Guide](docs/QUICKSTART.md) - Get up and running in 5 minutes
 - 📖 [Build Documentation](docs/BUILD.md) - Detailed build instructions
-- 💡 [Examples](examples/) - Sample programs and tutorials
-- 🔧 [Modernization Log](docs/MODERNIZATION.md) - Project upgrade details
+-  [Modernization Log](docs/MODERNIZATION.md) - Project upgrade details
 - ⚡ [Optimization Guide](docs/OPTIMIZATION.md) - Project optimizations and best practices
 - 🤝 [Contributing Guide](.github/CONTRIBUTING.md) - How to contribute to the project
 
@@ -142,9 +141,6 @@ cge-tools/
 │   ├── sprite/            # Sprite implementations
 │   ├── slideshow/         # Slideshow implementations
 │   └── extend/            # Extension modules
-├── examples/              # Usage examples
-│   ├── simple_filter.cpp  # Basic filtering example
-│   └── CMakeLists.txt     # Example build config
 ├── tools/                 # Utility tools
 │   ├── Generator/         # Filter generator tool
 │   └── Checker/           # Rule string validator
@@ -184,28 +180,6 @@ QImage processImage(const QImage& input) {
     return output;
 }
 ```
-
-## Examples
-
-The `examples/` directory contains sample programs demonstrating how to use CGE:
-
-- **simple_filter**: Basic image filtering example showing how to load an image, apply filters, and save results
-
-To build and run the examples:
-
-```bash
-# Build examples
-cd examples
-mkdir build && cd build
-cmake ..
-cmake --build .
-
-# Run simple_filter example
-cp /path/to/your/image.jpg input.jpg
-./simple_filter
-```
-
-For detailed instructions and more examples, see [examples/README.md](examples/README.md).
 
 ## Tools
 

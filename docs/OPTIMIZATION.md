@@ -91,7 +91,6 @@ Provides several convenient build tasks:
 - **Build cge (Debug/Release)**: Build the library
 - **Clean Build**: Clean the build directory
 - **Rebuild (Debug/Release)**: Rebuild
-- **Run Examples**: Run example programs
 
 **Usage**:
 - `Cmd/Ctrl + Shift + B`: Run the default build task
@@ -231,12 +230,6 @@ ls -lh build/libcge.a
 
    # Release build (for release)
    ./tasks.sh --release --rebuild
-   ```
-
-4. **Run examples**
-   ```bash
-   cd examples/build
-   ./simple_filter
    ```
 
 ### Git Workflow

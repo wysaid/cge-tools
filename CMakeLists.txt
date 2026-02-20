@@ -2,23 +2,13 @@ cmake_minimum_required(VERSION 3.16)
 
 project(cge-tools VERSION 2.0.0 LANGUAGES CXX)
 
-# ============================================================================
-# Options
-# ============================================================================
 option(BUILD_FILTER_GENERATOR "Build filter generator application" ON)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(BUILD_EXAMPLES "Build examples" ON)
 
-# ============================================================================
-# C++ Standard
-# ============================================================================
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# ============================================================================
-# CCache support
-# ============================================================================
 find_program(CCACHE_FOUND ccache)
 if (CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
@@ -26,9 +16,6 @@ if (CCACHE_FOUND)
     message(STATUS "Using ccache for compilation")
 endif ()
 
-# ============================================================================
-# Find Qt6
-# ============================================================================
 if (NOT DEFINED Qt_DIR OR NOT EXISTS ${Qt_DIR})
     if (DEFINED ENV{QTDIR})
         set(Qt_DIR $ENV{QTDIR})
@@ -71,9 +58,6 @@ set(QT Qt${QT_VERSION})
 
 find_package(${QT} REQUIRED COMPONENTS OpenGL Core)
 
-# ============================================================================
-# Compiler flags
-# ============================================================================
 if (NOT CMAKE_HOST_SYSTEM_NAME MATCHES "Windows")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 endif ()
@@ -105,11 +89,6 @@ else ()
 endif ()
 
 
-if (BUILD_EXAMPLES)
-    add_subdirectory(examples)
-endif ()
-
-
 message(STATUS "")
 message(STATUS "==== CGE Build Summary ====")
 message(STATUS "Version:              ${PROJECT_VERSION}")
@@ -118,4 +97,3 @@ message(STATUS "C++ standard:         ${CMAKE_CXX_STANDARD}")
 message(STATUS "Qt version:           ${QT_VERSION}")
 message(STATUS "Shared libs:          ${BUILD_SHARED_LIBS}")
 message(STATUS "Filter generator:     ${BUILD_FILTER_GENERATOR}")
-message(STATUS "Examples:             ${BUILD_EXAMPLES}")

@@ -141,9 +141,9 @@ function format_code() {
         exit 1
     fi
 
-    # Collect directories: core lib under cge/, plus filterGenerator and examples
+    # Collect directories: core lib under cge/, plus filterGenerator
     FORMAT_DIRS=()
-    for d in "$PROJECT_DIR/cge" "$PROJECT_DIR/filterGenerator" "$PROJECT_DIR/examples"; do
+    for d in "$PROJECT_DIR/cge" "$PROJECT_DIR/filterGenerator"; do
         [ -d "$d" ] && FORMAT_DIRS+=("$d")
     done
 

@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#define _CGE_FILTERS_H_
 
 namespace CGE
 {

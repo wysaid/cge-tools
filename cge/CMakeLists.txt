@@ -14,13 +14,13 @@ target_compile_definitions(cge PUBLIC LIBCGE4QT_LIB
 if (MSVC)
     set_target_properties(cge PROPERTIES
             OUTPUT_NAME cge
+            DEBUG_POSTFIX "d"
             VERSION ${PROJECT_VERSION}
             SOVERSION 2
     )
 else ()
     set_target_properties(cge PROPERTIES
             OUTPUT_NAME cge
-            DEBUG_POSTFIX "d"
             VERSION ${PROJECT_VERSION}
             SOVERSION 2
     )

@@ -77,15 +77,7 @@ src/                 # Implementation files (mirrors include structure)
 **New and updated docs**:
 - `README.md`: Enhanced project overview, features, build instructions
 - `BUILD.md`: Detailed build documentation with platform-specific notes and troubleshooting
-- `examples/README.md`: Example program usage guide
 - `.gitignore`: Updated for modern build tools
-
-### 6. Example Programs
-
-Created `examples/` directory containing:
-- `simple_filter.cpp`: Demonstrates basic filter usage
-- `CMakeLists.txt`: Example build configuration
-- `README.md`: Detailed usage instructions
 
 ## Technology Stack
 
