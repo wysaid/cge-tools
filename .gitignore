@@ -144,3 +144,5 @@ docs/latex/
 # dependencies/
 
 /tasks
+# macOS icon build intermediates
+*.iconset/

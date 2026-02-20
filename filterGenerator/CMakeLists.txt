@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(filterGenerator VERSION 2.0.0 LANGUAGES CXX)
+if(WIN32)
+    project(filterGenerator VERSION 2.0.0 LANGUAGES CXX RC)
+else()
+    project(filterGenerator VERSION 2.0.0 LANGUAGES CXX)
+endif()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -31,16 +35,24 @@ file(GLOB_RECURSE GENERATOR_RESOURCES
 )
 
 if(APPLE)
-    set(MACOSX_BUNDLE_ICON_FILE icon.icns)
-    # set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/icon.icns")
-    # set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    
+    set(MACOSX_BUNDLE_ICON_FILE filterGenerator.icns)
+    set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/filterGenerator.icns")
+    set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
     add_executable(filterGenerator MACOSX_BUNDLE
         ${GENERATOR_SOURCES}
         ${GENERATOR_HEADERS}
         ${GENERATOR_UI_FILES}
         ${GENERATOR_RESOURCES}
-        # ${app_icon_macos}
+        ${app_icon_macos}
+    )
+elseif(WIN32)
+    add_executable(filterGenerator WIN32
+        ${GENERATOR_SOURCES}
+        ${GENERATOR_HEADERS}
+        ${GENERATOR_UI_FILES}
+        ${GENERATOR_RESOURCES}
+        filterGenerator.rc
     )
 else()
     add_executable(filterGenerator
@@ -54,25 +66,11 @@ endif()
 # ============================================================================
 # Include Directories
 # ============================================================================
+# cge's PUBLIC include dirs are inherited transitively via target_link_libraries
 target_include_directories(filterGenerator PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/adjustments
-    ${CMAKE_SOURCE_DIR}/cge/include
-    ${CMAKE_SOURCE_DIR}/cge/include/cge
-    ${CMAKE_SOURCE_DIR}/cge/src
-    ${CMAKE_SOURCE_DIR}/cge/src/core
-    ${CMAKE_SOURCE_DIR}/cge/src/filters
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/adjustments
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/internal
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/blur
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/effects
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/beauty
-    ${CMAKE_SOURCE_DIR}/cge/src/filters/sharpen
-    ${CMAKE_SOURCE_DIR}/cge/src/animation
-    ${CMAKE_SOURCE_DIR}/cge/src/sprite
-    ${CMAKE_SOURCE_DIR}/cge/src/extend
-    ${CMAKE_SOURCE_DIR}/cge/src/platform
 )
 
 # ============================================================================
@@ -107,6 +105,24 @@ install(TARGETS filterGenerator
     BUNDLE DESTINATION .
     RUNTIME DESTINATION bin
 )
+
+# ============================================================================
+# Linux: install .desktop file and icon for system integration
+# ============================================================================
+if(UNIX AND NOT APPLE)
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/filterGenerator.desktop.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/filterGenerator.desktop"
+        @ONLY
+    )
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/filterGenerator.desktop"
+        DESTINATION share/applications
+    )
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/filterGenerator.ico"
+        DESTINATION share/pixmaps
+        RENAME filterGenerator.png
+    )
+endif()
 
 message(STATUS "Filter Generator configured")
 message(STATUS "  Sources: ${CMAKE_CURRENT_SOURCE_DIR}")

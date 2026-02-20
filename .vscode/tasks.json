@@ -296,7 +296,6 @@
             "group": "build",
             "problemMatcher": []
         },
-        // ── Run FilterGenerator ────────────────────────────────────────────
         {
             "label": "Run FilterGenerator (Debug)",
             "type": "shell",
@@ -316,7 +315,7 @@
             },
             "group": "build",
             "problemMatcher": "$gcc",
-            "dependsOn": "Build CMake Project (Debug)"
+            "dependsOn": "Load And Build CMake Project (Debug)"
         },
         {
             "label": "Run FilterGenerator (Release)",
@@ -337,7 +336,7 @@
             },
             "group": "build",
             "problemMatcher": "$gcc",
-            "dependsOn": "Build CMake Project (Release)"
+            "dependsOn": "Load And Build CMake Project (Release)"
         }
     ]
 }
