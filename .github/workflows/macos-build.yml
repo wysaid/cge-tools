@@ -61,13 +61,14 @@ jobs:
       - name: Deploy Qt dependencies
         run: |
           macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
+          macdeployqt build/filterGenerator/filterRuleTest.app -verbose=1
 
       - name: Package
         id: set-artifact
         run: |
           ARTIFACT_NAME="filterGenerator-macos-arm64"
           cd build/filterGenerator
-          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app
+          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app filterRuleTest.app
           echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
           echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
 
@@ -115,13 +116,14 @@ jobs:
       - name: Deploy Qt dependencies
         run: |
           macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
+          macdeployqt build/filterGenerator/filterRuleTest.app -verbose=1
 
       - name: Package
         id: set-artifact
         run: |
           ARTIFACT_NAME="filterGenerator-macos-x86_64"
           cd build/filterGenerator
-          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app
+          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app filterRuleTest.app
           echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
           echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
 

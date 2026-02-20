@@ -12,7 +12,7 @@ on:
       create_release:
         description: 'Create a GitHub Release after building'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 jobs:
@@ -70,7 +70,7 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          name: "FilterGenerator ${{ steps.prerelease.outputs.tag }}"
+          name: "CGE Tools ${{ steps.prerelease.outputs.tag }}"
           prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
           generate_release_notes: true
           make_latest: ${{ steps.prerelease.outputs.is_prerelease == 'false' }}
