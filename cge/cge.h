@@ -5,8 +5,7 @@
  * Include this file to access all public APIs
  */
 
-#ifndef _CGE_H_
-#define _CGE_H_
+#pragma once
 
 // Core functionality
 #include "cgeCommonDefine.h"
@@ -33,4 +32,4 @@
 // Platform abstraction
 #include "cgePlatform.h"
 
-#endif  // _CGE_H_
+

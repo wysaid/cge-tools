@@ -5,10 +5,7 @@
  * All filters should be created through these factory functions
  */
 
-#ifndef _CGE_FILTERS_H_
-#define _CGE_FILTERS_H_
-
-#include "cgeImageFilter.h"
+#pragma once
 
 namespace CGE
 {
@@ -126,5 +123,3 @@ CGEImageFilterInterface* createHistogramFilter();
 CGEImageFilterInterface* createBorderEffectsFilter();
 CGEImageFilterInterface* createCardEffectsFilter();
 }  // namespace CGE
-
-#endif  // _CGE_FILTERS_H_
