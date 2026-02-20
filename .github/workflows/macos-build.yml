@@ -1,0 +1,133 @@
+name: macOS Build
+
+on:
+  push:
+    branches: [master, source_code]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/instructions/**'
+      - '.github/skills/**'
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      artifact-arm64:
+        description: "macOS arm64 artifact name"
+        value: ${{ jobs.build-mac-arm64.outputs.artifact-name }}
+      artifact-x86_64:
+        description: "macOS x86_64 artifact name"
+        value: ${{ jobs.build-mac-x86_64.outputs.artifact-name }}
+
+jobs:
+  build-mac-arm64:
+    name: macOS arm64 (Apple Silicon)
+    runs-on: macos-latest
+    outputs:
+      artifact-name: ${{ steps.set-artifact.outputs.name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt6 (arm64)
+        run: |
+          brew install qt@6
+          echo "QTDIR=$(brew --prefix qt@6)" >> "$GITHUB_ENV"
+          echo "$(brew --prefix qt@6)/bin" >> "$GITHUB_PATH"
+
+      - name: Cache CMake build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: macos-arm64-release-${{ hashFiles('CMakeLists.txt', 'cge/CMakeLists.txt', 'filterGenerator/CMakeLists.txt', 'cge/src/**', 'cge/include/**', 'filterGenerator/**/*.cpp', 'filterGenerator/**/*.h') }}
+          restore-keys: macos-arm64-release-
+
+      - name: Configure CMake
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$QTDIR" \
+            -DBUILD_EXAMPLES=OFF \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Build
+        run: cmake --build build --config Release -j$(sysctl -n hw.logicalcpu)
+
+      - name: Deploy Qt dependencies
+        run: |
+          macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
+
+      - name: Package
+        id: set-artifact
+        run: |
+          ARTIFACT_NAME="filterGenerator-macos-arm64"
+          cd build/filterGenerator
+          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app
+          echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
+          echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: filterGenerator-macos-arm64
+          path: filterGenerator-macos-arm64.tar.gz
+          retention-days: 30
+
+  build-mac-x86_64:
+    name: macOS x86_64 (Intel)
+    runs-on: macos-13
+    outputs:
+      artifact-name: ${{ steps.set-artifact.outputs.name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt6 (x86_64)
+        run: |
+          brew install qt@6
+          echo "QTDIR=$(brew --prefix qt@6)" >> "$GITHUB_ENV"
+          echo "$(brew --prefix qt@6)/bin" >> "$GITHUB_PATH"
+
+      - name: Cache CMake build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: macos-x86_64-release-${{ hashFiles('CMakeLists.txt', 'cge/CMakeLists.txt', 'filterGenerator/CMakeLists.txt', 'cge/src/**', 'cge/include/**', 'filterGenerator/**/*.cpp', 'filterGenerator/**/*.h') }}
+          restore-keys: macos-x86_64-release-
+
+      - name: Configure CMake
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$QTDIR" \
+            -DBUILD_EXAMPLES=OFF \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Build
+        run: cmake --build build --config Release -j$(sysctl -n hw.logicalcpu)
+
+      - name: Deploy Qt dependencies
+        run: |
+          macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
+
+      - name: Package
+        id: set-artifact
+        run: |
+          ARTIFACT_NAME="filterGenerator-macos-x86_64"
+          cd build/filterGenerator
+          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app
+          echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
+          echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: filterGenerator-macos-x86_64
+          path: filterGenerator-macos-x86_64.tar.gz
+          retention-days: 30

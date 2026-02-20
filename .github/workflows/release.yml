@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-beta*'
+      - 'v*.*.*-alpha*'
+      - 'v*.*.*-rc*'
+  workflow_dispatch:
+    inputs:
+      create_release:
+        description: 'Create a GitHub Release after building'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  # Each workflow_call runs all jobs defined in the target file.
+  # macos-build.yml: builds both arm64 and x86_64.
+  # linux-build.yml: builds Ubuntu 22.04 and Fedora.
+  # windows-build.yml: builds Windows x64 MSVC.
+
+  # ─────────────────────────── macOS ───────────────────────────────────────
+  macos-builds:
+    name: macOS Builds (arm64 + x86_64)
+    uses: ./.github/workflows/macos-build.yml
+
+  # ─────────────────────────── Linux ───────────────────────────────────────
+  linux-builds:
+    name: Linux Builds (Ubuntu + Fedora)
+    uses: ./.github/workflows/linux-build.yml
+
+  # ─────────────────────────── Windows ─────────────────────────────────────
+  windows-build:
+    name: Windows x64 Build
+    uses: ./.github/workflows/windows-build.yml
+
+  # ─────────────────────────── Release ─────────────────────────────────────
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-22.04
+    needs: [macos-builds, linux-builds, windows-build]
+    if: >
+      startsWith(github.ref, 'refs/tags/v') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true')
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List artifacts
+        run: find artifacts -type f | sort
+
+      - name: Determine prerelease
+        id: prerelease
+        run: |
+          TAG="${GITHUB_REF_NAME:-manual}"
+          if echo "$TAG" | grep -qE '\-(beta|alpha|rc|test)'; then
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "FilterGenerator ${{ steps.prerelease.outputs.tag }}"
+          prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
+          generate_release_notes: true
+          make_latest: ${{ steps.prerelease.outputs.is_prerelease == 'false' }}
+          fail_on_unmatched_files: false
+          files: |
+            artifacts/**/*.tar.gz
+            artifacts/**/*.AppImage
+            artifacts/**/*.zip

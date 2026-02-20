@@ -1,0 +1,208 @@
+name: Linux Build
+
+on:
+  push:
+    branches: [master, source_code]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/instructions/**'
+      - '.github/skills/**'
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      artifact-ubuntu:
+        description: "Linux Ubuntu artifact name"
+        value: ${{ jobs.build-ubuntu.outputs.artifact-name }}
+      artifact-fedora:
+        description: "Linux Fedora artifact name"
+        value: ${{ jobs.build-fedora.outputs.artifact-name }}
+
+jobs:
+  build-ubuntu:
+    name: Linux x86_64 (Ubuntu 22.04)
+    runs-on: ubuntu-22.04
+    outputs:
+      artifact-name: ${{ steps.package.outputs.artifact-name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y \
+            cmake build-essential \
+            qt6-base-dev qt6-base-private-dev \
+            libqt6opengl6-dev \
+            libgl1-mesa-dev libglu1-mesa-dev \
+            libxcb-cursor0 libxcb-icccm4 libxcb-image0 \
+            libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
+            libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 \
+            libxkbcommon-x11-0 \
+            wget fuse
+
+      - name: Cache CMake build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: linux-ubuntu22-release-${{ hashFiles('CMakeLists.txt', 'cge/CMakeLists.txt', 'filterGenerator/CMakeLists.txt', 'cge/src/**', 'cge/include/**', 'filterGenerator/**/*.cpp', 'filterGenerator/**/*.h') }}
+          restore-keys: linux-ubuntu22-release-
+
+      - name: Configure CMake
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_EXAMPLES=OFF \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Build
+        run: cmake --build build --config Release -j$(nproc)
+
+      - name: Prepare AppDir
+        run: |
+          mkdir -p AppDir/usr/bin AppDir/usr/lib AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
+          cp build/filterGenerator/filterGenerator AppDir/usr/bin/filterGenerator
+          cp filterGenerator/resource/logo.png AppDir/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
+          cp filterGenerator/resource/logo.png AppDir/filterGenerator.png
+          cat > AppDir/filterGenerator.desktop <<'EOF'
+          [Desktop Entry]
+          Name=FilterGenerator
+          Exec=filterGenerator
+          Icon=filterGenerator
+          Type=Application
+          Categories=Graphics;
+          Comment=CGE Filter Generator - OpenGL image processing tool
+          EOF
+          cp AppDir/filterGenerator.desktop AppDir/usr/share/applications/filterGenerator.desktop
+
+      - name: Download linuxdeploy
+        run: |
+          wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
+
+      - name: Create AppImage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          QMAKE: /usr/lib/qt6/bin/qmake6
+          OUTPUT: filterGenerator-linux-x86_64-ubuntu22.AppImage
+        run: |
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir AppDir \
+            --executable AppDir/usr/bin/filterGenerator \
+            --desktop-file AppDir/filterGenerator.desktop \
+            --icon-file AppDir/filterGenerator.png \
+            --plugin qt \
+            --output appimage
+
+      - name: Package
+        id: package
+        run: |
+          APPIMAGE=$(ls filterGenerator-linux-x86_64-ubuntu22*.AppImage | head -1)
+          echo "artifact-name=filterGenerator-linux-x86_64-ubuntu22" >> "$GITHUB_OUTPUT"
+          echo "AppImage created: $APPIMAGE ($(du -sh "$APPIMAGE" | cut -f1))"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: filterGenerator-linux-x86_64-ubuntu22
+          path: filterGenerator-linux-x86_64-ubuntu22*.AppImage
+          retention-days: 30
+
+  build-fedora:
+    name: Linux x86_64 (Fedora)
+    runs-on: ubuntu-22.04
+    outputs:
+      artifact-name: ${{ steps.package.outputs.artifact-name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build inside Fedora container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            fedora:40 bash -lc '
+              set -e
+
+              echo "=== Installing dependencies ==="
+              dnf install -y \
+                cmake gcc-c++ make \
+                qt6-qtbase-devel \
+                qt6-qtopengl-devel \
+                mesa-libGL-devel mesa-libGLU-devel \
+                qt6-linguist-tools \
+                wget libstdc++-static
+
+              echo "=== Configuring CMake ==="
+              cd /workspace
+              cmake -B build-fedora \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_PREFIX_PATH=/usr/lib64/qt6 \
+                -DBUILD_EXAMPLES=OFF
+
+              echo "=== Building ==="
+              cmake --build build-fedora --config Release -j$(nproc)
+
+              echo "=== Preparing AppDir ==="
+              mkdir -p AppDir-fedora/usr/bin
+              mkdir -p AppDir-fedora/usr/share/applications
+              mkdir -p AppDir-fedora/usr/share/icons/hicolor/256x256/apps
+              cp build-fedora/filterGenerator/filterGenerator AppDir-fedora/usr/bin/filterGenerator
+              cp filterGenerator/resource/logo.png AppDir-fedora/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
+              cp filterGenerator/resource/logo.png AppDir-fedora/filterGenerator.png
+
+              cat > AppDir-fedora/filterGenerator.desktop <<'"'"'EOF'"'"'
+              [Desktop Entry]
+              Name=FilterGenerator
+              Exec=filterGenerator
+              Icon=filterGenerator
+              Type=Application
+              Categories=Graphics;
+              Comment=CGE Filter Generator - OpenGL image processing tool
+              EOF
+              cp AppDir-fedora/filterGenerator.desktop AppDir-fedora/usr/share/applications/filterGenerator.desktop
+
+              echo "=== Downloading linuxdeploy ==="
+              wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+              wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+              chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
+
+              echo "=== Creating AppImage ==="
+              export APPIMAGE_EXTRACT_AND_RUN=1
+              export QMAKE=/usr/lib64/qt6/bin/qmake6
+              export OUTPUT=filterGenerator-linux-x86_64-fedora.AppImage
+
+              ./linuxdeploy-x86_64.AppImage \
+                --appdir AppDir-fedora \
+                --executable AppDir-fedora/usr/bin/filterGenerator \
+                --desktop-file AppDir-fedora/filterGenerator.desktop \
+                --icon-file AppDir-fedora/filterGenerator.png \
+                --plugin qt \
+                --output appimage
+
+              echo "=== Done ==="
+              ls -lh filterGenerator-linux-x86_64-fedora*.AppImage
+            '
+
+      - name: Package
+        id: package
+        run: |
+          APPIMAGE=$(ls filterGenerator-linux-x86_64-fedora*.AppImage | head -1)
+          echo "artifact-name=filterGenerator-linux-x86_64-fedora" >> "$GITHUB_OUTPUT"
+          echo "AppImage created: $APPIMAGE ($(du -sh "$APPIMAGE" | cut -f1))"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: filterGenerator-linux-x86_64-fedora
+          path: filterGenerator-linux-x86_64-fedora*.AppImage
+          retention-days: 30
