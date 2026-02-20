@@ -41,6 +41,12 @@ target_link_libraries(cge PUBLIC
         ${QT}::OpenGL
 )
 
+# Use GLEW for OpenGL function loading on non-Apple desktop platforms.
+if (NOT APPLE)
+    find_package(GLEW REQUIRED)
+    target_link_libraries(cge PUBLIC GLEW::GLEW)
+endif ()
+
 if (APPLE)
     target_link_libraries(cge PUBLIC "-framework OpenGL")
     if (NOT IOS)

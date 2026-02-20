@@ -102,8 +102,13 @@ void CanvasWidget::paintGL()
 
 void CanvasWidget::initializeGL()
 {
-#ifdef CGE_USE_COMPATIBLE_GL_FUNCTIONS
-    g_glFunctions = this->context()->functions();
+#ifdef CGE_USE_GLEW
+    GLenum glewErr = glewInit();
+    if (glewErr != GLEW_OK)
+    {
+        CGE_LOG_ERROR("Failed to initialize GLEW: %s\n",
+                      reinterpret_cast<const char*>(glewGetErrorString(glewErr)));
+    }
 #endif
 
     cgePrintGLInfo();

@@ -14,12 +14,18 @@ export QTDIR=$(brew --prefix qt@6)
 **Linux (Ubuntu/Debian):**
 ```bash
 sudo apt-get update
-sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev
+sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev libglew-dev
+```
+
+**Linux (Fedora/RHEL):**
+```bash
+sudo dnf install gcc-c++ cmake qt6-qtbase-devel glew-devel
 ```
 
 **Windows:**
 - Download and install Qt6 from [Qt official website](https://www.qt.io/download)
 - Install Visual Studio 2019 or later
+- GLEW will be automatically downloaded during CMake configuration
 
 ### 2. Clone and Build
 

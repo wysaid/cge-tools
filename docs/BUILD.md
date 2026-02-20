@@ -119,19 +119,20 @@ target_link_libraries(your_app PRIVATE
 - Requires Xcode Command Line Tools
 - Qt6 can be installed via Homebrew: `brew install qt@6`
 - Set `QTDIR` to Qt installation: `export QTDIR=$(brew --prefix qt@6)`
+- OpenGL via system framework (no GLEW needed)
 
 ### Linux
 
 #### Ubuntu/Debian
 
 ```bash
-sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev
+sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev libglew-dev
 ```
 
 #### Fedora/RHEL
 
 ```bash
-sudo dnf install gcc-c++ cmake qt6-qtbase-devel
+sudo dnf install gcc-c++ cmake qt6-qtbase-devel glew-devel
 ```
 
 ### Windows

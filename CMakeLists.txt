@@ -53,7 +53,7 @@ else ()
     message(STATUS "Using Qt: ${Qt_DIR}, version ${QT_VERSION}")
 endif ()
 
-set(CMAKE_PREFIX_PATH ${Qt_DIR})
+set(CMAKE_PREFIX_PATH ${Qt_DIR} ${CMAKE_PREFIX_PATH})
 set(QT Qt${QT_VERSION})
 
 find_package(${QT} REQUIRED COMPONENTS OpenGL Core)
