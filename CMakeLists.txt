@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(cge-tools VERSION 2.0.0 LANGUAGES CXX)
 
-option(BUILD_FILTER_GENERATOR "Build filter generator application" ON)
+option(BUILD_FILTER_GENERATOR "Build filter generator application" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -22,7 +22,7 @@ if (NOT DEFINED Qt_DIR OR NOT EXISTS ${Qt_DIR})
     elseif (DEFINED ENV{QT_DIR})
         set(Qt_DIR $ENV{QT_DIR})
     else ()
-        find_program(MY_QMAKE_NAME qmake)
+        find_program(MY_QMAKE_NAME qmake qmake6)
         if (MY_QMAKE_NAME)
             get_filename_component(MY_QMAKE_DIR ${MY_QMAKE_NAME} DIRECTORY)
             get_filename_component(Qt_DIR ${MY_QMAKE_DIR} DIRECTORY)
@@ -32,7 +32,7 @@ endif ()
 
 # Detect Qt version
 if (NOT DEFINED QT_VERSION)
-    find_program(QMAKE_EXECUTABLE NAMES qmake HINTS "${Qt_DIR}/bin")
+    find_program(QMAKE_EXECUTABLE NAMES qmake qmake6 HINTS "${Qt_DIR}/bin")
     if (QMAKE_EXECUTABLE)
         execute_process(
                 COMMAND "${QMAKE_EXECUTABLE}" -query QT_VERSION

@@ -934,7 +934,7 @@ void CGEFilterColorScaleAndTex1::initSampler()
     setAdditionalUniformParameter(param);
 }
 
-CGEConstString CGESpecialFilterE39::paramTextureNmae = "e39_t.jpg";
+CGEConstString CGESpecialFilterE39::paramTextureName = "e39_t.jpg";
 
 bool CGESpecialFilterE39::initWithinCommonFilter(CGEMutipleEffectFilter* htProc)
 {
@@ -943,7 +943,7 @@ bool CGESpecialFilterE39::initWithinCommonFilter(CGEMutipleEffectFilter* htProc)
         setColorScale(0.01f, 0.01f);
         setSaturation(0.3f);
         initSampler();
-        return assignSamplerID(htProc->loadResources(paramTextureNmae));
+        return assignSamplerID(htProc->loadResources(paramTextureName));
     }
     return false;
 }

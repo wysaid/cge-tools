@@ -69,11 +69,11 @@ static CGEConstString s_fshMidValue3x3 = CGE_SHADER_STRING_PRECISION_M(
 
     float lum(vec3 value) { return dot(value, vec3(0.299, 0.587, 0.114)); }
 
-    vec3 max2(vec3 c0, vec3 c1) { return mix(newValue, originValue, step(lum(newValue), lum(originValue))); }
+    vec3 max2(vec3 c0, vec3 c1) { return mix(c0, c1, step(lum(c0), lum(c1))); }
 
     vec3 max3(vec3 c0, vec3 c1, vec3 c2) { return max2(max2(c0, c1), c2); }
 
-    vec3 min2(vec3 c0, vec3 c1) { return mix(newValue, originValue, step(lum(originValue), lum(newValue))); }
+    vec3 min2(vec3 c0, vec3 c1) { return mix(c0, c1, step(lum(c1), lum(c0))); }
 
     vec3 min3(vec3 c0, vec3 c1, vec3 c2) { return min2(min2(c0, c1), c2); }
 
@@ -106,9 +106,9 @@ static CGEConstString s_fshMidValue3x3 = CGE_SHADER_STRING_PRECISION_M(
 
         for (int i = 0; i < 3; ++i)
         {
-            vec3 a = texture2D(inputImageTexture, texCoord[i * 3]);
-            vec3 b = texture2D(inputImageTexture, texCoord[i * 3 + 1]);
-            vec3 c = texture2D(inputImageTexture, texCoord[i * 3 + 2]);
+            vec3 a = texture2D(inputImageTexture, texCoord[i * 3]).rgb;
+            vec3 b = texture2D(inputImageTexture, texCoord[i * 3 + 1]).rgb;
+            vec3 c = texture2D(inputImageTexture, texCoord[i * 3 + 2]).rgb;
 
             maxGroup[i] = max3(a, b, c);
             midGroup[i] = mid3(a, b, c);

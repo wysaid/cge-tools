@@ -51,7 +51,7 @@ void cgeInitFilterStatus()
 
     // Probe whether GL_PIXEL_PACK_BUFFER is supported at runtime.
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
-    if (glGetError() == GL_FALSE)
+    if (glGetError() == GL_NO_ERROR)
     {
         g_shouldUsePBO = true;
     }

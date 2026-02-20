@@ -67,13 +67,13 @@ public:
     bool initWithinCommonFilter(CGEMutipleEffectFilter* htProc);
 
 protected:
-    static CGEConstString paramTextureNmae;
+    static CGEConstString paramTextureName;
 };
 
 class CGESpecialFilterE73To80Help : public CGEImageFilterInterface
 {
 public:
-    CGESpecialFilterE73To80Help() {}
+    CGESpecialFilterE73To80Help() : m_texture(0) {}
     ~CGESpecialFilterE73To80Help() { glDeleteTextures(1, &m_texture); }
 
 protected:

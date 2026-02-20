@@ -58,8 +58,7 @@ typedef GLuint (*CGETextureLoadFun)(const char* sourceName, GLint* w, GLint* h, 
 void cgeSetCommonLoadFunction(CGEBufferLoadFun fun, void* arg);
 void cgeSetCommonUnloadFunction(CGEBufferUnloadFun fun, void* arg);
 
-void* cgeLoadResourceCommon(const char* sourceName, void** bufferData, GLint* w, GLint* h, GLenum* format,
-                            GLenum* type);
+void* cgeLoadResourceCommon(const char* sourceName, void** bufferData, CGEBufferFormat* fmt, GLint* w, GLint* h);
 CGEBufferLoadFun cgeGetCommonLoadFunc();
 void* cgeGetCommonLoadArg();
 bool cgeUnloadResourceCommon(void* bufferArg);
