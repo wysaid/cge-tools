@@ -316,7 +316,7 @@
             },
             "group": "build",
             "problemMatcher": "$gcc",
-            "dependsOn": "Build With Filter Generator (Debug)"
+            "dependsOn": "Build CMake Project (Debug)"
         },
         {
             "label": "Run FilterGenerator (Release)",
@@ -337,7 +337,7 @@
             },
             "group": "build",
             "problemMatcher": "$gcc",
-            "dependsOn": "Build With Filter Generator (Release)"
+            "dependsOn": "Build CMake Project (Release)"
         }
     ]
 }
