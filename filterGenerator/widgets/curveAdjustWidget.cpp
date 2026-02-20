@@ -7,7 +7,7 @@
  */
 
 #include "curveAdjustWidget.h"
-#include "../../cge/src/core/cgeGlobal.h"
+#include "cgeGlobal.h"
 
 SingleCurveWidget::SingleCurveWidget(CurveAdjustWindow* curveAdjustWindow, QLineEdit* edit, CurveChannel channel,
                                      QWidget* parent) :

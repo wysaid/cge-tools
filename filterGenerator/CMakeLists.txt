@@ -2,24 +2,17 @@ cmake_minimum_required(VERSION 3.16)
 
 project(filterGenerator VERSION 2.0.0 LANGUAGES CXX)
 
-# ============================================================================
-# Qt Settings
-# ============================================================================
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui ui/widgets)
 
-# ============================================================================
-# Sources
-# ============================================================================
 file(GLOB_RECURSE GENERATOR_SOURCES
     "*.cpp"
     "widgets/*.cpp"
     "widgets/adjustments/*.cpp"
 )
 
-# Exclude filterRuleTestMain.cpp which has its own main() function
 list(REMOVE_ITEM GENERATOR_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/filterRuleTestMain.cpp")
 
 file(GLOB_RECURSE GENERATOR_HEADERS
@@ -37,9 +30,6 @@ file(GLOB_RECURSE GENERATOR_RESOURCES
     "*.qrc"
 )
 
-# ============================================================================
-# Executable
-# ============================================================================
 if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE icon.icns)
     # set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/icon.icns")

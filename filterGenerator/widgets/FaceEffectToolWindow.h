@@ -13,9 +13,9 @@
 #include <QTime>
 #include <functional>
 #include "ui_faceEffectTool.h"
-#include "../../cge/src/sprite/cgeSprite2d.h"
+#include "cgeSprite2d.h"
 
-#include "../../cge/src/core/cgeGeometryUtils.h"
+#include "cgeGeometryUtils.h"
 
 #include <QJsonDocument>
 

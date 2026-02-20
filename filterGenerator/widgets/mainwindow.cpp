@@ -7,7 +7,7 @@
  */
 
 #include "mainwindow.h"
-#include "../../cge/src/filters/internal/cgeMultipleEffectsDataset.h"
+#include "cgeMultipleEffectsDataset.h"
 
 #define MARGIN_TOP 10
 
