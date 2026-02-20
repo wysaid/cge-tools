@@ -36,29 +36,6 @@ cmake --build . -j$(nproc)
 
 After building, you will have `libcge.a` (or `libcge.lib` on Windows).
 
-### 3. Run Your First Example
-
-```bash
-# Go to examples directory
-cd ../examples
-mkdir build && cd build
-
-# Build examples
-cmake ..
-cmake --build .
-
-# Prepare a test image
-cp /path/to/your/image.jpg input.jpg
-
-# Run example
-./simple_filter
-
-# View result
-open output.jpg  # macOS
-# or xdg-open output.jpg  # Linux
-# or start output.jpg  # Windows
-```
-
 ## Common Operations
 
 ### Apply a Single Filter
@@ -311,7 +288,6 @@ cmake .. -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations"
 ## Next Steps
 
 - Read the [Full Documentation](README.md)
-- Browse the [Example Programs](examples/)
 - Read the [Build Instructions](BUILD.md)
 - Explore the [Filter Source Code](src/filters/)
 

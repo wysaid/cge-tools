@@ -58,9 +58,9 @@ cmake .. \
 | Build Type | Output |
 |------------|--------|
 | Release (static) | `build/libcge.a` (Unix) / `build/cge.lib` (Windows) |
-| Debug (static) | `build/libcged.a` (Unix) / `build/cged.lib` (Windows) |
+| Debug (static) | `build/libcge.a` (Unix) / `build/cged.lib` (Windows/MSVC) |
 | Release (shared) | `build/libcge.so` (Linux) / `build/libcge.dylib` (macOS) / `build/cge.dll` (Windows) |
-| Debug (shared) | `build/libcged.so` (Linux) / `build/libcged.dylib` (macOS) / `build/cged.dll` (Windows) |
+| Debug (shared) | `build/libcge.so` (Linux) / `build/libcge.dylib` (macOS) / `build/cged.dll` (Windows/MSVC) |
 
 ### Applications
 
@@ -252,4 +252,3 @@ cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 - GitHub Issues: https://github.com/wysaid/cge-tools/issues
 - Documentation: See README.md
-- Examples: Check `filterGenerator/` for usage examples
