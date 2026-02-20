@@ -2,7 +2,7 @@ name: Windows Build
 
 on:
   push:
-    branches: [master, source_code]
+    branches: [master]
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -19,6 +19,10 @@ on:
       artifact-windows:
         description: "Windows artifact name"
         value: ${{ jobs.build-windows.outputs.artifact-name }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-windows:

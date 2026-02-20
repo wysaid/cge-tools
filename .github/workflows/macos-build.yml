@@ -2,7 +2,7 @@ name: macOS Build
 
 on:
   push:
-    branches: [master, source_code]
+    branches: [master]
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -22,6 +22,10 @@ on:
       artifact-x86_64:
         description: "macOS x86_64 artifact name"
         value: ${{ jobs.build-mac-x86_64.outputs.artifact-name }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-mac-arm64:
