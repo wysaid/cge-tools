@@ -68,7 +68,7 @@ static CGEConstString s_fshDistortionMove = CGE_SHADER_STRING_PRECISION_H(
             float percent;
 
             // Projection onto the line is outside the segment
-            if (projVec.x < v2Min.x || projVec.x > v2Min.x || projVec.y < v2Min.y || projVec.y > v2Max.y)
+            if (projVec.x < v2Min.x || projVec.x > v2Max.x || projVec.y < v2Min.y || projVec.y > v2Max.y)
             {
                 // Check if within radius of the nearest endpoint
                 float dis2 = length(realPosition - keyPoint);
@@ -99,7 +99,7 @@ static CGEConstString s_fshDistortionMove = CGE_SHADER_STRING_PRECISION_H(
 namespace CGE
 {
 CGEDistortionFilter::CGEDistortionFilter() :
-    m_intensityLoc(-1), m_radiusLoc(-1), m_stepsLoc(-1), m_keyPointLoc(-1), m_keyPoint2Loc(-1)
+    m_intensityLoc(-1), m_radiusLoc(-1), m_stepsLoc(-1), m_keyPointLoc(-1), m_keyPoint2Loc(-1), m_equationLoc(-1)
 {}
 
 CGEDistortionFilter::~CGEDistortionFilter()

@@ -16,6 +16,7 @@
 #include <condition_variable>
 #include <list>
 #include <memory>
+#include <functional>
 
 namespace CGE
 {
@@ -25,30 +26,28 @@ public:
     void putData4Write(const Type& data)
     {
         m_writeMutex.lock();
-        m_list4Write.push(data);
+        m_list4Write.push_back(data);
         m_writeMutex.unlock();
     }
 
     void putData4Read(const Type& data)
     {
         m_readMutex.lock();
-        m_list4Read.push(data);
+        m_list4Read.push_back(data);
         m_readMutex.unlock();
     }
 
     bool hasData4Write()
     {
-        m_list4Write.lock();
+        std::lock_guard<std::mutex> lock(m_writeMutex);
         bool canWrite = !m_list4Write.empty();
-        m_list4Write.unlock();
         return canWrite;
     }
 
     bool hasData4Read()
     {
-        m_list4Read.lock();
+        std::lock_guard<std::mutex> lock(m_readMutex);
         bool canRead = !m_list4Read.empty();
-        m_list4Read.unlock();
         return canRead;
     }
 
@@ -58,7 +57,7 @@ public:
         if (m_list4Write.empty()) return Type();
 
         Type data = m_list4Write.front();
-        m_list4Write.pop();
+        m_list4Write.pop_front();
         return data;
     }
 
@@ -68,7 +67,7 @@ public:
         if (m_list4Read.empty()) return Type();
 
         Type data = m_list4Read.front();
-        m_list4Read.pop();
+        m_list4Read.pop_front();
         return data;
     }
 

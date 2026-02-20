@@ -237,10 +237,10 @@ extern QOpenGLFunctions* g_glFunctions;
 extern QGLFunctions* g_glFunctions;
 #endif
 
-//    inline void glActiveTexture(GLenum texture)
-//    {
-//        return g_glFunctions->glActiveTexture(texture);
-//    }
+inline void glActiveTexture(GLenum texture)
+{
+    return g_glFunctions->glActiveTexture(texture);
+}
 
 inline void glAttachShader(GLuint program, GLuint shader)
 {

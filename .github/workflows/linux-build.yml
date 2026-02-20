@@ -63,6 +63,8 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH=/usr \
+            -DBUILD_FILTER_GENERATOR=ON \
             -DBUILD_EXAMPLES=OFF \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
@@ -176,9 +178,8 @@ jobs:
               dnf install -y \
                 cmake gcc-c++ make \
                 qt6-qtbase-devel \
-                qt6-qtopengl-devel \
                 mesa-libGL-devel mesa-libGLU-devel \
-                qt6-linguist-tools \
+                qt6-linguist \
                 wget libstdc++-static
 
               echo "=== Configuring CMake ==="
@@ -186,6 +187,7 @@ jobs:
               cmake -B build-fedora \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_PREFIX_PATH=/usr/lib64/qt6 \
+                -DBUILD_FILTER_GENERATOR=ON \
                 -DBUILD_EXAMPLES=OFF
 
               echo "=== Building ==="
