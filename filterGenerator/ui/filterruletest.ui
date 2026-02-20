@@ -78,7 +78,7 @@
       <height>451</height>
      </rect>
     </property>
-    <property name="plainText">
+    <property name="placeholderText">
      <string>## Paste Effect Rules Here! ##
 
 Clear all text in this box, paste the effect rules, and click Test.
@@ -153,9 +153,9 @@ V1.3 added Batch Process function: click to select multiple images, all will hav
     <widget class="QPushButton" name="saveBtn">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>148</x>
        <y>60</y>
-       <width>85</width>
+       <width>138</width>
        <height>31</height>
       </rect>
      </property>
@@ -169,9 +169,9 @@ V1.3 added Batch Process function: click to select multiple images, all will hav
     <widget class="QPushButton" name="batchBtn">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>5</x>
        <y>60</y>
-       <width>85</width>
+       <width>135</width>
        <height>31</height>
       </rect>
      </property>
@@ -185,9 +185,9 @@ V1.3 added Batch Process function: click to select multiple images, all will hav
     <widget class="QPushButton" name="compBtn">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>148</x>
        <y>20</y>
-       <width>85</width>
+       <width>138</width>
        <height>31</height>
       </rect>
      </property>
@@ -198,9 +198,9 @@ V1.3 added Batch Process function: click to select multiple images, all will hav
     <widget class="QPushButton" name="testBtn">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>5</x>
        <y>20</y>
-       <width>85</width>
+       <width>135</width>
        <height>31</height>
       </rect>
      </property>

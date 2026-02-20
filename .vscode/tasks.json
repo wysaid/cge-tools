@@ -337,6 +337,48 @@
             "group": "build",
             "problemMatcher": "$gcc",
             "dependsOn": "Load And Build CMake Project (Release)"
+        },
+        {
+            "label": "Run FilterRuleTest (Debug)",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build/filterGenerator/filterRuleTest.app"
+            ],
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "${workspaceFolder}/build/filterGenerator/Debug/filterRuleTest.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Load And Build CMake Project (Debug)"
+        },
+        {
+            "label": "Run FilterRuleTest (Release)",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build/filterGenerator/filterRuleTest.app"
+            ],
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "${workspaceFolder}/build/filterGenerator/Release/filterRuleTest.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc",
+            "dependsOn": "Load And Build CMake Project (Release)"
         }
     ]
 }

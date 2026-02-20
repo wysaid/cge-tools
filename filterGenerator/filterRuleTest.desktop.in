@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Filter Rule Test
+Comment=CGE Filter Rule Validation Tool
+Exec=filterRuleTest
+Icon=filterRuleTest
+Terminal=false
+Type=Application
+Categories=Graphics;
