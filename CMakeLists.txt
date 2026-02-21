@@ -34,6 +34,12 @@ endif ()
 if (NOT DEFINED QT_VERSION)
     find_program(QMAKE_EXECUTABLE NAMES qmake qmake6 HINTS "${Qt_DIR}/bin")
     if (QMAKE_EXECUTABLE)
+        # Also derive Qt_DIR from QMAKE_EXECUTABLE if not yet set (handles cases
+        # where find_program above missed qmake but HINTS path succeeded).
+        if (NOT DEFINED Qt_DIR OR NOT EXISTS "${Qt_DIR}")
+            get_filename_component(_qmake_dir "${QMAKE_EXECUTABLE}" DIRECTORY)
+            get_filename_component(Qt_DIR "${_qmake_dir}" DIRECTORY)
+        endif ()
         execute_process(
                 COMMAND "${QMAKE_EXECUTABLE}" -query QT_VERSION
                 OUTPUT_VARIABLE QT_VERSION_FULL
@@ -47,13 +53,15 @@ if (NOT DEFINED QT_VERSION)
     endif ()
 endif ()
 
-if (NOT DEFINED Qt_DIR)
-    message(FATAL_ERROR "Qt not found! Please set QTDIR environment variable or CMAKE_PREFIX_PATH")
+if (NOT DEFINED Qt_DIR OR NOT EXISTS "${Qt_DIR}")
+    # Qt_DIR not found via QTDIR env or qmake — rely on cmake's built-in
+    # find_package search paths (works for system-installed Qt on Ubuntu/Debian).
+    message(STATUS "Qt dir not detected; relying on system CMake package search paths")
 else ()
     message(STATUS "Using Qt: ${Qt_DIR}, version ${QT_VERSION}")
+    set(CMAKE_PREFIX_PATH ${Qt_DIR} ${CMAKE_PREFIX_PATH})
 endif ()
 
-set(CMAKE_PREFIX_PATH ${Qt_DIR} ${CMAKE_PREFIX_PATH})
 set(QT Qt${QT_VERSION})
 
 find_package(${QT} REQUIRED COMPONENTS OpenGL Core)
