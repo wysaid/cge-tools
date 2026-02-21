@@ -6,6 +6,7 @@
  */
 
 #include "cgeImageFilter.h"
+#include <cstdio>
 
 CGE_UNEXPECTED_ERR_MSG(static int sFilterCount = 0;)
 

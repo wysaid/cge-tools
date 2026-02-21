@@ -10,6 +10,8 @@
 #define _CGEPLATFORMS_H_
 
 #include <QtCore/QtGlobal>
+#include <cstdio>
+#include <cstring>
 
 // On non-macOS desktop platforms, use GLEW for OpenGL function loading.
 // GLEW must be included BEFORE any other OpenGL headers.
@@ -19,8 +21,14 @@
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+// QOpenGLFunctions and QOpenGLContext headers call #undef on GLEW-provided OpenGL
+// function pointers when included after glew.h. On desktop Linux/Windows where GLEW
+// is used for function loading, skip these Qt OpenGL headers entirely — GLEW alone
+// provides all the raw glXxx() symbols the library needs.
+#ifndef CGE_USE_GLEW
 #include <QOpenGLFunctions>
 #include <QOpenGLContext>
+#endif
 #elif defined(QT_OPENGL_ES_2)
 #include <QOpenGLFunctions_ES2>
 #include <qgl.h>
