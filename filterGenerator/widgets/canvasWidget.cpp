@@ -6,10 +6,10 @@
  *        Mail: admin@wysaid.org
  */
 
+#include "canvasWidget.h"
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QMimeData>
-#include "canvasWidget.h"
 
 #define CLOCK_TRANSLATE (CLOCKS_PER_SEC / 1000)
 

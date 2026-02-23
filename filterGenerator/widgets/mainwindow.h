@@ -8,6 +8,10 @@
 
 #pragma once
 
+// cge.h must be included before any Qt headers to ensure
+// glew.h is loaded before gl.h on platforms that use GLEW.
+#include "cge.h"
+
 #include <QImage>
 #include <QPushButton>
 #include <QtWidgets>
@@ -16,7 +20,6 @@
 #include "ui_mainwindow.h"
 #include "ui_exportWidget.h"
 #include "canvasWidget.h"
-#include "cge.h"
 
 struct FormatContent
 {
