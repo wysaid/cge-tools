@@ -114,6 +114,14 @@ endmacro()
 cge_add_app(filterGenerator    main.cpp)
 cge_add_app(filterRuleTest     filterRuleTestMain.cpp)
 
+# On Windows with MSVC, GLEW must be included before any OpenGL headers.
+# Qt's OpenGL headers include gl.h implicitly, so we force-include glew.h first.
+if (WIN32 AND MSVC AND GLEW_INCLUDE_DIR)
+    foreach(_tgt filterGenerator filterRuleTest)
+        target_compile_options(${_tgt} PRIVATE "/FI${GLEW_INCLUDE_DIR}/GL/glew.h")
+    endforeach()
+endif ()
+
 message(STATUS "Filter Generator configured")
 message(STATUS "  Sources: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "  UI files: ${CMAKE_CURRENT_SOURCE_DIR}/ui")

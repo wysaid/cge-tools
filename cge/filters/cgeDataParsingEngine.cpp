@@ -1332,7 +1332,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::advancedStyleParser(const char* p
         }
 
         CGEColorMappingFilter* filter =
-            CGEColorMappingFilter::createWithMode(CGEColorMappingFilter::MAPINGMODE_DEFAULT);
+            CGEColorMappingFilter::createWithMode(CGEColorMappingFilter::MAPPINGMODE_DEFAULT);
 
         float weight = 0.0f;
 
@@ -1345,7 +1345,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::advancedStyleParser(const char* p
 
                 weight += 1.0f / (unitWidth * unitHeight - 1);
 
-                filter->pushMapingArea(ma);
+                filter->pushMappingArea(ma);
             }
         }
 

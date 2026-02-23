@@ -21,11 +21,11 @@ public:
     CGEColorMappingFilter();
     ~CGEColorMappingFilter();
 
-    enum MapingMode
+    enum MappingMode
     {
-        MAPINGMODE_DEFAULT = 0,
-        MAPINGMODE_BUFFERED_AREA = 0,
-        MAPINGMODE_SINGLE = 1,
+        MAPPINGMODE_DEFAULT = 0,
+        MAPPINGMODE_BUFFERED_AREA = 0,
+        MAPPINGMODE_SINGLE = 1,
     };
 
     struct MappingArea
@@ -36,10 +36,10 @@ public:
         bool operator<(const MappingArea& m) const { return weight < m.weight; }
     };
 
-    static CGEColorMappingFilter* createWithMode(MapingMode mode = MAPINGMODE_DEFAULT);
+    static CGEColorMappingFilter* createWithMode(MappingMode mode = MAPPINGMODE_DEFAULT);
 
-    virtual void pushMapingArea(const MappingArea& area);
-    virtual void endPushing();  // Called after pushMapingArea is done
+    virtual void pushMappingArea(const MappingArea& area);
+    virtual void endPushing();  // Called after pushMappingArea is done
     virtual void clearPushing() { m_mappingAreas.clear(); }
 
 

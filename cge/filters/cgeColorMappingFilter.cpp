@@ -191,13 +191,13 @@ CGEColorMappingFilter::~CGEColorMappingFilter()
     glDeleteTextures(1, &m_mappingTexture);
 }
 
-CGEColorMappingFilter* CGEColorMappingFilter::createWithMode(MapingMode mode)
+CGEColorMappingFilter* CGEColorMappingFilter::createWithMode(MappingMode mode)
 {
     switch (mode)
     {
-        case MAPINGMODE_BUFFERED_AREA:
+        case MAPPINGMODE_BUFFERED_AREA:
             return CGEColorMappingFilterBuffered_Area::create();
-        case MAPINGMODE_SINGLE:
+        case MAPPINGMODE_SINGLE:
         default:
             break;
     }
@@ -205,7 +205,7 @@ CGEColorMappingFilter* CGEColorMappingFilter::createWithMode(MapingMode mode)
     return nullptr;
 }
 
-void CGEColorMappingFilter::pushMapingArea(const MappingArea& area)
+void CGEColorMappingFilter::pushMappingArea(const MappingArea& area)
 {
     m_mappingAreas.push_back(area);
 }
