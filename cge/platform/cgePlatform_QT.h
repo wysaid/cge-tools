@@ -21,14 +21,41 @@
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-// QOpenGLFunctions and QOpenGLContext headers call #undef on GLEW-provided OpenGL
-// function pointers when included after glew.h. On desktop Linux/Windows where GLEW
-// is used for function loading, skip these Qt OpenGL headers entirely — GLEW alone
-// provides all the raw glXxx() symbols the library needs.
-#ifndef CGE_USE_GLEW
+
+#ifdef CGE_USE_GLEW
+// Qt's qopenglfunctions.h is fundamentally incompatible with GLEW: it
+// #undef's every GL function macro that GLEW provides.  Block that header
+// entirely by pre-defining its include guard.  We also define the
+// Q_OPENGL_FUNCTIONS_DEBUG macro (normally empty) so that downstream
+// Qt headers compile cleanly.
+//
+// qopenglextrafunctions.h inherits from QOpenGLFunctions and therefore
+// also must be blocked — our code uses GLEW directly instead.
+//
+// QOpenGLContext only needs a forward declaration of QOpenGLFunctions
+// (which qopenglcontext.h provides itself), so everything links correctly.
+#define QOPENGLFUNCTIONS_H
+#define QOPENGLEXTRAFUNCTIONS_H
+#define Q_OPENGL_FUNCTIONS_DEBUG
+// Suppress the informational GLEW-incompatibility warning emitted by
+// qopenglcontext.h when it detects __GLEW_H__.
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcpp"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 4081)
+#endif
+#include <QOpenGLContext>
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#else // !CGE_USE_GLEW
 #include <QOpenGLFunctions>
 #include <QOpenGLContext>
-#endif
+#endif // CGE_USE_GLEW
 #elif defined(QT_OPENGL_ES_2)
 #include <QOpenGLFunctions_ES2>
 #include <qgl.h>

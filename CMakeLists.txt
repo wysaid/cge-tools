@@ -98,6 +98,12 @@ add_subdirectory(cge)
 if (BUILD_FILTER_GENERATOR)
     message(STATUS "Building filter generator application")
     find_package(${QT} REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
+    # GLEW is found inside cge/CMakeLists.txt, but those variables are scoped
+    # to that subdirectory.  Re-find GLEW here so filterGenerator/CMakeLists.txt
+    # can use GLEW_INCLUDE_DIRS for its force-include workaround.
+    if (NOT APPLE)
+        find_package(GLEW REQUIRED)
+    endif ()
     add_subdirectory(filterGenerator)
 else ()
     message(STATUS "Skipping filter generator (use -DBUILD_FILTER_GENERATOR=ON to enable)")

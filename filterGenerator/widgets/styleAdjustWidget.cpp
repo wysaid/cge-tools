@@ -968,7 +968,7 @@ bool ColorMappingWidget::checkFilter()
 {
     if (m_filter == nullptr)
     {
-        m_filter = CGE::CGEColorMappingFilter::createWithMode(CGE::CGEColorMappingFilter::MAPINGMODE_DEFAULT);
+        m_filter = CGE::CGEColorMappingFilter::createWithMode(CGE::CGEColorMappingFilter::MAPPINGMODE_DEFAULT);
         m_mainWindow->appendFilter(m_filter);
     }
     return !!m_filter;
@@ -1038,7 +1038,7 @@ void ColorMappingWidget::preview()
 
             weight += 1.0f / (m_unitWidth * m_unitHeight - 1);
 
-            m_filter->pushMapingArea(ma);
+            m_filter->pushMappingArea(ma);
         }
     }
 
