@@ -187,17 +187,17 @@ struct Mat3
 
     inline void rotateX(float rad)
     {
-        *this *= makeXRotation(rad);  // 待优化
+        *this *= makeXRotation(rad);  // TODO: optimize
     }
 
     inline void rotateY(float rad)
     {
-        *this *= makeYRotation(rad);  // 待优化
+        *this *= makeYRotation(rad);  // TODO: optimize
     }
 
     inline void rotateZ(float rad)
     {
-        *this *= makeZRotation(rad);  // 待优化
+        *this *= makeZRotation(rad);  // TODO: optimize
     }
 
     inline void loadIdentity() { *this = makeIdentity(); }
@@ -660,7 +660,7 @@ struct Mat4
                     data[0][3] * m[3][0] + data[1][3] * m[3][1] + data[2][3] * m[3][2] + data[3][3] * m[3][3]);
     }
 
-    // 特殊用法， 将mat3 直接转换为mat4 并与之相乘。
+    // Special usage: directly convert mat3 to mat4 and multiply with it.
     inline Mat4 operator*(const Mat3& m) const
     {
         return Mat4(data[0][0] * m[0][0] + data[1][0] * m[0][1] + data[2][0] * m[0][2],

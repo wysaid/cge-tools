@@ -3,7 +3,7 @@
  *
  *  Created on: 2015-3-20
  *      Author: Wang Yang
- * Description: ×î´óÖµÂË²¨
+ * Description: Maximum value filter
  */
 
 #ifndef _CGE_MAXVALUE_FILTER_H_

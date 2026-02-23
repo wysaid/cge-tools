@@ -32,7 +32,8 @@ endif ()
 
 # Detect Qt version
 if (NOT DEFINED QT_VERSION)
-    find_program(QMAKE_EXECUTABLE NAMES qmake qmake6 HINTS "${Qt_DIR}/bin")
+    # Prefer qmake6 (Qt6) over legacy qmake to avoid empty version from Qt5's qmake
+    find_program(QMAKE_EXECUTABLE NAMES qmake6 qmake HINTS "${Qt_DIR}/bin")
     if (QMAKE_EXECUTABLE)
         # Also derive Qt_DIR from QMAKE_EXECUTABLE if not yet set (handles cases
         # where find_program above missed qmake but HINTS path succeeded).
@@ -44,9 +45,15 @@ if (NOT DEFINED QT_VERSION)
                 COMMAND "${QMAKE_EXECUTABLE}" -query QT_VERSION
                 OUTPUT_VARIABLE QT_VERSION_FULL
                 OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_QUIET
         )
-        string(REGEX REPLACE "^([0-9]+)\\..*" "\\1" QT_VERSION ${QT_VERSION_FULL})
-        message(STATUS "Found Qt version: ${QT_VERSION}")
+        if (QT_VERSION_FULL AND NOT QT_VERSION_FULL STREQUAL "**Unknown**")
+            string(REGEX REPLACE "^([0-9]+)\\..*" "\\1" QT_VERSION ${QT_VERSION_FULL})
+            message(STATUS "Found Qt version: ${QT_VERSION}")
+        else ()
+            set(QT_VERSION 6)
+            message(WARNING "Could not determine Qt version from qmake output '${QT_VERSION_FULL}', assuming Qt 6")
+        endif ()
     else ()
         set(QT_VERSION 6)
         message(WARNING "qmake not found, assuming Qt 6")
