@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(cge-tools VERSION 2.0.0 LANGUAGES CXX)
 
-option(BUILD_FILTER_GENERATOR "Build filter generator application" OFF)
+option(BUILD_FILTER_GENERATOR "Build filter generator application" ON)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -93,17 +93,32 @@ if (CMAKE_HOST_SYSTEM_NAME MATCHES "Windows")
     endif ()
 endif ()
 
+# Fetch and build GLEW from source on non-Apple platforms (Linux + Windows).
+# This avoids any system-level GLEW installation requirement.
+if (NOT APPLE)
+    include(FetchContent)
+    set(BUILD_UTILS OFF CACHE BOOL "" FORCE)
+    FetchContent_Declare(
+            glew
+            URL           https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.tgz
+            SOURCE_SUBDIR build/cmake
+    )
+    # GLEW 2.2.0 uses cmake_minimum_required(VERSION 2.8) which CMake 4.0+
+    # no longer accepts.  Override so FetchContent can configure it.
+    set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+    FetchContent_MakeAvailable(glew)
+    unset(CMAKE_POLICY_VERSION_MINIMUM)
+    # GLEW 2.2.0's CMakeLists.txt uses global include_directories() instead of
+    # target_include_directories(), so INTERFACE_INCLUDE_DIRECTORIES is not set
+    # on the glew_s target.  Patch it here so downstream targets inherit it.
+    target_include_directories(glew_s INTERFACE "$<BUILD_INTERFACE:${glew_SOURCE_DIR}/include>")
+endif ()
+
 add_subdirectory(cge)
 
 if (BUILD_FILTER_GENERATOR)
     message(STATUS "Building filter generator application")
     find_package(${QT} REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
-    # GLEW is found inside cge/CMakeLists.txt, but those variables are scoped
-    # to that subdirectory.  Re-find GLEW here so filterGenerator/CMakeLists.txt
-    # can use GLEW_INCLUDE_DIRS for its force-include workaround.
-    if (NOT APPLE)
-        find_package(GLEW REQUIRED)
-    endif ()
     add_subdirectory(filterGenerator)
 else ()
     message(STATUS "Skipping filter generator (use -DBUILD_FILTER_GENERATOR=ON to enable)")

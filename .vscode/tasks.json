@@ -19,7 +19,7 @@
             "group": "build",
             "problemMatcher": "$gcc"
         },
-        // ── Configure (Load) ───────────────────────────────────────────────
+        // ── Configure (Load) ───────────────────────────────────────────────────────
         {
             "label": "Load CMake Project (Debug)",
             "type": "shell",
