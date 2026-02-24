@@ -8,6 +8,7 @@ C++ OpenGL image/video processing library with Qt6 integration.
 - Keep Qt code compatible with Qt 6.0+.
 - Maintain both standard OpenGL and OpenGL ES support.
 - Prefer additive changes; avoid refactoring stable, well-tested filters unless required.
+- Do not change default CMake options unless requested.
 
 ## Required Workflow
 
