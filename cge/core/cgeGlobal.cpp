@@ -138,11 +138,6 @@ void cgeCleanup()
         if (!CGE::SpriteCommonSettings::getDebugManager().empty()) {
             CGE_LOG_ERROR("Warning! %d sprites are not deleted!\n",
                           (int)CGE::SpriteCommonSettings::getDebugManager().size());
-        }
-
-        if (!CGE::TimeActionInterfaceAbstract::getDebugManager().empty()) {
-            CGE_LOG_ERROR("Warning! %d sprites are not deleted!\n",
-                          (int)CGE::TimeActionInterfaceAbstract::getDebugManager().size());
         });
 #endif
 }

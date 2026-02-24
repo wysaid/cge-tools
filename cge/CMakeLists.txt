@@ -42,9 +42,9 @@ target_link_libraries(cge PUBLIC
 )
 
 # Use GLEW for OpenGL function loading on non-Apple desktop platforms.
+# GLEW is fetched from source via FetchContent in the root CMakeLists.txt.
 if (NOT APPLE)
-    find_package(GLEW REQUIRED)
-    target_link_libraries(cge PUBLIC GLEW::GLEW)
+    target_link_libraries(cge PUBLIC glew_s)
 endif ()
 
 if (APPLE)
