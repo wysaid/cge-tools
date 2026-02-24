@@ -6,6 +6,12 @@
  *        Mail: admin@wysaid.org
  */
 
+// Include cgeFilters.h first so _CGE_FILTERS_H_ is defined, ensuring
+// factory function declarations use the public API return type
+// (CGEImageFilterInterface*). This prevents MSVC linker errors caused
+// by return-type name mangling mismatches.
+#include "../cgeFilters.h"
+
 #include "cgeFilterBasic.h"
 
 #define COMMON_FUNC(type)    \
@@ -19,172 +25,172 @@
 
 namespace CGE
 {
-CGEBrightnessFilter* createBrightnessFilter()
+CGEImageFilterInterface* createBrightnessFilter()
 {
     COMMON_FUNC(CGEBrightnessFilter);
 }
 
-CGEBrightnessFastFilter* createBrightnessFastFilter()
+CGEImageFilterInterface* createBrightnessFastFilter()
 {
     COMMON_FUNC(CGEBrightnessFastFilter);
 }
 
-CGEContrastFilter* createContrastFilter()
+CGEImageFilterInterface* createContrastFilter()
 {
     COMMON_FUNC(CGEContrastFilter);
 }
 
-CGESharpenBlurFilter* createSharpenBlurFilter()
+CGEImageFilterInterface* createSharpenBlurFilter()
 {
     COMMON_FUNC(CGESharpenBlurFilter);
 }
 
-CGESharpenBlurFastFilter* createSharpenBlurFastFilter()
+CGEImageFilterInterface* createSharpenBlurFastFilter()
 {
     COMMON_FUNC(CGESharpenBlurFastFilter);
 }
 
-CGESharpenBlurSimpleFilter* createSharpenBlurSimpleFilter()
+CGEImageFilterInterface* createSharpenBlurSimpleFilter()
 {
     COMMON_FUNC(CGESharpenBlurSimpleFilter);
 }
 
-CGESharpenBlurSimpleBetterFilter* createSharpenBlurSimpleBetterFilter()
+CGEImageFilterInterface* createSharpenBlurSimpleBetterFilter()
 {
     COMMON_FUNC(CGESharpenBlurSimpleBetterFilter);
 }
 
-CGESaturationHSLFilter* createSaturationHSLFilter()
+CGEImageFilterInterface* createSaturationHSLFilter()
 {
     COMMON_FUNC(CGESaturationHSLFilter);
 }
 
-CGESaturationFilter* createSaturationFilter()
+CGEImageFilterInterface* createSaturationFilter()
 {
     COMMON_FUNC(CGESaturationFilter);
 }
 
-CGEShadowHighlightFilter* createShadowHighlightFilter()
+CGEImageFilterInterface* createShadowHighlightFilter()
 {
     COMMON_FUNC(CGEShadowHighlightFilter);
 }
 
-CGEShadowHighlightFastFilter* createShadowHighlightFastFilter()
+CGEImageFilterInterface* createShadowHighlightFastFilter()
 {
     COMMON_FUNC(CGEShadowHighlightFastFilter);
 }
 
-CGEWhiteBalanceFilter* createWhiteBalanceFilter()
+CGEImageFilterInterface* createWhiteBalanceFilter()
 {
     COMMON_FUNC(CGEWhiteBalanceFilter);
 }
 
-CGEWhiteBalanceFastFilter* createWhiteBalanceFastFilter()
+CGEImageFilterInterface* createWhiteBalanceFastFilter()
 {
     COMMON_FUNC(CGEWhiteBalanceFastFilter);
 }
 
-CGEMonochromeFilter* createMonochromeFilter()
+CGEImageFilterInterface* createMonochromeFilter()
 {
     COMMON_FUNC(CGEMonochromeFilter);
 }
 
-CGECurveTexFilter* createCurveTexFilter()
+CGEImageFilterInterface* createCurveTexFilter()
 {
     COMMON_FUNC(CGECurveTexFilter);
 }
 
-CGECurveFilter* createCurveFilter()
+CGEImageFilterInterface* createCurveFilter()
 {
     COMMON_FUNC(CGECurveFilter);
 }
 
-CGEMoreCurveFilter* createMoreCurveFilter()
+CGEImageFilterInterface* createMoreCurveFilter()
 {
     COMMON_FUNC(CGEMoreCurveFilter);
 }
 
-CGEMoreCurveTexFilter* createMoreCurveTexFilter()
+CGEImageFilterInterface* createMoreCurveTexFilter()
 {
     COMMON_FUNC(CGEMoreCurveTexFilter);
 }
 
-CGEColorLevelFilter* createColorLevelFilter()
+CGEImageFilterInterface* createColorLevelFilter()
 {
     COMMON_FUNC(CGEColorLevelFilter);
 }
 
-CGEVignetteFilter* createVignetteFilter()
+CGEImageFilterInterface* createVignetteFilter()
 {
     COMMON_FUNC(CGEVignetteFilter);
 }
-CGEVignetteExtFilter* createVignetteExtFilter()
+
+CGEImageFilterInterface* createVignetteExtFilter()
 {
     COMMON_FUNC(CGEVignetteExtFilter);
 }
 
-CGETiltshiftVectorFilter* createTiltshiftVectorFilter()
+CGEImageFilterInterface* createTiltshiftVectorFilter()
 {
-
     COMMON_FUNC(CGETiltshiftVectorFilter);
 }
 
-CGETiltshiftEllipseFilter* createTiltshiftEllipseFilter()
+CGEImageFilterInterface* createTiltshiftEllipseFilter()
 {
     COMMON_FUNC(CGETiltshiftEllipseFilter);
 }
 
-CGETiltshiftVectorWithFixedBlurRadiusFilter* createFixedTiltshiftVectorFilter()
+CGEImageFilterInterface* createFixedTiltshiftVectorFilter()
 {
     COMMON_FUNC(CGETiltshiftVectorWithFixedBlurRadiusFilter);
 }
 
-CGETiltshiftEllipseWithFixedBlurRadiusFilter* createFixedTiltshiftEllipseFilter()
+CGEImageFilterInterface* createFixedTiltshiftEllipseFilter()
 {
     COMMON_FUNC(CGETiltshiftEllipseWithFixedBlurRadiusFilter);
 }
 
-CGESharpenBlurFastWithFixedBlurRadiusFilter* createSharpenBlurFastWithFixedBlurRadiusFilter()
+CGEImageFilterInterface* createSharpenBlurFastWithFixedBlurRadiusFilter()
 {
     COMMON_FUNC(CGESharpenBlurFastWithFixedBlurRadiusFilter);
 }
 
-CGEZoomBlurFilter* createZoomBlurFilter()
+CGEImageFilterInterface* createZoomBlurFilter()
 {
     COMMON_FUNC(CGEZoomBlurFilter);
 }
 
-CGEZoomBlur2Filter* createZoomBlur2Filter()
+CGEImageFilterInterface* createZoomBlur2Filter()
 {
     COMMON_FUNC(CGEZoomBlur2Filter);
 }
 
-CGEMotionBlurFilter* createMotionBlurFilter()
+CGEImageFilterInterface* createMotionBlurFilter()
 {
     COMMON_FUNC(CGEMotionBlurFilter);
 }
 
-CGESelectiveColorFilter* createSelectiveColorFilter()
+CGEImageFilterInterface* createSelectiveColorFilter()
 {
     COMMON_FUNC(CGESelectiveColorFilter);
 }
 
-CGEExposureFilter* createExposureFilter()
+CGEImageFilterInterface* createExposureFilter()
 {
     COMMON_FUNC(CGEExposureFilter);
 }
 
-CGEHueAdjustFilter* createHueAdjustFilter()
+CGEImageFilterInterface* createHueAdjustFilter()
 {
     COMMON_FUNC(CGEHueAdjustFilter);
 }
 
-CGEColorBalanceFilter* createColorBalanceFilter()
+CGEImageFilterInterface* createColorBalanceFilter()
 {
     COMMON_FUNC(CGEColorBalanceFilter);
 }
 
-CGELookupFilter* createLookupFilter()
+CGEImageFilterInterface* createLookupFilter()
 {
     COMMON_FUNC(CGELookupFilter);
 }

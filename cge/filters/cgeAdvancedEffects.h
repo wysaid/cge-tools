@@ -47,29 +47,27 @@ CGELiquidationFilter* getLiquidationFilter(float width, float height, float stri
 CGELiquidationNicerFilter* getLiquidationNicerFilter(float ratio, float stride);
 CGELiquidationNicerFilter* getLiquidationNicerFilter(float width, float height, float stride);
 
-// These functions have the same name in filters.h but different return types.
-// Only declare with concrete types when filters.h has NOT been included.
-#ifndef _CGE_FILTERS_H_
-CGEEmbossFilter* createEmbossFilter();
-CGEEdgeFilter* createEdgeFilter();
-CGERandomBlurFilter* createRandomBlurFilter();
-CGEBilateralBlurFilter* createBilateralBlurFilter();
-CGEMosaicBlurFilter* createMosaicBlurFilter();
-CGEEnlargeEyeFilter* createEnlargeEyeFilter();
-CGEEyeTintFilter* createEyeTintFilter();
-CGEEyeBrightenFilter* createEyeBrightenFilter();
-CGETeethWhitenFilter* createTeethWhitenFilter();
-CGEMarscaraFilter* createMarscaraFilter();
-CGERedeyeRemoveFilter* createRedeyeRemoveFilter();
-CGELightFilter* createLightFilter();
-CGEHalftoneFilter* createHalftoneFilter();
-CGEPolarPixellateFilter* createPolarPixellateFilter();
-CGECrosshatchFilter* createCrosshatchFilter();
-CGEHazeFilter* createHazeFilter();
-CGESketchFilter* createSketchFilter();
-CGEBeautifyFilter* createBeautifyFilter();
-CGEAlienLookFilter* createAlienLookFilter();
-#endif  // _CGE_FILTERS_H_
+// Factory functions matching the public API in cgeFilters.h use
+// CGEImageFilterInterface* to ensure consistent mangling on MSVC.
+CGEImageFilterInterface* createEmbossFilter();
+CGEImageFilterInterface* createEdgeFilter();
+CGEImageFilterInterface* createRandomBlurFilter();
+CGEImageFilterInterface* createBilateralBlurFilter();
+CGEImageFilterInterface* createMosaicBlurFilter();
+CGEImageFilterInterface* createEnlargeEyeFilter();
+CGEImageFilterInterface* createEyeTintFilter();
+CGEImageFilterInterface* createEyeBrightenFilter();
+CGEImageFilterInterface* createTeethWhitenFilter();
+CGEImageFilterInterface* createMarscaraFilter();
+CGEImageFilterInterface* createRedeyeRemoveFilter();
+CGEImageFilterInterface* createLightFilter();
+CGEImageFilterInterface* createHalftoneFilter();
+CGEImageFilterInterface* createPolarPixellateFilter();
+CGEImageFilterInterface* createCrosshatchFilter();
+CGEImageFilterInterface* createHazeFilter();
+CGEImageFilterInterface* createSketchFilter();
+CGEImageFilterInterface* createBeautifyFilter();
+CGEImageFilterInterface* createAlienLookFilter();
 }  // namespace CGE
 
 #endif

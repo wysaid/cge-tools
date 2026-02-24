@@ -5,6 +5,12 @@
  *      Author: Wang Yang
  */
 
+// Include cgeFilters.h first so _CGE_FILTERS_H_ is defined, ensuring
+// factory function declarations use the public API return type
+// (CGEImageFilterInterface*). This prevents MSVC linker errors caused
+// by return-type name mangling mismatches.
+#include "../cgeFilters.h"
+
 #include "cgeAdvancedEffects.h"
 
 #define COMMON_FUNC(type)    \
@@ -18,12 +24,12 @@
 
 namespace CGE
 {
-CGEEmbossFilter* createEmbossFilter()
+CGEImageFilterInterface* createEmbossFilter()
 {
     COMMON_FUNC(CGEEmbossFilter);
 }
 
-CGEEdgeFilter* createEdgeFilter()
+CGEImageFilterInterface* createEdgeFilter()
 {
     COMMON_FUNC(CGEEdgeFilter);
 }
@@ -33,12 +39,12 @@ CGEEdgeSobelFilter* createEdgeSobelFilter()
     COMMON_FUNC(CGEEdgeSobelFilter);
 }
 
-CGERandomBlurFilter* createRandomBlurFilter()
+CGEImageFilterInterface* createRandomBlurFilter()
 {
     COMMON_FUNC(CGERandomBlurFilter);
 }
 
-CGEBilateralBlurFilter* createBilateralBlurFilter()
+CGEImageFilterInterface* createBilateralBlurFilter()
 {
     COMMON_FUNC(CGEBilateralBlurFilter);
 }
@@ -48,32 +54,32 @@ CGEBilateralBlurBetterFilter* createBilateralBlurBetterFilter()
     COMMON_FUNC(CGEBilateralBlurBetterFilter);
 }
 
-CGEMosaicBlurFilter* createMosaicBlurFilter()
+CGEImageFilterInterface* createMosaicBlurFilter()
 {
     COMMON_FUNC(CGEMosaicBlurFilter);
 }
 
-CGEEnlargeEyeFilter* createEnlargeEyeFilter()
+CGEImageFilterInterface* createEnlargeEyeFilter()
 {
     COMMON_FUNC(CGEEnlargeEyeFilter);
 }
 
-CGEEyeTintFilter* createEyeTintFilter()
+CGEImageFilterInterface* createEyeTintFilter()
 {
     COMMON_FUNC(CGEEyeTintFilter);
 }
 
-CGEEyeBrightenFilter* createEyeBrightenFilter()
+CGEImageFilterInterface* createEyeBrightenFilter()
 {
     COMMON_FUNC(CGEEyeBrightenFilter);
 }
 
-CGETeethWhitenFilter* createTeethWhitenFilter()
+CGEImageFilterInterface* createTeethWhitenFilter()
 {
     COMMON_FUNC(CGETeethWhitenFilter);
 }
 
-CGEMarscaraFilter* createMarscaraFilter()
+CGEImageFilterInterface* createMarscaraFilter()
 {
     COMMON_FUNC(CGEMarscaraFilter);
 }
@@ -83,12 +89,12 @@ CGEWrinkleRemoveFilter* createWrinkleRemoveFilter()
     COMMON_FUNC(CGEWrinkleRemoveFilter);
 }
 
-CGERedeyeRemoveFilter* createRedeyeRemoveFilter()
+CGEImageFilterInterface* createRedeyeRemoveFilter()
 {
     COMMON_FUNC(CGERedeyeRemoveFilter);
 }
 
-CGELightFilter* createLightFilter()
+CGEImageFilterInterface* createLightFilter()
 {
     COMMON_FUNC(CGELightFilter);
 }
@@ -137,12 +143,12 @@ CGELiquidationNicerFilter* getLiquidationNicerFilter(float width, float height, 
     return proc;
 }
 
-CGEHalftoneFilter* createHalftoneFilter()
+CGEImageFilterInterface* createHalftoneFilter()
 {
     COMMON_FUNC(CGEHalftoneFilter);
 }
 
-CGEPolarPixellateFilter* createPolarPixellateFilter()
+CGEImageFilterInterface* createPolarPixellateFilter()
 {
     COMMON_FUNC(CGEPolarPixellateFilter);
 }
@@ -152,12 +158,12 @@ CGEPolkaDotFilter* createPolkaDotFilter()
     COMMON_FUNC(CGEPolkaDotFilter);
 }
 
-CGECrosshatchFilter* createCrosshatchFilter()
+CGEImageFilterInterface* createCrosshatchFilter()
 {
     COMMON_FUNC(CGECrosshatchFilter);
 }
 
-CGEHazeFilter* createHazeFilter()
+CGEImageFilterInterface* createHazeFilter()
 {
     COMMON_FUNC(CGEHazeFilter);
 }
@@ -167,17 +173,17 @@ CGELerpblurFilter* createLerpblurFilter()
     COMMON_FUNC(CGELerpblurFilter);
 }
 
-CGESketchFilter* createSketchFilter()
+CGEImageFilterInterface* createSketchFilter()
 {
     COMMON_FUNC(CGESketchFilter);
 }
 
-CGEBeautifyFilter* createBeautifyFilter()
+CGEImageFilterInterface* createBeautifyFilter()
 {
     COMMON_FUNC(CGEBeautifyFilter);
 }
 
-CGEAlienLookFilter* createAlienLookFilter()
+CGEImageFilterInterface* createAlienLookFilter()
 {
     COMMON_FUNC(CGEAlienLookFilter);
 }
