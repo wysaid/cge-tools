@@ -1,0 +1,48 @@
+# Normalize line endings for all text files to LF in the repository.
+# This prevents CRLF vs LF conflicts when working across Windows/Linux/macOS.
+
+# Default: all text files use LF
+* text=auto eol=lf
+
+# Explicitly enforce LF for shell scripts and CMake files
+*.sh        text eol=lf
+*.bash      text eol=lf
+*.cmake     text eol=lf
+CMakeLists.txt text eol=lf
+
+# Source and header files
+*.cpp       text eol=lf
+*.cc        text eol=lf
+*.c         text eol=lf
+*.h         text eol=lf
+*.hpp       text eol=lf
+
+# Config and markup
+*.md        text eol=lf
+*.txt       text eol=lf
+*.json      text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+*.xml       text eol=lf
+*.in        text eol=lf
+*.qrc       text eol=lf
+*.pro       text eol=lf
+*.pri       text eol=lf
+*.ui        text eol=lf
+*.desktop   text eol=lf
+*.plist     text eol=lf
+.clang-format text eol=lf
+.clang-tidy   text eol=lf
+
+# Force binary files to not be modified
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.a         binary
+*.lib       binary
+*.dll       binary
+*.so        binary
+*.dylib     binary
+*.exe       binary
