@@ -65,12 +65,13 @@ CGEImageFilterInterface* CGEDataParsingEngine::curveParser(const char* pstr, CGE
 {
     using namespace std;
     vector<CGEMoreCurveFilter::CurvePoint> vecR, vecG, vecB, vecRGB;
-    CGEMoreCurveTexFilter* proc = g_isFastFilterImpossible ? nullptr : createMoreCurveTexFilter();
+    auto* proc = static_cast<CGEMoreCurveTexFilter*>(
+        g_isFastFilterImpossible ? nullptr : createMoreCurveTexFilter());
 
     if (proc == nullptr)
     {
         CGE_LOG_INFO("curveParser - Curve With Texture is used!(Not error, everything is ok)\n");
-        proc = createMoreCurveTexFilter();
+        proc = static_cast<CGEMoreCurveTexFilter*>(createMoreCurveTexFilter());
 
         if (proc == nullptr)
         {
@@ -403,8 +404,10 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
     {
         float intensity;
         if (sscanf(pstr, "%f", &intensity) != 1) return nullptr;
-        CGEBrightnessFastFilter* bfp = g_isFastFilterImpossible ? nullptr : createBrightnessFastFilter();
-        CGEBrightnessFilter* bp = (bfp == nullptr) ? createBrightnessFilter() : nullptr;
+        auto* bfp = static_cast<CGEBrightnessFastFilter*>(
+            g_isFastFilterImpossible ? nullptr : createBrightnessFastFilter());
+        auto* bp = static_cast<CGEBrightnessFilter*>(
+            (bfp == nullptr) ? createBrightnessFilter() : nullptr);
 
         if (bfp != nullptr)
         {
@@ -446,8 +449,10 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             CGE_LOG_ERROR("Invalid Parameters: %s\n", pstr);
             return nullptr;
         }
-        CGEWhiteBalanceFastFilter* wfp = g_isFastFilterImpossible ? nullptr : createWhiteBalanceFastFilter();
-        CGEWhiteBalanceFilter* wp = (wfp == nullptr) ? createWhiteBalanceFilter() : nullptr;
+        auto* wfp = static_cast<CGEWhiteBalanceFastFilter*>(
+            g_isFastFilterImpossible ? nullptr : createWhiteBalanceFastFilter());
+        auto* wp = static_cast<CGEWhiteBalanceFilter*>(
+            (wfp == nullptr) ? createWhiteBalanceFilter() : nullptr);
         if (wfp != nullptr)
         {
             wfp->setTempAndTint(temp, tint);
@@ -498,8 +503,10 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             CGE_LOG_ERROR("Invalid Parameters: %s\n", pstr);
             return nullptr;
         }
-        CGEShadowHighlightFastFilter* shfp = g_isFastFilterImpossible ? nullptr : createShadowHighlightFastFilter();
-        CGEShadowHighlightFilter* shp = (shfp == nullptr) ? createShadowHighlightFilter() : nullptr;
+        auto* shfp = static_cast<CGEShadowHighlightFastFilter*>(
+            g_isFastFilterImpossible ? nullptr : createShadowHighlightFastFilter());
+        auto* shp = static_cast<CGEShadowHighlightFilter*>(
+            (shfp == nullptr) ? createShadowHighlightFilter() : nullptr);
         if (shfp != nullptr)
         {
             shfp->setShadowAndHighlight(shadow, highlight);
@@ -545,7 +552,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             CGE_LOG_ERROR("adjust hsl - Invalid Parameters: %s\n", pstr);
             return nullptr;
         }
-        CGESaturationHSLFilter* hslProc = createSaturationHSLFilter();
+        auto* hslProc = static_cast<CGESaturationHSLFilter*>(createSaturationHSLFilter());
         proc = hslProc;
         if (hslProc != nullptr)
         {
@@ -562,7 +569,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             CGE_LOG_ERROR("adjust color level - Invalid Parameters: %s\n", pstr);
             return nullptr;
         }
-        CGEColorLevelFilter* levelProc = createColorLevelFilter();
+        auto* levelProc = static_cast<CGEColorLevelFilter*>(createColorLevelFilter());
         proc = levelProc;
         if (levelProc != nullptr)
         {
@@ -587,7 +594,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             return nullptr;
         }
 
-        CGEColorBalanceFilter* filter = createColorBalanceFilter();
+        auto* filter = static_cast<CGEColorBalanceFilter*>(createColorBalanceFilter());
 
         if (filter != nullptr)
         {
@@ -611,7 +618,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::adjustParser(const char* pstr, CG
             return nullptr;
         }
 
-        CGELookupFilter* filter = createLookupFilter();
+        auto* filter = static_cast<CGELookupFilter*>(createLookupFilter());
         GLuint tex = fatherFilter->loadResources(lutName);
         if (filter != nullptr && tex != 0)
         {
@@ -1105,7 +1112,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::colorMulParser(const char* pstr, 
 CGEImageFilterInterface* CGEDataParsingEngine::selectiveColorParser(const char* pstr,
                                                                     CGEMutipleEffectFilter* fatherFilter)
 {
-    CGESelectiveColorFilter* proc = createSelectiveColorFilter();
+    auto* proc = static_cast<CGESelectiveColorFilter*>(createSelectiveColorFilter());
     if (proc == nullptr)
     {
         CGE_LOG_ERROR("selectiveColorParser - init processor failed!\n");
@@ -1271,7 +1278,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::advancedStyleParser(const char* p
             CGE_LOG_ERROR("Invalid Parameters: %s\n", pstr);
             return nullptr;
         }
-        CGEHazeFilter* filter = createHazeFilter();
+        auto* filter = static_cast<CGEHazeFilter*>(createHazeFilter());
         if (filter != nullptr)
         {
             proc = filter;
@@ -1408,7 +1415,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::beautifyParser(const char* pstr, 
             return nullptr;
         }
 
-        CGEBeautifyFilter* filter = createBeautifyFilter();
+        auto* filter = static_cast<CGEBeautifyFilter*>(createBeautifyFilter());
         if (filter != nullptr)
         {
             proc = filter;
@@ -1510,7 +1517,7 @@ CGEImageFilterInterface* CGEDataParsingEngine::dynamicParser(const char* pstr, C
             return nullptr;
         }
 
-        auto* filter = createDynamicWaveFilter();
+        auto* filter = static_cast<CGEDynamicWaveFilter*>(createDynamicWaveFilter());
 
         if (filter != nullptr)
         {

@@ -30,48 +30,45 @@
 #include "cgeColorBalanceAdjust.h"
 #include "cgeLookupFilter.h"
 
-// Only declare factory functions with concrete types when the public API header
-// (filters.h) has NOT been included. When filters.h is included, it already
-// declares these functions as CGEImageFilterInterface*, avoiding redeclaration
-// conflicts with different return types.
-#ifndef _CGE_FILTERS_H_
+// Factory function declarations — always use CGEImageFilterInterface* return
+// type to ensure consistent symbol mangling across all compilers (MSVC includes
+// the return type in mangled names, unlike GCC/Clang).
 namespace CGE
 {
-CGEBrightnessFilter* createBrightnessFilter();
-CGEBrightnessFastFilter* createBrightnessFastFilter();
-CGEContrastFilter* createContrastFilter();
-CGESharpenBlurFilter* createSharpenBlurFilter();
-CGESharpenBlurFastFilter* createSharpenBlurFastFilter();
-CGESharpenBlurSimpleFilter* createSharpenBlurSimpleFilter();
-CGESharpenBlurSimpleBetterFilter* createSharpenBlurSimpleBetterFilter();
-CGESaturationHSLFilter* createSaturationHSLFilter();
-CGESaturationFilter* createSaturationFilter();
-CGEShadowHighlightFilter* createShadowHighlightFilter();
-CGEShadowHighlightFastFilter* createShadowHighlightFastFilter();
-CGEWhiteBalanceFilter* createWhiteBalanceFilter();
-CGEWhiteBalanceFastFilter* createWhiteBalanceFastFilter();
-CGEMonochromeFilter* createMonochromeFilter();  // Monochrome
-CGECurveTexFilter* createCurveTexFilter();
-CGECurveFilter* createCurveFilter();
-CGEMoreCurveFilter* createMoreCurveFilter();
-CGEMoreCurveTexFilter* createMoreCurveTexFilter();
-CGEColorLevelFilter* createColorLevelFilter();
-CGEVignetteFilter* createVignetteFilter();
-CGEVignetteExtFilter* createVignetteExtFilter();
-CGETiltshiftVectorFilter* createTiltshiftVectorFilter();
-CGETiltshiftEllipseFilter* createTiltshiftEllipseFilter();
-CGETiltshiftVectorWithFixedBlurRadiusFilter* createFixedTiltshiftVectorFilter();
-CGETiltshiftEllipseWithFixedBlurRadiusFilter* createFixedTiltshiftEllipseFilter();
-CGESharpenBlurFastWithFixedBlurRadiusFilter* createSharpenBlurFastWithFixedBlurRadiusFilter();
-CGEZoomBlurFilter* createZoomBlurFilter();
-CGEZoomBlur2Filter* createZoomBlur2Filter();
-CGEMotionBlurFilter* createMotionBlurFilter();
-CGESelectiveColorFilter* createSelectiveColorFilter();
-CGEExposureFilter* createExposureFilter();
-CGEHueAdjustFilter* createHueAdjustFilter();
-CGEColorBalanceFilter* createColorBalanceFilter();
-CGELookupFilter* createLookupFilter();
+CGEImageFilterInterface* createBrightnessFilter();
+CGEImageFilterInterface* createBrightnessFastFilter();
+CGEImageFilterInterface* createContrastFilter();
+CGEImageFilterInterface* createSharpenBlurFilter();
+CGEImageFilterInterface* createSharpenBlurFastFilter();
+CGEImageFilterInterface* createSharpenBlurSimpleFilter();
+CGEImageFilterInterface* createSharpenBlurSimpleBetterFilter();
+CGEImageFilterInterface* createSaturationHSLFilter();
+CGEImageFilterInterface* createSaturationFilter();
+CGEImageFilterInterface* createShadowHighlightFilter();
+CGEImageFilterInterface* createShadowHighlightFastFilter();
+CGEImageFilterInterface* createWhiteBalanceFilter();
+CGEImageFilterInterface* createWhiteBalanceFastFilter();
+CGEImageFilterInterface* createMonochromeFilter();
+CGEImageFilterInterface* createCurveTexFilter();
+CGEImageFilterInterface* createCurveFilter();
+CGEImageFilterInterface* createMoreCurveFilter();
+CGEImageFilterInterface* createMoreCurveTexFilter();
+CGEImageFilterInterface* createColorLevelFilter();
+CGEImageFilterInterface* createVignetteFilter();
+CGEImageFilterInterface* createVignetteExtFilter();
+CGEImageFilterInterface* createTiltshiftVectorFilter();
+CGEImageFilterInterface* createTiltshiftEllipseFilter();
+CGEImageFilterInterface* createFixedTiltshiftVectorFilter();
+CGEImageFilterInterface* createFixedTiltshiftEllipseFilter();
+CGEImageFilterInterface* createSharpenBlurFastWithFixedBlurRadiusFilter();
+CGEImageFilterInterface* createZoomBlurFilter();
+CGEImageFilterInterface* createZoomBlur2Filter();
+CGEImageFilterInterface* createMotionBlurFilter();
+CGEImageFilterInterface* createSelectiveColorFilter();
+CGEImageFilterInterface* createExposureFilter();
+CGEImageFilterInterface* createHueAdjustFilter();
+CGEImageFilterInterface* createColorBalanceFilter();
+CGEImageFilterInterface* createLookupFilter();
 }  // namespace CGE
-#endif  // _CGE_FILTERS_H_
 
 #endif
