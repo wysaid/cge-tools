@@ -77,8 +77,8 @@ jobs:
           # filterGenerator
           mkdir -p AppDir/usr/bin AppDir/usr/lib AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
           cp build/filterGenerator/filterGenerator AppDir/usr/bin/filterGenerator
-          cp filterGenerator/resource/logo.png AppDir/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
-          cp filterGenerator/resource/logo.png AppDir/filterGenerator.png
+          cp filterGenerator/resource/filterGenerator_256x256.png AppDir/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
+          cp filterGenerator/resource/filterGenerator_256x256.png AppDir/filterGenerator.png
           cat > AppDir/filterGenerator.desktop <<'EOF'
           [Desktop Entry]
           Name=FilterGenerator
@@ -93,8 +93,8 @@ jobs:
           # filterRuleTest
           mkdir -p AppDir-frt/usr/bin AppDir-frt/usr/lib AppDir-frt/usr/share/applications AppDir-frt/usr/share/icons/hicolor/256x256/apps
           cp build/filterGenerator/filterRuleTest AppDir-frt/usr/bin/filterRuleTest
-          cp filterGenerator/resource/logo.png AppDir-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
-          cp filterGenerator/resource/logo.png AppDir-frt/filterRuleTest.png
+          cp filterGenerator/resource/filterRuleTest_256x256.png AppDir-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
+          cp filterGenerator/resource/filterRuleTest_256x256.png AppDir-frt/filterRuleTest.png
           cat > AppDir-frt/filterRuleTest.desktop <<'EOF'
           [Desktop Entry]
           Name=Filter Rule Test
@@ -200,8 +200,8 @@ jobs:
               mkdir -p AppDir-fedora/usr/share/applications
               mkdir -p AppDir-fedora/usr/share/icons/hicolor/256x256/apps
               cp build-fedora/filterGenerator/filterGenerator AppDir-fedora/usr/bin/filterGenerator
-              cp filterGenerator/resource/logo.png AppDir-fedora/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
-              cp filterGenerator/resource/logo.png AppDir-fedora/filterGenerator.png
+              cp filterGenerator/resource/filterGenerator_256x256.png AppDir-fedora/usr/share/icons/hicolor/256x256/apps/filterGenerator.png
+              cp filterGenerator/resource/filterGenerator_256x256.png AppDir-fedora/filterGenerator.png
 
               cat > AppDir-fedora/filterGenerator.desktop <<'"'"'EOF'"'"'
               [Desktop Entry]
@@ -218,8 +218,8 @@ jobs:
               mkdir -p AppDir-fedora-frt/usr/share/applications
               mkdir -p AppDir-fedora-frt/usr/share/icons/hicolor/256x256/apps
               cp build-fedora/filterGenerator/filterRuleTest AppDir-fedora-frt/usr/bin/filterRuleTest
-              cp filterGenerator/resource/logo.png AppDir-fedora-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
-              cp filterGenerator/resource/logo.png AppDir-fedora-frt/filterRuleTest.png
+              cp filterGenerator/resource/filterRuleTest_256x256.png AppDir-fedora-frt/usr/share/icons/hicolor/256x256/apps/filterRuleTest.png
+              cp filterGenerator/resource/filterRuleTest_256x256.png AppDir-fedora-frt/filterRuleTest.png
 
               cat > AppDir-fedora-frt/filterRuleTest.desktop <<'"'"'EOF'"'"'
               [Desktop Entry]
