@@ -80,12 +80,15 @@ macro(cge_add_app TARGET_NAME)
     )
     target_link_libraries(${TARGET_NAME} PRIVATE
         cge
-        Qt${QT_VERSION}::Core
-        Qt${QT_VERSION}::Gui
-        Qt${QT_VERSION}::Widgets
-        Qt${QT_VERSION}::OpenGL
-        Qt${QT_VERSION}::OpenGLWidgets
+        ${QT}::Core
+        ${QT}::Gui
+        ${QT}::Widgets
+        ${QT}::OpenGL
     )
+    # Qt6 ships QOpenGLWidget in a separate module; Qt5 bundles it in Widgets
+    if (QT_VERSION_MAJOR GREATER_EQUAL 6)
+        target_link_libraries(${TARGET_NAME} PRIVATE ${QT}::OpenGLWidgets)
+    endif ()
     target_compile_features(${TARGET_NAME} PRIVATE cxx_std_11)
 
     install(TARGETS ${TARGET_NAME}

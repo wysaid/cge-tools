@@ -2,16 +2,40 @@
 
 This document provides detailed instructions for building the CGE library and tools.
 
-## Quick Start
+## Qt Version Discovery
+
+The build system automatically discovers and uses either Qt5 (5.15+) or Qt6 (6.0+), with the following priority:
+
+1. `Qt_DIR` CMake variable
+2. `QTDIR`, `QT_DIR`, or `QT_ROOT` environment variables
+3. `Qt6_DIR` or `Qt5_DIR` environment variables (CMake standard)
+4. System CMake package search paths
+5. `qmake6` or `qmake` executable on PATH
+
+If multiple Qt installations are available, Qt6 takes precedence over Qt5.
+
+### Quick Start
 
 ```bash
-# macOS/Linux
+# macOS/Linux with Qt5
+export QTDIR=/path/to/Qt/5.15.x/macos  # or linux
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . -j$(nproc)
+
+# macOS/Linux with Qt6
 export QTDIR=/path/to/Qt/6.x.x/macos  # or linux
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . -j$(nproc)
 
-# Windows
+# Windows with Qt5
+set QTDIR=C:\Qt\5.15.x\msvc2019_64
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . --config Release
+
+# Windows with Qt6
 set QTDIR=C:\Qt\6.x.x\msvc2019_64
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -86,11 +110,12 @@ This installs:
 
 ### With CMake (Recommended)
 
-After installation:
+After installation, `find_package(cge)` will automatically discover Qt5 or Qt6:
 
 ```cmake
 find_package(cge REQUIRED)
-target_link_libraries(your_app PRIVATE CGE::cge)
+find_package(Qt6 COMPONENTS Core OpenGL REQUIRED)  # or Qt5
+target_link_libraries(your_app PRIVATE CGE::cge ${QT}::Core ${QT}::OpenGL)
 ```
 
 Without installation (using build directory):
@@ -117,19 +142,33 @@ target_link_libraries(your_app PRIVATE
 ### macOS
 
 - Requires Xcode Command Line Tools
-- Qt6 can be installed via Homebrew: `brew install qt@6`
-- Set `QTDIR` to Qt installation: `export QTDIR=$(brew --prefix qt@6)`
+- Qt5 and Qt6 can be installed via Homebrew: `brew install qt@5` or `brew install qt@6`
+- Set `QTDIR` appropriately:
+  - Qt5: `export QTDIR=$(brew --prefix qt@5)`
+  - Qt6: `export QTDIR=$(brew --prefix qt@6)`
 - OpenGL via system framework (no GLEW needed)
 
 ### Linux
 
-#### Ubuntu/Debian
+#### Ubuntu/Debian (Qt5)
+
+```bash
+sudo apt-get install build-essential cmake qt5-qmake qt5-default qtbase5-dev libqt5opengl5-dev libglew-dev
+```
+
+#### Ubuntu/Debian (Qt6)
 
 ```bash
 sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev libglew-dev
 ```
 
-#### Fedora/RHEL
+#### Fedora/RHEL (Qt5)
+
+```bash
+sudo dnf install gcc-c++ cmake qt5-qtbase-devel qt5-qtbase-gui glew-devel
+```
+
+#### Fedora/RHEL (Qt6)
 
 ```bash
 sudo dnf install gcc-c++ cmake qt6-qtbase-devel glew-devel

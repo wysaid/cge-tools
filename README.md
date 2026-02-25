@@ -1,6 +1,6 @@
 # CGE-Tools
 
-A powerful C++ image and video processing library with OpenGL-based filters and effects, built with Qt6.
+A powerful C++ image and video processing library with OpenGL-based filters and effects, built with Qt5/Qt6 support.
 
 ## Quick Links
 
@@ -31,7 +31,7 @@ This library is the core engine powering the mobile apps:
 
 - Hardware-accelerated OpenGL rendering
 - Cross-platform support (macOS, Linux, Windows)
-- Qt6 integration
+- Qt5 (5.15+) and Qt6 integration
 - Modular architecture
 
 ### Filter Categories
@@ -48,7 +48,7 @@ This library is the core engine powering the mobile apps:
 ### Prerequisites
 
 - CMake 3.16 or higher
-- Qt6 (Qt 6.0 or later)
+- Qt 5.15+ or Qt 6.0+
 - C++11 compatible compiler
 - OpenGL development libraries
 - (Optional) ccache for faster compilation
@@ -68,8 +68,8 @@ cmake --build . -j8
 ### macOS
 
 ```bash
-# Set Qt6 path (if not already set)
-export QTDIR=/path/to/Qt/6.x.x/macos
+# Set Qt path (if not already set)
+export QTDIR=/path/to/Qt/5.15.x/macos  # or Qt/6.x.x/macos
 
 # Build
 mkdir build && cd build
@@ -81,7 +81,11 @@ cmake --build .
 
 ```bash
 # Install dependencies (Ubuntu/Debian)
-sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev
+# For Qt5:
+sudo apt-get install build-essential cmake qt5-qmake qt5-default qtbase5-dev libqt5opengl5-dev libglew-dev
+
+# For Qt6:
+sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev libglew-dev
 
 # Build
 mkdir build && cd build
@@ -91,9 +95,11 @@ cmake --build .
 
 ### Windows
 
-```bash
-# Set Qt6 path
-set QTDIR=C:\Qt\6.x.x\msvc2019_64
+```batch
+# Set Qt path (use Qt5 or Qt6 installation)
+set QTDIR=C:\Qt\5.15.x\msvc2019_64
+REM or
+REM set QTDIR=C:\Qt\6.x.x\msvc2019_64
 
 # Build
 mkdir build && cd build

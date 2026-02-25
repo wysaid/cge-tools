@@ -4,26 +4,42 @@
 
 ### 1. Install Dependencies
 
-**macOS:**
+**macOS (Qt5):**
 ```bash
-# Install Qt6 (if not already installed)
+brew install qt@5
+export QTDIR=$(brew --prefix qt@5)
+```
+
+**macOS (Qt6):**
+```bash
 brew install qt@6
 export QTDIR=$(brew --prefix qt@6)
 ```
 
-**Linux (Ubuntu/Debian):**
+**Linux (Ubuntu/Debian, Qt5):**
+```bash
+sudo apt-get update
+sudo apt-get install build-essential cmake qt5-qmake qt5-default qtbase5-dev libqt5opengl5-dev libglew-dev
+```
+
+**Linux (Ubuntu/Debian, Qt6):**
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential cmake qt6-base-dev qt6-opengl-dev libglew-dev
 ```
 
-**Linux (Fedora/RHEL):**
+**Linux (Fedora/RHEL, Qt5):**
+```bash
+sudo dnf install gcc-c++ cmake qt5-qtbase-devel libqt5opengl-devel glew-devel
+```
+
+**Linux (Fedora/RHEL, Qt6):**
 ```bash
 sudo dnf install gcc-c++ cmake qt6-qtbase-devel glew-devel
 ```
 
 **Windows:**
-- Download and install Qt6 from [Qt official website](https://www.qt.io/download)
+- Download and install Qt 5.15+ or Qt 6.x from [Qt official website](https://www.qt.io/download)
 - Install Visual Studio 2019 or later
 - GLEW will be automatically downloaded during CMake configuration
 

@@ -17,7 +17,7 @@ void ResultWidget::mousePressEvent(QMouseEvent* e)
 {
     m_ui.dockWidget->setCursor(Qt::CursorShape::ClosedHandCursor);
     raise();
-    m_lastY = (int)e->globalPosition().y();
+    m_lastY = (int)e->globalPos().y();
     m_isHover = true;
     CGE_LOG_INFO("Result Widget Hover\n");
 }
@@ -38,7 +38,7 @@ void ResultWidget::mouseMoveEvent(QMouseEvent* e)
 {
     if (m_isHover)
     {
-        auto globalY = (int)e->globalPosition().y();
+        auto globalY = (int)e->globalPos().y();
         move(x(), y() + globalY - m_lastY);
         m_lastY = globalY;
 
@@ -46,7 +46,7 @@ void ResultWidget::mouseMoveEvent(QMouseEvent* e)
 #ifdef Q_OS_MACOS
 
         auto w = m_mainWindow->getOutputScrollWidget();
-        auto p = w->mapFromGlobal(e->globalPosition().toPoint());
+        auto p = w->mapFromGlobal(e->globalPos());
 
         if (p.y() < -50)
         {
