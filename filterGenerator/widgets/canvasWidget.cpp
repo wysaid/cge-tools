@@ -165,15 +165,16 @@ void CanvasWidget::mousePressEvent(QMouseEvent* e)
 {
     setCursor(Qt::CursorShape::ClosedHandCursor);
     m_isMoving = true;
-    m_lastX = (int)e->globalPosition().x();
-    m_lastY = (int)e->globalPosition().y();
+    // globalPos() works in both Qt5 and Qt6 (deprecated but present in Qt6)
+    m_lastX = (int)e->globalPos().x();
+    m_lastY = (int)e->globalPos().y();
 }
 
 void CanvasWidget::mouseMoveEvent(QMouseEvent* e)
 {
     if (m_isMoving)
     {
-        auto px = (int)e->globalPosition().x(), py = (int)e->globalPosition().y();
+        auto px = (int)e->globalPos().x(), py = (int)e->globalPos().y();
         m_sprite->move(px - m_lastX, py - m_lastY);
         m_lastX = px;
         m_lastY = py;

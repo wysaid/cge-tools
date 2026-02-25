@@ -16,60 +16,7 @@ if (CCACHE_FOUND)
     message(STATUS "Using ccache for compilation")
 endif ()
 
-if (NOT DEFINED Qt_DIR OR NOT EXISTS ${Qt_DIR})
-    if (DEFINED ENV{QTDIR})
-        set(Qt_DIR $ENV{QTDIR})
-    elseif (DEFINED ENV{QT_DIR})
-        set(Qt_DIR $ENV{QT_DIR})
-    else ()
-        find_program(MY_QMAKE_NAME qmake qmake6)
-        if (MY_QMAKE_NAME)
-            get_filename_component(MY_QMAKE_DIR ${MY_QMAKE_NAME} DIRECTORY)
-            get_filename_component(Qt_DIR ${MY_QMAKE_DIR} DIRECTORY)
-        endif ()
-    endif ()
-endif ()
-
-# Detect Qt version
-if (NOT DEFINED QT_VERSION)
-    # Prefer qmake6 (Qt6) over legacy qmake to avoid empty version from Qt5's qmake
-    find_program(QMAKE_EXECUTABLE NAMES qmake6 qmake HINTS "${Qt_DIR}/bin")
-    if (QMAKE_EXECUTABLE)
-        # Also derive Qt_DIR from QMAKE_EXECUTABLE if not yet set (handles cases
-        # where find_program above missed qmake but HINTS path succeeded).
-        if (NOT DEFINED Qt_DIR OR NOT EXISTS "${Qt_DIR}")
-            get_filename_component(_qmake_dir "${QMAKE_EXECUTABLE}" DIRECTORY)
-            get_filename_component(Qt_DIR "${_qmake_dir}" DIRECTORY)
-        endif ()
-        execute_process(
-                COMMAND "${QMAKE_EXECUTABLE}" -query QT_VERSION
-                OUTPUT_VARIABLE QT_VERSION_FULL
-                OUTPUT_STRIP_TRAILING_WHITESPACE
-                ERROR_QUIET
-        )
-        if (QT_VERSION_FULL AND NOT QT_VERSION_FULL STREQUAL "**Unknown**")
-            string(REGEX REPLACE "^([0-9]+)\\..*" "\\1" QT_VERSION ${QT_VERSION_FULL})
-            message(STATUS "Found Qt version: ${QT_VERSION}")
-        else ()
-            set(QT_VERSION 6)
-            message(WARNING "Could not determine Qt version from qmake output '${QT_VERSION_FULL}', assuming Qt 6")
-        endif ()
-    else ()
-        set(QT_VERSION 6)
-        message(WARNING "qmake not found, assuming Qt 6")
-    endif ()
-endif ()
-
-if (NOT DEFINED Qt_DIR OR NOT EXISTS "${Qt_DIR}")
-    # Qt_DIR not found via QTDIR env or qmake — rely on cmake's built-in
-    # find_package search paths (works for system-installed Qt on Ubuntu/Debian).
-    message(STATUS "Qt dir not detected; relying on system CMake package search paths")
-else ()
-    message(STATUS "Using Qt: ${Qt_DIR}, version ${QT_VERSION}")
-    set(CMAKE_PREFIX_PATH ${Qt_DIR} ${CMAKE_PREFIX_PATH})
-endif ()
-
-set(QT Qt${QT_VERSION})
+include(cmake/findQt.cmake)
 
 find_package(${QT} REQUIRED COMPONENTS OpenGL Core)
 
@@ -118,7 +65,12 @@ add_subdirectory(cge)
 
 if (BUILD_FILTER_GENERATOR)
     message(STATUS "Building filter generator application")
-    find_package(${QT} REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
+    if (QT_VERSION_MAJOR GREATER_EQUAL 6)
+        find_package(${QT} REQUIRED COMPONENTS Gui Widgets OpenGLWidgets)
+    else ()
+        # Qt5: QOpenGLWidget lives in Qt5::Widgets; no separate OpenGLWidgets module
+        find_package(${QT} REQUIRED COMPONENTS Gui Widgets)
+    endif ()
     add_subdirectory(filterGenerator)
 else ()
     message(STATUS "Skipping filter generator (use -DBUILD_FILTER_GENERATOR=ON to enable)")
@@ -130,6 +82,6 @@ message(STATUS "==== CGE Build Summary ====")
 message(STATUS "Version:              ${PROJECT_VERSION}")
 message(STATUS "Build type:           ${CMAKE_BUILD_TYPE}")
 message(STATUS "C++ standard:         ${CMAKE_CXX_STANDARD}")
-message(STATUS "Qt version:           ${QT_VERSION}")
+message(STATUS "Qt version:           ${QT_VERSION_MAJOR} (${QT_VERSION})")
 message(STATUS "Shared libs:          ${BUILD_SHARED_LIBS}")
 message(STATUS "Filter generator:     ${BUILD_FILTER_GENERATOR}")

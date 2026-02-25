@@ -57,11 +57,13 @@
 #include <QOpenGLContext>
 #endif // CGE_USE_GLEW
 #elif defined(QT_OPENGL_ES_2)
+// Qt5 + OpenGL ES2: use the ES2-specific functions wrapper
 #include <QOpenGLFunctions_ES2>
-#include <qgl.h>
 #else
-#include <QGLFunctions>
-#include <qgl.h>
+// Qt5 desktop: QOpenGLFunctions / QOpenGLContext exist in both Qt5 and Qt6
+// (avoid the long-deprecated QGLFunctions / qgl.h Qt5 API)
+#include <QOpenGLFunctions>
+#include <QOpenGLContext>
 #endif
 
 #if defined(_CGE_GENERAL_ERROR_TEST_) && _CGE_GENERAL_ERROR_TEST_

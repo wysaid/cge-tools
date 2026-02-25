@@ -86,7 +86,7 @@ jobs:
 
   build-mac-x86_64:
     name: macOS x86_64 (Intel)
-    runs-on: macos-13
+    runs-on: macos-14
     outputs:
       artifact-name: ${{ steps.set-artifact.outputs.name }}
 

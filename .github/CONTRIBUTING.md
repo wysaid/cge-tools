@@ -120,13 +120,24 @@ namespace CGE
 }
 ```
 
-### 3. Qt6 Compatibility
+### 3. Qt Version Compatibility
 
-When working with Qt code:
-- Use version checks: `#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)`
+The project now supports both Qt5 (5.15+) and Qt6 (6.0+):
+
+- Use version checks for Qt version-specific code:
+  ```cpp
+  #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+      // Qt6-specific code
+  #else
+      // Qt5 code (or fallback)
+  #endif
+  ```
 - Test with both Qt5 and Qt6 if possible
-- Avoid deprecated Qt APIs
-- Document Qt version requirements
+- Prefer APIs that work in both versions (e.g., `globalPos()` over `globalPosition()`)
+- When APIs differ, use the cross-compatible version
+- Key differences:
+  - Qt6 has `Qt::OpenGLWidgets` module; Qt5 bundles `QOpenGLWidget` in `Qt::Widgets`
+  - Some deprecated APIs removed in Qt6 (e.g., `QGLFunctions`)
 
 ### 4. Platform Testing
 
@@ -149,14 +160,14 @@ Minimum requirement: test on your primary platform + verify build on one other.
 ### Build System
 
 - **CMake**: When adding source files, they're auto-discovered via `GLOB_RECURSE`
-- **Qt Version**: Support Qt 6.0+, gracefully handle version differences
+- **Qt Version**: Support Qt 5.15+ and Qt 6.0+, ensure cross-version compatibility
 - **C++11**: Use C++11 standard features only (no C++14/17/20)
 
 ### filterGenerator
 
-The GUI application is currently undergoing Qt6 migration:
-- Disabled by default (`BUILD_FILTER_GENERATOR=OFF`)
-- Contributions to complete the migration are welcome
+The GUI application now supports both Qt5 and Qt6:
+- Enable with `-DBUILD_FILTER_GENERATOR=ON` (enabled by default)
+- Qt version is automatically detected at build time
 - Don't couple library APIs to filterGenerator-specific features
 
 ## Testing Checklist
