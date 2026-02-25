@@ -71,11 +71,13 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: "CGE Tools ${{ steps.prerelease.outputs.tag }}"
+          draft: false
           prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
           generate_release_notes: true
           make_latest: ${{ steps.prerelease.outputs.is_prerelease == 'false' }}
           fail_on_unmatched_files: false
           files: |
+            artifacts/**/*.dmg
             artifacts/**/*.tar.gz
             artifacts/**/*.AppImage
             artifacts/**/*.zip

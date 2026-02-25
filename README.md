@@ -1,5 +1,10 @@
 # CGE-Tools
 
+[![Release](https://github.com/wysaid/cge-tools/actions/workflows/release.yml/badge.svg)](https://github.com/wysaid/cge-tools/actions/workflows/release.yml)
+[![macOS Build](https://github.com/wysaid/cge-tools/actions/workflows/macos-build.yml/badge.svg)](https://github.com/wysaid/cge-tools/actions/workflows/macos-build.yml)
+[![Linux Build](https://github.com/wysaid/cge-tools/actions/workflows/linux-build.yml/badge.svg)](https://github.com/wysaid/cge-tools/actions/workflows/linux-build.yml)
+[![Windows Build](https://github.com/wysaid/cge-tools/actions/workflows/windows-build.yml/badge.svg)](https://github.com/wysaid/cge-tools/actions/workflows/windows-build.yml)
+
 A powerful C++ image and video processing library with OpenGL-based filters and effects, built with Qt5/Qt6 support.
 
 ## Quick Links
