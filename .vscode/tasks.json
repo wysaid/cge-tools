@@ -3,7 +3,6 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        // ── Clean ──────────────────────────────────────────────────────────
         {
             "label": "Clean Build Directory",
             "type": "shell",
@@ -17,9 +16,8 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
-        // ── Configure (Load) ───────────────────────────────────────────────────────
         {
             "label": "Load CMake Project (Debug)",
             "type": "shell",
@@ -34,7 +32,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Load CMake Project (Release)",
@@ -50,7 +48,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Reload CMake Project (Debug)",
@@ -67,7 +65,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Reload CMake Project (Release)",
@@ -84,9 +82,8 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
-        // ── Build ──────────────────────────────────────────────────────────
         {
             "label": "Build CMake Project (Debug)",
             "type": "shell",
@@ -103,7 +100,7 @@
             "group": {
                 "kind": "build"
             },
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Build CMake Project (Release)",
@@ -119,9 +116,8 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
-        // ── Load + Build (sequence) ────────────────────────────────────────
         {
             "label": "Load And Build CMake Project (Debug)",
             "type": "shell",
@@ -133,7 +129,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": [],
             "dependsOn": [
                 "Load CMake Project (Debug)",
                 "Build CMake Project (Debug)"
@@ -151,14 +147,13 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": [],
             "dependsOn": [
                 "Load CMake Project (Release)",
                 "Build CMake Project (Release)"
             ],
             "dependsOrder": "sequence"
         },
-        // ── Rebuild ────────────────────────────────────────────────────────
         {
             "label": "Rebuild Project (Debug)",
             "type": "shell",
@@ -173,7 +168,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Rebuild Project (Release)",
@@ -189,7 +184,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Build Current Cpp File",
@@ -205,7 +200,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Run Tests (Debug)",
@@ -223,7 +218,7 @@
             "group": {
                 "kind": "test"
             },
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Run Tests (Release)",
@@ -239,7 +234,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "test",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Run simple_filter Example (Debug)",
@@ -249,7 +244,7 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Build CMake Project (Debug)"
         },
         {
@@ -265,7 +260,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "Open Project In Xcode",
@@ -278,7 +273,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Gen Mac Xcode Project"
         },
         {
@@ -314,7 +309,7 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Load And Build CMake Project (Debug)"
         },
         {
@@ -335,7 +330,7 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Load And Build CMake Project (Release)"
         },
         {
@@ -356,7 +351,7 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Load And Build CMake Project (Debug)"
         },
         {
@@ -377,7 +372,7 @@
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build",
-            "problemMatcher": "$gcc",
+            "problemMatcher": ["$msCompile"],
             "dependsOn": "Load And Build CMake Project (Release)"
         }
     ]
