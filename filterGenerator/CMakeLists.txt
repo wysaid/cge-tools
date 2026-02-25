@@ -46,7 +46,6 @@ file(GLOB_RECURSE GENERATOR_RESOURCES
 macro(cge_add_app TARGET_NAME)
     set(_EXTRA_SOURCES ${ARGN})
     if(APPLE)
-        set(MACOSX_BUNDLE_ICON_FILE ${TARGET_NAME}.icns)
         set(_icon_file "${CMAKE_CURRENT_SOURCE_DIR}/${TARGET_NAME}.icns")
         set_source_files_properties(${_icon_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
         add_executable(${TARGET_NAME} MACOSX_BUNDLE
@@ -54,7 +53,9 @@ macro(cge_add_app TARGET_NAME)
             ${GENERATOR_HEADERS} ${GENERATOR_UI_FILES} ${GENERATOR_RESOURCES}
             ${_icon_file}
         )
+        # CFBundleIconFile 必须不带 .icns 后缀，否则 Dock 无法正确显示图标
         set_target_properties(${TARGET_NAME} PROPERTIES
+            MACOSX_BUNDLE_ICON_FILE ${TARGET_NAME}
             MACOSX_BUNDLE_GUI_IDENTIFIER "org.wysaid.${TARGET_NAME}"
             MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
             MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
