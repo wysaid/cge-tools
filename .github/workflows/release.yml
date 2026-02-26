@@ -15,6 +15,10 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   # Each workflow_call runs all jobs defined in the target file.
   # macos-build.yml: builds both arm64 and x86_64.

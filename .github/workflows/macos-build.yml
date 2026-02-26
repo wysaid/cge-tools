@@ -24,7 +24,7 @@ on:
         value: ${{ jobs.build-mac-x86_64.outputs.artifact-name }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: macos-build-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:

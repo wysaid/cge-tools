@@ -24,7 +24,7 @@ on:
         value: ${{ jobs.build-fedora.outputs.artifact-name }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: linux-build-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
