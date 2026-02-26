@@ -34,14 +34,29 @@ SKIP_DEPLOY=false
 while [[ $# -gt 0 ]]; do
     case "$1" in
     --app-path)
+        if [[ $# -lt 2 ]] || [[ "$2" == --* ]]; then
+            echo "Error: --app-path requires a value." >&2
+            sed -n '2,22p' "$0" | sed 's/^# \?//'
+            exit 1
+        fi
         APP_PATH="$2"
         shift 2
         ;;
     --output)
+        if [[ $# -lt 2 ]] || [[ "$2" == --* ]]; then
+            echo "Error: --output requires a value." >&2
+            sed -n '2,22p' "$0" | sed 's/^# \?//'
+            exit 1
+        fi
         OUTPUT_PATH="$2"
         shift 2
         ;;
     --volname)
+        if [[ $# -lt 2 ]] || [[ "$2" == --* ]]; then
+            echo "Error: --volname requires a value." >&2
+            sed -n '2,22p' "$0" | sed 's/^# \?//'
+            exit 1
+        fi
         VOLNAME="$2"
         shift 2
         ;;
@@ -88,7 +103,14 @@ resolve_frameworks_symlinks() {
     local _F _REAL
     for _F in "$_FW_DIR"/*; do
         if [[ -L "$_F" ]]; then
-            _REAL="$(realpath "$_F")"
+            if ! _REAL="$(realpath "$_F" 2>/dev/null)"; then
+                echo "  warning: failed to resolve symlink $(basename "$_F"); leaving as-is" >&2
+                continue
+            fi
+            if [[ ! -e "$_REAL" ]]; then
+                echo "  warning: target of symlink $(basename "$_F") does not exist: $_REAL" >&2
+                continue
+            fi
             rm "$_F"
             cp -r "$_REAL" "$_F"
             echo "  resolved symlink: $(basename "$_F")"
@@ -131,6 +153,10 @@ package_dmg() {
 
     # Remove dangling .DS_Store symlinks left by macdeployqt
     find "$_APP" -name '.DS_Store' -type l -delete 2>/dev/null || true
+
+    # Resolve Frameworks symlinks (hdiutil can choke on broken symlinks)
+    echo "  Resolving Frameworks symlinks..."
+    resolve_frameworks_symlinks "$_APP"
 
     # Ad-hoc code sign
     if ! $SKIP_SIGN; then
