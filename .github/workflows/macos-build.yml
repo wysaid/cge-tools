@@ -63,6 +63,15 @@ jobs:
       - name: Build
         run: cmake --build build --config Release -j$(sysctl -n hw.logicalcpu)
 
+      - name: Verify architecture (arm64)
+        run: |
+          ARCH=$(lipo -info build/filterGenerator/filterGenerator.app/Contents/MacOS/filterGenerator | grep -o 'arm64\|x86_64' | tail -1)
+          echo "Binary architecture: $ARCH"
+          if [ "$ARCH" != "arm64" ]; then
+            echo "ERROR: Expected arm64 but got $ARCH"
+            exit 1
+          fi
+
       - name: Deploy Qt dependencies
         run: |
           macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
@@ -92,7 +101,7 @@ jobs:
 
   build-mac-x86_64:
     name: macOS x86_64 (Intel)
-    runs-on: macos-14
+    runs-on: macos-13
     outputs:
       artifact-name: ${{ steps.set-artifact.outputs.name }}
 
@@ -124,6 +133,15 @@ jobs:
 
       - name: Build
         run: cmake --build build --config Release -j$(sysctl -n hw.logicalcpu)
+
+      - name: Verify architecture (x86_64)
+        run: |
+          ARCH=$(lipo -info build/filterGenerator/filterGenerator.app/Contents/MacOS/filterGenerator | grep -o 'arm64\|x86_64' | tail -1)
+          echo "Binary architecture: $ARCH"
+          if [ "$ARCH" != "x86_64" ]; then
+            echo "ERROR: Expected x86_64 but got $ARCH"
+            exit 1
+          fi
 
       - name: Deploy Qt dependencies
         run: |
