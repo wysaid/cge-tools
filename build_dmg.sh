@@ -126,7 +126,7 @@ package_dmg() {
         return 1
     fi
 
-    _APP="$(cd "$_APP" && pwd)"   # absolute path
+    _APP="$(cd "$_APP" && pwd)" # absolute path
     mkdir -p "$(dirname "$_OUT")"
 
     # Remove dangling .DS_Store symlinks left by macdeployqt
@@ -146,12 +146,29 @@ package_dmg() {
     [[ -f "$_OUT" ]] && rm -f "$_OUT"
 
     echo "→ Creating DMG: $_OUT"
-    hdiutil create \
-        -volname "$_VOL" \
-        -srcfolder "$_APP" \
-        -ov \
-        -format ULMO \
-        "$_OUT"
+    # hdiutil can spuriously report "Resource busy" on GitHub Actions runners
+    # when two invocations occur back-to-back.  Retry with exponential back-off.
+    local _MAX_RETRIES=5
+    local _DELAY=2
+    local _ATTEMPT=1
+    while true; do
+        if hdiutil create \
+            -volname "$_VOL" \
+            -srcfolder "$_APP" \
+            -ov \
+            -format ULMO \
+            "$_OUT"; then
+            break
+        fi
+        if [[ $_ATTEMPT -ge $_MAX_RETRIES ]]; then
+            echo "Error: hdiutil create failed after $_MAX_RETRIES attempts." >&2
+            return 1
+        fi
+        echo "  hdiutil failed (attempt $_ATTEMPT/$_MAX_RETRIES) — retrying in ${_DELAY}s..." >&2
+        sleep "$_DELAY"
+        _DELAY=$((_DELAY * 2))
+        _ATTEMPT=$((_ATTEMPT + 1))
+    done
 
     echo "✓ DMG ready: $_OUT ($(du -sh "$_OUT" | cut -f1))"
 }
@@ -166,8 +183,7 @@ if [[ -z "$APP_PATH" ]] && [[ -z "$OUTPUT_PATH" ]]; then
     FAILED=0
     for APP in \
         "$FG_DIR/filterGenerator.app" \
-        "$FG_DIR/filterRuleTest.app"
-    do
+        "$FG_DIR/filterRuleTest.app"; do
         if [[ ! -d "$APP" ]]; then
             echo "Skipping (not found): $APP"
             continue
@@ -177,7 +193,10 @@ if [[ -z "$APP_PATH" ]] && [[ -z "$OUTPUT_PATH" ]]; then
 
         # Deploy Qt deps unless explicitly skipped
         if ! $SKIP_DEPLOY; then
-            deploy_app "$APP" || { FAILED=1; continue; }
+            deploy_app "$APP" || {
+                FAILED=1
+                continue
+            }
         fi
 
         package_dmg "$APP" "$BUILD_DIR/${APP_BASE}.dmg" || FAILED=1
