@@ -68,20 +68,26 @@ jobs:
           macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
           macdeployqt build/filterGenerator/filterRuleTest.app -verbose=1
 
-      - name: Package
+      - name: Package as DMG
         id: set-artifact
         run: |
           ARTIFACT_NAME="filterGenerator-macos-arm64"
-          cd build/filterGenerator
-          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app filterRuleTest.app
+          mkdir -p dist-arm64
+          ./build_dmg.sh \
+            --app-path build/filterGenerator/filterGenerator.app \
+            --output "dist-arm64/filterGenerator-macos-arm64.dmg" \
+            --volname "FilterGenerator (arm64)"
+          ./build_dmg.sh \
+            --app-path build/filterGenerator/filterRuleTest.app \
+            --output "dist-arm64/filterRuleTest-macos-arm64.dmg" \
+            --volname "FilterRuleTest (arm64)"
           echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
-          echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: filterGenerator-macos-arm64
-          path: filterGenerator-macos-arm64.tar.gz
+          path: dist-arm64/*.dmg
           retention-days: 30
 
   build-mac-x86_64:
@@ -124,18 +130,24 @@ jobs:
           macdeployqt build/filterGenerator/filterGenerator.app -verbose=1
           macdeployqt build/filterGenerator/filterRuleTest.app -verbose=1
 
-      - name: Package
+      - name: Package as DMG
         id: set-artifact
         run: |
           ARTIFACT_NAME="filterGenerator-macos-x86_64"
-          cd build/filterGenerator
-          tar -czf "../../${ARTIFACT_NAME}.tar.gz" filterGenerator.app filterRuleTest.app
+          mkdir -p dist-x86_64
+          ./build_dmg.sh \
+            --app-path build/filterGenerator/filterGenerator.app \
+            --output "dist-x86_64/filterGenerator-macos-x86_64.dmg" \
+            --volname "FilterGenerator (x86_64)"
+          ./build_dmg.sh \
+            --app-path build/filterGenerator/filterRuleTest.app \
+            --output "dist-x86_64/filterRuleTest-macos-x86_64.dmg" \
+            --volname "FilterRuleTest (x86_64)"
           echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
-          echo "Package created: ${ARTIFACT_NAME}.tar.gz ($(du -sh ../../${ARTIFACT_NAME}.tar.gz | cut -f1))"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: filterGenerator-macos-x86_64
-          path: filterGenerator-macos-x86_64.tar.gz
+          path: dist-x86_64/*.dmg
           retention-days: 30
