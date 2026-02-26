@@ -101,7 +101,7 @@ jobs:
 
   build-mac-x86_64:
     name: macOS x86_64 (Intel)
-    runs-on: macos-13
+    runs-on: macos-latest
     outputs:
       artifact-name: ${{ steps.set-artifact.outputs.name }}
 
@@ -109,11 +109,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Qt6 (x86_64)
-        run: |
-          brew install qt@6
-          echo "QTDIR=$(brew --prefix qt@6)" >> "$GITHUB_ENV"
-          echo "$(brew --prefix qt@6)/bin" >> "$GITHUB_PATH"
+      - name: Install Qt6 (x86_64 via aqtinstall)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.*'
+          target: 'desktop'
+          arch: 'clang_64'
+          host: 'mac'
+          cache: true
+          cache-key-prefix: 'install-qt6-macos-x86_64'
 
       - name: Cache CMake build
         uses: actions/cache@v4
@@ -126,7 +130,8 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH="$QTDIR" \
+            -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR" \
+            -DCMAKE_OSX_ARCHITECTURES=x86_64 \
             -DBUILD_FILTER_GENERATOR=ON \
             -DBUILD_EXAMPLES=OFF \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
