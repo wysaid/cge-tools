@@ -129,6 +129,9 @@ examples/build/
 examples/input.jpg
 examples/output.jpg
 
+# Downloaded release packages (tools/download.sh)
+tools/downloads/
+
 # Documentation build
 docs/_build/
 docs/html/

@@ -9,15 +9,16 @@ A powerful C++ image and video processing library with OpenGL-based filters and 
 
 ## Quick Links
 
+- � [**Download Latest Release**](https://github.com/wysaid/cge-tools/releases/latest) - Pre-built binaries for macOS / Linux / Windows
 - 🚀 [Quick Start Guide](docs/QUICKSTART.md) - Get up and running in 5 minutes
 - 📖 [Build Documentation](docs/BUILD.md) - Detailed build instructions
--  [Modernization Log](docs/MODERNIZATION.md) - Project upgrade details
+- 📝 [Modernization Log](docs/MODERNIZATION.md) - Project upgrade details
 - ⚡ [Optimization Guide](docs/OPTIMIZATION.md) - Project optimizations and best practices
 - 🤝 [Contributing Guide](.github/CONTRIBUTING.md) - How to contribute to the project
 
 ## Description
 
-CGE (Cool Graphics Effects) is a high-performance graphics processing library that provides:
+CGE (Cross-platform Graphics Effects) is a high-performance graphics processing library that provides:
 
 - **Image Filters**: 70+ built-in filters for image enhancement and effects
 - **Animation System**: Smooth animation framework for dynamic effects
@@ -130,7 +131,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Debug
 cmake .. -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x.x
 ```
 
-**Note**: The filter generator application is currently undergoing Qt5 to Qt6 migration and is disabled by default. The core CGE library is fully functional.
+**Note**: The filter generator application requires Qt6 and is disabled by default. The core CGE library is fully functional.
 
 ## Project Structure
 
@@ -152,9 +153,11 @@ cge-tools/
 │   ├── sprite/            # Sprite implementations
 │   ├── slideshow/         # Slideshow implementations
 │   └── extend/            # Extension modules
-├── tools/                 # Utility tools
-│   ├── Generator/         # Filter generator tool
-│   └── Checker/           # Rule string validator
+├── tools/                 # Utility tools & pre-built binaries (legacy)
+│   ├── download.sh        # Script to fetch latest release packages
+│   ├── mac/               # Legacy macOS binaries (outdated)
+│   ├── ubuntu/            # Legacy Linux binaries (outdated)
+│   └── windows/           # Legacy Windows binaries (outdated)
 └── screenshots/           # Example screenshots
 ```
 
@@ -194,22 +197,39 @@ QImage processImage(const QImage& input) {
 
 ## Tools
 
-### Filter Generator (Experimental)
+### Download Pre-built Binaries
 
-A Qt-based GUI application for creating and testing CGE filters interactively.
+Pre-built packages for all platforms are published on the **[GitHub Releases page](https://github.com/wysaid/cge-tools/releases)**.
 
-**Status**: Currently undergoing Qt5 to Qt6 migration. To build:
+Use the provided download script to fetch them interactively:
+
+```bash
+# Interactive menu
+bash tools/download.sh
+
+# Auto-detect platform and download matching packages
+bash tools/download.sh --auto
+
+# Download everything
+bash tools/download.sh --all
+```
+
+### Filter Generator
+
+A Qt6-based GUI application for creating and testing CGE filters interactively.
+
+To build from source:
 
 ```bash
 cmake .. -DBUILD_FILTER_GENERATOR=ON
 cmake --build .
 ```
 
-**Note**: The application may require additional code updates for full Qt6 compatibility. Pre-built versions are available in the `tools/` directory for macOS, Windows, and Linux.
-
 ### Checker
 
-A tool for validating CGE rule strings to ensure filter configurations are correct. (Available in `tools/` directory)
+A tool for validating CGE rule strings to ensure filter configurations are correct.
+
+Pre-built binaries are available on the [Releases page](https://github.com/wysaid/cge-tools/releases).
 
 ## Installation
 
@@ -263,6 +283,14 @@ Wang Yang (wysaid)
 - [iOS GPUImage Plus](https://github.com/wysaid/ios-gpuimage-plus) - iOS version with Objective-C/Swift bindings
 
 ## Changelog
+
+### Version 2.0.0 (2026)
+
+- CI/CD pipeline for automated releases on macOS, Linux, and Windows
+- GitHub Releases with pre-built DMG / AppImage / ZIP packages
+- Added `tools/download.sh` for one-command package download
+- Filter Generator fully migrated to Qt6
+- Improved documentation
 
 ### Version 1.0.0 (2024)
 
